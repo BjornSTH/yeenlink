@@ -1,0 +1,6 @@
+{
+  "description": "Массив из MaxItems + 1 элементов",
+  "valid": false,
+  "canonical": false,
+  "error": "size"
+}

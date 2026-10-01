@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>YeenLink — первый вход, Android</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; padding: 20px 20px 24px; display: flex; flex-direction: column; gap: 28px; background: #1C1B19; color: #ECE6DD; font-family: 'Manrope', system-ui, sans-serif; overflow: hidden">
+<div style="display: flex; align-items: center; gap: 10px"><div style="width: 36px; height: 36px; border-radius: 11px; background: {{accent}}; color: #1C1B19; display: flex; align-items: center; justify-content: center; flex-shrink: 0"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4 8.5 10M19 4l-3.5 6"></path><path d="M6 13a6 6 0 0 0 12 0c0-2-1.5-3-3-3H9c-1.5 0-3 1-3 3z"></path><circle cx="10" cy="13.5" r=".8" fill="currentColor"></circle><circle cx="14" cy="13.5" r=".8" fill="currentColor"></circle></svg></div><span style="font-size: 19px; font-weight: 800">YeenLink</span></div>
+<dc-import name="OnbSteps" framed="{{ false }}" accent="{{accent}}" hint-size="100%,640px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent": {"editor": "color", "default": "#C9A06B", "options": ["#C9A06B", "#D97A4A", "#5FA8A0"]}, "$preview": {"width": 390, "height": 844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { accent: this.props.accent ?? '#C9A06B' };
+  }
+}
+</script>
+</body>
+</html>

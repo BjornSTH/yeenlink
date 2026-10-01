@@ -1,0 +1,9 @@
+{
+  "description": "float32 на входе допустим, на выходе станет float64",
+  "valid": true,
+  "canonical": false,
+  "frame": {
+    "d": 1.5,
+    "op": "test"
+  }
+}

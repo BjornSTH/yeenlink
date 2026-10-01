@@ -1,0 +1,34 @@
+# Открытые решения проекта (docs/spec.md, «Открытые вопросы и риски»).
+# null — решение ещё не принято: код не должен опираться на догадку.
+# Когда решение принято — впишите значение и обновите места из where.
+
+name: YeenLink
+
+# Домен для веб-ссылок приглашений: https://<domain>/i#<Signed>.
+# В спецификации как пример — yeenlink.app, не подтверждён.
+domain: null
+
+# Лицензия кода. «Открытый сервер — да, но какая» — не решено.
+# Пока null, файла LICENSE в репозитории нет.
+license:
+  server: null
+  client: null
+
+# Идентификатор приложения. ЗАГЛУШКА до выбора домена/имени пакета.
+app_id:
+  value: todo.yeenlink
+  where:
+    - client/android/app/build.gradle.kts      # namespace, applicationId
+    - client/android/app/src/main/kotlin/todo/yeenlink/MainActivity.kt  # package и путь
+    - client/linux/CMakeLists.txt              # APPLICATION_ID
+    - client/windows/runner/Runner.rc          # CompanyName, LegalCopyright
+
+# Путь Go-модуля. Локальный, пока нет постоянного хостинга кода.
+go_module:
+  value: yeenlink/server
+  where:
+    - server/go.mod
+    - импорты в server/**/*.go
+
+# Нужна ли зашифрованная копия профиля на родном сервере уже в MVP.
+encrypted_profile_backup_in_mvp: null

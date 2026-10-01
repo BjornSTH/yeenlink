@@ -1,0 +1,6 @@
+{
+  "description": "Словарь с длиной без счётчика",
+  "valid": false,
+  "canonical": false,
+  "error": "indefinite"
+}

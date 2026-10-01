@@ -1,0 +1,6 @@
+{
+  "description": "Текст не в UTF-8",
+  "valid": false,
+  "canonical": false,
+  "error": "utf8"
+}

@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Светлая тема — YeenLink — каталог серверов, Android</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; position: relative; display: flex; flex-direction: column; background: #F4F0EA; color: #2A2622; font-family: 'Manrope', system-ui, sans-serif; overflow: hidden">
+<sc-if value="{{notDetail}}" hint-placeholder-val="{{ true }}">
+<header style="height: 56px; flex-shrink: 0; padding: 0 6px; display: flex; align-items: center; gap: 4px"><a href="MobileAppLight.dc.html" aria-label="Назад" style="width: 44px; height: 44px; border-radius: 22px; color: #2A2622; display: flex; align-items: center; justify-content: center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"></path></svg></a><span style="font-size: 18px; font-weight: 800">Каталог серверов</span></header>
+<div style="padding: 0 16px 10px; display: flex; flex-direction: column; gap: 10px">
+<label style="height: 44px; padding: 0 14px; border-radius: 12px; background: #FBF8F3; display: flex; align-items: center; gap: 10px; color: #6E655B"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg><input aria-label="Поиск" onInput="{{onSearch}}" placeholder="Название или тема" style="flex-grow: 1; background: transparent; border: none; outline: none; color: #2A2622; font-family: inherit; font-size: 15px"></label>
+<div style="display: flex; gap: 6px; overflow-x: auto; margin: 0 -16px; padding: 0 16px"><sc-for list="{{tagChips}}" as="c" hint-placeholder-count="6"><button onClick="{{c.pick}}" style="height: 34px; padding: 0 14px; border: 1px solid {{c.border}}; border-radius: 17px; background: {{c.bg}}; color: {{c.color}}; font-size: 13px; font-weight: 600; font-family: inherit; cursor: pointer; white-space: nowrap">{{c.t}}</button></sc-for></div>
+</div>
+<div style="flex-grow: 1; min-height: 0; overflow-y: auto; padding: 4px 16px 16px; display: flex; flex-direction: column; gap: 10px">
+<sc-for list="{{list}}" as="s" hint-placeholder-count="5">
+<button onClick="{{s.open}}" style="padding: 12px; border: none; border-radius: 14px; background: #FBF8F3; color: #2A2622; display: flex; gap: 12px; text-align: left; font-family: inherit; cursor: pointer">
+<div style="width: 52px; height: 52px; flex-shrink: 0; border-radius: 15px; background: {{s.icon}}; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 800">{{s.ini}}</div>
+<span style="flex-grow: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px">
+<span style="display: flex; align-items: center; gap: 6px"><span style="font-size: 15px; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{s.name}}</span><sc-if value="{{s.adult}}" hint-placeholder-val="{{ false }}"><span style="padding: 1px 4px; border-radius: 4px; border: 1px solid #E2B3A8; color: #A34E3E; font-size: 9px; font-weight: 800">18+</span></sc-if></span>
+<span style="font-size: 13px; line-height: 1.4; color: #4A443D; height: 36px; overflow: hidden">{{s.desc}}</span>
+<span style="display: flex; gap: 10px; font-size: 11px; color: #6B6258"><span>{{s.online}} в сети</span><span style="font-family: 'JetBrains Mono', monospace; color: {{s.pingColor}}">{{s.ping}} мс</span><span style="margin-left: auto; font-weight: 700; color: {{s.modeColor}}">{{s.mode}}</span></span>
+</span>
+</button>
+</sc-for>
+</div>
+<nav aria-label="Основная навигация" style="height: 66px; flex-shrink: 0; background: #E9E3DA; border-top: 1px solid #E3DCD1; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr))"><a href="MobileAppLight.dc.html" style="color: #86602F; text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; font-size: 11px; font-weight: 700"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="7" height="7" rx="2"></rect><rect x="13" y="4" width="7" height="7" rx="2"></rect><rect x="4" y="13" width="7" height="7" rx="2"></rect><rect x="13" y="13" width="7" height="7" rx="2"></rect></svg>Серверы</a><a href="MobileFeedLight.dc.html" style="color: #6E655B; text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; font-size: 11px; font-weight: 600"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 6h14M5 12h14M5 18h9"></path></svg>Лента</a><a href="MobileLight-dms.dc.html" style="color: #6E655B; text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; font-size: 11px; font-weight: 600"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"></path></svg>Личные</a><a href="PhoneLight.dc.html" style="color: #6E655B; text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; font-size: 11px; font-weight: 600"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"></circle><path d="M4 21a8 8 0 0 1 16 0"></path></svg>Профиль</a></nav>
+</sc-if>
+<sc-if value="{{hasSel}}" hint-placeholder-val="{{ false }}">
+<div style="height: 160px; flex-shrink: 0; position: relative; background: {{sel.banner}}"><div style="position: absolute; left: 12%; top: 18%; width: 44px; height: 30px; border-radius: 50%; background: rgba(0,0,0,0.16)"></div><div style="position: absolute; left: 52%; top: 46%; width: 30px; height: 22px; border-radius: 50%; background: rgba(0,0,0,0.16)"></div><div style="position: absolute; right: 10%; top: 14%; width: 54px; height: 38px; border-radius: 50%; background: rgba(0,0,0,0.16)"></div>
+<button aria-label="Назад" onClick="{{close}}" style="position: absolute; left: 10px; top: 10px; width: 40px; height: 40px; border: none; border-radius: 20px; background: rgba(251,248,243,0.85); color: #2A2622; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"></path></svg></button>
+<div style="position: absolute; left: 16px; bottom: -32px; width: 72px; height: 72px; border-radius: 20px; background: {{sel.icon}}; border: 5px solid #F4F0EA; box-sizing: border-box; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 800">{{sel.ini}}</div>
+</div>
+<div style="flex-grow: 1; min-height: 0; overflow-y: auto; padding: 42px 16px 16px; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; flex-direction: column; gap: 4px"><span style="font-size: 22px; font-weight: 800">{{sel.name}}</span><span style="font-size: 12px; color: #6E655B">{{sel.online}} в сети · {{sel.members}} участников · <span style="font-family: 'JetBrains Mono', monospace; color: {{sel.pingColor}}">{{sel.ping}} мс</span></span></div>
+<span style="font-size: 15px; line-height: 1.55; color: #4A443D">{{sel.desc}}</span>
+<span style="display: flex; flex-wrap: wrap; gap: 6px"><sc-for list="{{sel.tagList}}" as="t" hint-placeholder-count="2"><span style="height: 28px; padding: 0 12px; border-radius: 14px; background: #FBF8F3; color: #4A443D; font-size: 13px; font-weight: 600; display: flex; align-items: center">{{t.t}}</span></sc-for></span>
+<div style="padding: 10px 12px; border-radius: 10px; background: #FBF8F3; display: flex; align-items: center; gap: 10px; font-size: 12px; color: #6B6258"><span style="color: #436B35; display: flex"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 5 6v6c0 4.5 3 7.5 7 9 4-1.5 7-4.5 7-9V6z"></path><path d="m9 12 2 2 4-4"></path></svg></span>Ключ сервера <span style="font-family: 'JetBrains Mono', monospace; color: #4A443D">{{sel.key}}</span></div>
+<sc-if value="{{canApply}}" hint-placeholder-val="{{ false }}"><textarea aria-label="О себе" rows="3" placeholder="Пара слов о себе для модераторов" style="padding: 12px; border-radius: 12px; border: 1px solid #D6CEC2; background: #E9E3DA; color: #2A2622; font-family: inherit; font-size: 15px; outline: none; resize: none"></textarea></sc-if>
+<sc-if value="{{applied}}" hint-placeholder-val="{{ false }}"><div style="padding: 12px 14px; border-radius: 12px; background: #E6EFE0; border: 1px solid #BFD3B2; color: #2F4A23; font-size: 14px; line-height: 1.5">Заявка отправлена. Ответ модераторов придёт уведомлением.</div></sc-if>
+</div>
+<div style="flex-shrink: 0; padding: 12px 16px 18px; border-top: 1px solid #E3DCD1; display: flex">
+<sc-if value="{{canJoin}}" hint-placeholder-val="{{ true }}"><a href="Mobile-invite.dc.html" style="flex-grow: 1; height: 50px; border-radius: 14px; background: {{accent}}; color: #1C1B19; text-decoration: none; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700">Присоединиться</a></sc-if>
+<sc-if value="{{canApply}}" hint-placeholder-val="{{ false }}"><button onClick="{{apply}}" style="flex-grow: 1; height: 50px; border: none; border-radius: 12px; background: {{accent}}; color: #1C1B19; font-weight: 700; font-family: inherit; cursor: pointer; font-size: 16px">Отправить заявку</button></sc-if>
+<sc-if value="{{isMember}}" hint-placeholder-val="{{ false }}"><a href="MobileAppLight.dc.html" style="flex-grow: 1; height: 50px; border-radius: 14px; border: 1px solid #D6CEC2; color: #2A2622; text-decoration: none; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 600">Открыть сервер</a></sc-if>
+</div>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent": {"editor": "color", "default": "#C9A06B", "options": ["#C9A06B", "#D97A4A", "#5FA8A0"]}, "start": {"editor": "enum", "default": "none", "options": ["none", "detail"]}, "$preview": {"width": 390, "height": 844}}'>
+class Component extends DCLogic {
+  state = { touched: false, tag: 'Все', sort: 0, q: '', sel: null, applied: {} };
+  renderVals() {
+    const accent = this.props.accent ?? '#C9A06B';
+    const st = this.state;
+    const SERVERS = [
+      { id: 'np', name: 'Ночной привал', ini: 'НП', banner: '#E3D3BC', icon: '#E3D3BC', desc: 'Пятничные партии в НРИ, карты и долгие разговоры в голосовом.', tags: ['НРИ'], online: 6, members: 9, ping: 38, mode: 'member', isNew: false, adult: false },
+      { id: 'px', name: 'Пиксельная мастерская', ini: 'ПМ', banner: '#D5DCE6', icon: '#4A5A6E', desc: 'Пиксель-арт и маленькие игры на Godot. Разборы работ по воскресеньям.', tags: ['Разработка', 'Арт'], online: 38, members: 214, ping: 24, mode: 'free', isNew: false, adult: false },
+      { id: 'kb', name: 'Кодовая база', ini: 'КБ', banner: '#D9E0CF', icon: '#55664A', desc: 'Go, Rust и всё self-hosted. Помогаем поднять свой сервер с нуля.', tags: ['Разработка'], online: 71, members: 540, ping: 33, mode: 'free', isNew: false, adult: false },
+      { id: 'zc', name: 'Заводской цех', ini: 'ЗЦ', banner: '#E4D8C3', icon: '#6E6048', desc: 'Factorio, Satisfactory и автоматизация. Общие сейвы и стримы стройки.', tags: ['Игры'], online: 12, members: 86, ping: 61, mode: 'apply', isNew: true, adult: false },
+      { id: 'ln', name: 'Лисья нора', ini: 'ЛН', banner: '#E8D3C6', icon: '#7A5A48', desc: 'Тёплое общение, ночные разговоры и подкасты в прямом эфире.', tags: ['Общение'], online: 230, members: 1204, ping: 112, mode: 'free', isNew: false, adult: false },
+      { id: 'tb', name: 'Тихий бард', ini: 'ТБ', banner: '#E2D5DE', icon: '#6A5466', desc: 'Музыканты-любители: джемы в голосовом, разборы песен, свои треки.', tags: ['Музыка'], online: 9, members: 97, ping: 48, mode: 'apply', isNew: true, adult: false },
+      { id: 'pd', name: 'Подземелья по средам', ini: 'ПС', banner: '#E3D8D4', icon: '#5A4440', desc: 'Мрачные кампании по D&D 5e. Ищем игроков в долгую кампанию.', tags: ['НРИ'], online: 7, members: 63, ping: 140, mode: 'apply', isNew: true, adult: true },
+      { id: 'vp', name: 'Вечерний просмотр', ini: 'ВП', banner: '#CFDDE0', icon: '#456068', desc: 'Смотрим аниме и кино вместе через стрим, обсуждаем после серии.', tags: ['Аниме', 'Общение'], online: 40, members: 320, ping: 57, mode: 'free', isNew: false, adult: false }
+    ];
+    const pingColor = (p) => (p < 60 ? '#466E37' : p < 120 ? '#A8752A' : '#A34E3E');
+    const modeLabel = { free: 'Вход свободный', apply: 'По заявке', member: 'Вы участник' };
+    const sel = st.touched ? st.sel : (this.props.start === 'detail' ? 'zc' : null);
+    const set = (p) => this.setState({ touched: true, sel, ...p });
+    const TAGS = ['Все', 'НРИ', 'Игры', 'Разработка', 'Общение', 'Музыка', 'Арт', 'Аниме'];
+    let list = SERVERS.filter((s) => (st.tag === 'Все' || s.tags.includes(st.tag)) && (!st.q || s.name.toLowerCase().includes(st.q.toLowerCase()) || s.desc.toLowerCase().includes(st.q.toLowerCase())));
+    if (st.sort === 0) list = [...list].sort((a, b) => b.online - a.online);
+    if (st.sort === 1) list = [...list].sort((a, b) => Number(b.isNew) - Number(a.isNew));
+    if (st.sort === 2) list = [...list].sort((a, b) => a.ping - b.ping);
+    const fmt = (n) => n.toLocaleString('ru-RU');
+    const view = (s) => ({ ...s, online: fmt(s.online), members: fmt(s.members), tagList: s.tags.map((t) => ({ t })), pingColor: pingColor(s.ping), mode: modeLabel[s.mode], modeColor: s.mode === 'member' ? '#436B35' : s.mode === 'free' ? accent : '#6B6258', key: s.id.toUpperCase() + '4A·7C' + s.ping + '·B2', open: () => set({ sel: s.id }) });
+    const cur = SERVERS.find((s) => s.id === sel);
+    const applied = !!(cur && st.applied[cur.id]);
+    return {
+      accent,
+      list: list.map(view), empty: list.length === 0,
+      tagChips: TAGS.map((t) => ({ t, border: st.tag === t ? accent : '#D6CEC2', bg: st.tag === t ? '#F1E6D4' : 'transparent', color: st.tag === t ? '#2A2622' : '#6B6258', pick: () => set({ tag: t }) })),
+      sorts: ['Популярные', 'Новые', 'Ближе по пингу'].map((label, i) => ({ label, bg: st.sort === i ? '#E3DCD1' : 'transparent', color: st.sort === i ? '#2A2622' : '#6E655B', pick: () => set({ sort: i }) })),
+      onSearch: (e) => set({ q: e.target.value }),
+      hasSel: !!cur, notDetail: !cur, sel: cur ? view(cur) : view(SERVERS[1]),
+      canJoin: !!cur && cur.mode === 'free', canApply: !!cur && cur.mode === 'apply' && !applied, applied, isMember: !!cur && cur.mode === 'member',
+      apply: () => set({ applied: { ...st.applied, [cur.id]: true } }),
+      close: () => set({ sel: null })
+    };
+  }
+}
+</script>
+</body>
+</html>

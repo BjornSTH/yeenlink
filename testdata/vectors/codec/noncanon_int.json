@@ -1,0 +1,9 @@
+{
+  "description": "Целое не в кратчайшей форме (1 как 0x18 0x01) — принимается",
+  "valid": true,
+  "canonical": false,
+  "frame": {
+    "id": 1,
+    "op": "test"
+  }
+}

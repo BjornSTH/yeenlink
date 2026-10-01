@@ -1,0 +1,6 @@
+{
+  "description": "Ключ словаря — число",
+  "valid": false,
+  "canonical": false,
+  "error": "key_type"
+}

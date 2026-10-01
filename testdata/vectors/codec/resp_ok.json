@@ -1,0 +1,13 @@
+{
+  "description": "Ответ сервера с тем же id и полем d",
+  "valid": true,
+  "canonical": true,
+  "frame": {
+    "d": {
+      "id": "01J9Z3K8Q4V5M2N7P6R1S0T2W4",
+      "ts": 1790000000123
+    },
+    "id": 1,
+    "op": "msg.send"
+  }
+}

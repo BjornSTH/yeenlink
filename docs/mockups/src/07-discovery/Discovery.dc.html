@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>YeenLink — каталог серверов, ПК</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="width: 1440px; height: 900px; position: relative; display: flex; background: #1C1B19; color: #ECE6DD; font-family: 'Manrope', system-ui, sans-serif; overflow: hidden">
+<nav aria-label="Серверы" style="width: 72px; flex-shrink: 0; background: #151412; display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 14px 0">
+<a href="Main.dc.html" aria-label="Главный экран" style="width: 44px; height: 44px; border-radius: 14px; background: {{accent}}; color: #1C1B19; display: flex; align-items: center; justify-content: center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4 8.5 10M19 4l-3.5 6"></path><path d="M6 13a6 6 0 0 0 12 0c0-2-1.5-3-3-3H9c-1.5 0-3 1-3 3z"></path><circle cx="10" cy="13.5" r=".8" fill="currentColor"></circle><circle cx="14" cy="13.5" r=".8" fill="currentColor"></circle></svg></a>
+<div style="width: 32px; height: 2px; background: #2D2A26"></div>
+<a href="Main.dc.html" aria-label="Ночной привал" style="width: 44px; height: 44px; border-radius: 22px; background: #3A3026; color: #ECE6DD; font-weight: 700; font-size: 14px; display: flex; align-items: center; justify-content: center; text-decoration: none">НП</a>
+<div style="flex-grow: 1"></div>
+<div style="position: relative"><div style="position: absolute; left: -14px; top: 8px; width: 4px; height: 28px; border-radius: 0 4px 4px 0; background: {{accent}}"></div>
+<button aria-label="Каталог серверов" style="width: 44px; height: 44px; border: none; border-radius: 14px; background: #2A251F; color: {{accent}}; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="m15.5 8.5-2 5-5 2 2-5z"></path></svg></button></div>
+<button aria-label="Добавить сервер" style="width: 44px; height: 44px; border: 1px dashed #4A443D; border-radius: 22px; background: transparent; color: #A39A8D; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"></path></svg></button>
+</nav>
+<main style="flex-grow: 1; min-width: 0; display: flex; flex-direction: column">
+<header style="padding: 28px 40px 18px; display: flex; flex-direction: column; gap: 18px">
+<div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 24px">
+<div style="display: flex; flex-direction: column; gap: 6px"><h1 style="margin: 0; font-size: 30px; font-weight: 800">Каталог серверов</h1><span style="font-size: 14px; color: #A39A8D">Открытые сообщества, которые сами решили сюда попасть. Приватных серверов здесь нет.</span></div>
+<button style="height: 36px; padding: 0 12px; border: 1px solid #3A3631; border-radius: 10px; background: transparent; color: #CFC7BC; display: flex; align-items: center; gap: 8px; font-size: 12px; font-family: inherit; cursor: pointer"><span style="font-family: 'JetBrains Mono', monospace">catalog.yeenlink.ru</span><span style="color: #8A8276">+ ещё 1 каталог</span></button>
+</div>
+<div style="display: flex; align-items: center; gap: 12px">
+<label style="width: 340px; height: 42px; padding: 0 14px; border-radius: 10px; background: #151412; border: 1px solid #2D2A26; display: flex; align-items: center; gap: 10px; color: #8A8276"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg><input aria-label="Поиск серверов" onInput="{{onSearch}}" placeholder="Название или тема" style="flex-grow: 1; background: transparent; border: none; outline: none; color: #ECE6DD; font-family: inherit; font-size: 14px"></label>
+<div style="display: flex; gap: 6px; flex-grow: 1; overflow: hidden"><sc-for list="{{tagChips}}" as="c" hint-placeholder-count="6"><button onClick="{{c.pick}}" style="height: 34px; padding: 0 14px; border: 1px solid {{c.border}}; border-radius: 17px; background: {{c.bg}}; color: {{c.color}}; font-size: 13px; font-weight: 600; font-family: inherit; cursor: pointer; white-space: nowrap">{{c.t}}</button></sc-for></div>
+<div style="display: flex; padding: 3px; gap: 3px; border-radius: 10px; background: #151412"><sc-for list="{{sorts}}" as="o" hint-placeholder-count="3"><button onClick="{{o.pick}}" style="height: 32px; padding: 0 12px; border: none; border-radius: 8px; background: {{o.bg}}; color: {{o.color}}; font-size: 12px; font-weight: 600; font-family: inherit; cursor: pointer; white-space: nowrap">{{o.label}}</button></sc-for></div>
+</div>
+</header>
+<div style="flex-grow: 1; min-height: 0; overflow-y: auto; padding: 4px 40px 32px">
+<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px">
+<sc-for list="{{list}}" as="s" hint-placeholder-count="6">
+<button onClick="{{s.open}}" style="padding: 0; border: 1px solid #2D2A26; border-radius: 16px; background: #24221F; color: #ECE6DD; overflow: hidden; display: flex; flex-direction: column; text-align: left; font-family: inherit; cursor: pointer">
+<div style="height: 72px; position: relative; background: {{s.banner}}"><div style="position: absolute; left: 12%; top: 18%; width: 44px; height: 30px; border-radius: 50%; background: rgba(0,0,0,0.16)"></div><div style="position: absolute; left: 52%; top: 46%; width: 30px; height: 22px; border-radius: 50%; background: rgba(0,0,0,0.16)"></div><div style="position: absolute; right: 10%; top: 14%; width: 54px; height: 38px; border-radius: 50%; background: rgba(0,0,0,0.16)"></div>
+<sc-if value="{{s.isNew}}" hint-placeholder-val="{{ false }}"><span style="position: absolute; right: 10px; top: 10px; padding: 2px 7px; border-radius: 4px; background: rgba(21,20,18,0.7); color: #ECE6DD; font-size: 10px; font-weight: 800; letter-spacing: 0.04em">НОВЫЙ</span></sc-if>
+<div style="position: absolute; left: 14px; bottom: -22px; width: 48px; height: 48px; border-radius: 14px; background: {{s.icon}}; border: 4px solid #24221F; box-sizing: border-box; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800">{{s.ini}}</div>
+</div>
+<div style="padding: 30px 14px 14px; display: flex; flex-direction: column; gap: 8px; flex-grow: 1">
+<span style="display: flex; align-items: center; gap: 8px"><span style="font-size: 15px; font-weight: 800; flex-grow: 1">{{s.name}}</span><sc-if value="{{s.adult}}" hint-placeholder-val="{{ false }}"><span style="padding: 1px 5px; border-radius: 4px; border: 1px solid #6A3A31; color: #D98C7A; font-size: 10px; font-weight: 800">18+</span></sc-if></span>
+<span style="font-size: 13px; line-height: 1.45; color: #CFC7BC; height: 38px; overflow: hidden">{{s.desc}}</span>
+<span style="display: flex; flex-wrap: wrap; gap: 4px"><sc-for list="{{s.tagList}}" as="t" hint-placeholder-count="2"><span style="height: 22px; padding: 0 8px; border-radius: 11px; background: #151412; color: #A39A8D; font-size: 11px; font-weight: 600; display: flex; align-items: center">{{t.t}}</span></sc-for></span>
+<span style="margin-top: auto; padding-top: 6px; display: flex; align-items: center; gap: 10px; font-size: 12px; color: #A39A8D"><span style="display: flex; align-items: center; gap: 5px"><span style="width: 7px; height: 7px; border-radius: 4px; background: #8BAA7A"></span>{{s.online}} в сети</span><span>{{s.members}} уч.</span><span style="margin-left: auto; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: {{s.pingColor}}">{{s.ping}} мс</span></span>
+<span style="font-size: 11px; font-weight: 700; color: {{s.modeColor}}">{{s.mode}}</span>
+</div>
+</button>
+</sc-for>
+</div>
+<sc-if value="{{empty}}" hint-placeholder-val="{{ false }}"><div style="padding: 60px 0; text-align: center; font-size: 14px; color: #8A8276">Ничего не нашлось. Попробуйте другой тег или слово.</div></sc-if>
+</div>
+</main>
+<sc-if value="{{hasSel}}" hint-placeholder-val="{{ false }}">
+<button aria-label="Закрыть" onClick="{{close}}" style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; border: none; background: rgba(15,14,13,0.6); cursor: default"></button>
+<aside aria-label="Сервер" style="position: absolute; top: 0; right: 0; bottom: 0; width: 460px; background: #201E1C; box-shadow: -16px 0 40px rgba(0,0,0,0.45); display: flex; flex-direction: column; overflow: hidden">
+<div style="height: 140px; flex-shrink: 0; position: relative; background: {{sel.banner}}"><div style="position: absolute; left: 12%; top: 18%; width: 44px; height: 30px; border-radius: 50%; background: rgba(0,0,0,0.16)"></div><div style="position: absolute; left: 52%; top: 46%; width: 30px; height: 22px; border-radius: 50%; background: rgba(0,0,0,0.16)"></div><div style="position: absolute; right: 10%; top: 14%; width: 54px; height: 38px; border-radius: 50%; background: rgba(0,0,0,0.16)"></div>
+<button aria-label="Закрыть" onClick="{{close}}" style="position: absolute; right: 12px; top: 12px; width: 32px; height: 32px; border: none; border-radius: 16px; background: rgba(21,20,18,0.6); color: #ECE6DD; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"></path></svg></button>
+<div style="position: absolute; left: 20px; bottom: -32px; width: 72px; height: 72px; border-radius: 20px; background: {{sel.icon}}; border: 5px solid #201E1C; box-sizing: border-box; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 800">{{sel.ini}}</div>
+</div>
+<div style="flex-grow: 1; overflow-y: auto; padding: 44px 20px 20px; display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; flex-direction: column; gap: 6px"><span style="font-size: 22px; font-weight: 800">{{sel.name}}</span><span style="font-size: 12px; color: #8A8276">Из каталога catalog.yeenlink.ru · {{sel.mode}}</span></div>
+<span style="font-size: 14px; line-height: 1.55; color: #CFC7BC">{{sel.desc}}</span>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px">
+<div style="padding: 10px 12px; border-radius: 10px; background: #24221F; display: flex; flex-direction: column; gap: 2px"><span style="font-size: 16px; font-weight: 800">{{sel.online}}</span><span style="font-size: 11px; color: #8A8276">в сети</span></div>
+<div style="padding: 10px 12px; border-radius: 10px; background: #24221F; display: flex; flex-direction: column; gap: 2px"><span style="font-size: 16px; font-weight: 800">{{sel.members}}</span><span style="font-size: 11px; color: #8A8276">участников</span></div>
+<div style="padding: 10px 12px; border-radius: 10px; background: #24221F; display: flex; flex-direction: column; gap: 2px"><span style="font-size: 16px; font-weight: 800; color: {{sel.pingColor}}; font-family: 'JetBrains Mono', monospace">{{sel.ping}} мс</span><span style="font-size: 11px; color: #8A8276">пинг от вас</span></div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px"><span style="font-size: 11px; font-weight: 700; letter-spacing: 0.08em; color: #8A8276">ПРАВИЛА</span><div style="border-radius: 12px; background: #24221F; padding: 6px 0">
+<div style="padding: 8px 14px; font-size: 13px; color: #CFC7BC">1. Уважайте друг друга, без травли и оскорблений.</div>
+<div style="padding: 8px 14px; font-size: 13px; color: #CFC7BC">2. Реклама — только в отдельном канале.</div>
+<div style="padding: 8px 14px; font-size: 13px; color: #CFC7BC">3. Спойлеры прячем под кат.</div></div></div>
+<div style="padding: 10px 12px; border-radius: 10px; background: #24221F; display: flex; align-items: center; gap: 10px; font-size: 12px; color: #A39A8D"><span style="color: #9DB58A; display: flex"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 5 6v6c0 4.5 3 7.5 7 9 4-1.5 7-4.5 7-9V6z"></path><path d="m9 12 2 2 4-4"></path></svg></span><span style="flex-grow: 1">Ключ сервера <span style="font-family: 'JetBrains Mono', monospace; color: #CFC7BC">{{sel.key}}</span> · 2 адреса</span></div>
+<sc-if value="{{sel.adult}}" hint-placeholder-val="{{ false }}"><div style="padding: 10px 12px; border-radius: 10px; background: #2B1D1A; border: 1px solid #6A3A31; font-size: 12px; color: #EBCFC8">Сервер отмечен как 18+. Заходя, вы подтверждаете, что вам есть 18 лет.</div></sc-if>
+<sc-if value="{{canApply}}" hint-placeholder-val="{{ false }}"><label style="display: flex; flex-direction: column; gap: 8px; font-size: 13px; font-weight: 600; color: #CFC7BC">Пара слов о себе для модераторов<textarea rows="3" placeholder="Например: играю по пятницам, интересует долгая кампания" style="padding: 10px 12px; border-radius: 10px; border: 1px solid #3A3631; background: #151412; color: #ECE6DD; font-family: inherit; font-size: 14px; outline: none; resize: none"></textarea></label></sc-if>
+<sc-if value="{{applied}}" hint-placeholder-val="{{ false }}"><div style="padding: 12px 14px; border-radius: 12px; background: #1F261C; border: 1px solid #3A4A33; display: flex; gap: 10px; color: #DCE8D3; font-size: 13px; line-height: 1.5"><span style="color: #9DB58A; display: flex"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"></path></svg></span>Заявка отправлена. Сервер появится в рельсе со значком «ждёт», когда модераторы ответят.</div></sc-if>
+</div>
+<div style="flex-shrink: 0; padding: 14px 20px 18px; border-top: 1px solid #2D2A26; display: flex; gap: 10px">
+<sc-if value="{{canJoin}}" hint-placeholder-val="{{ true }}"><a href="InviteJoin.dc.html" style="flex-grow: 1; height: 46px; border-radius: 12px; background: {{accent}}; color: #1C1B19; text-decoration: none; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 700">Присоединиться</a></sc-if>
+<sc-if value="{{canApply}}" hint-placeholder-val="{{ false }}"><button onClick="{{apply}}" style="flex-grow: 1; height: 46px; border: none; border-radius: 12px; background: {{accent}}; color: #1C1B19; font-weight: 700; font-family: inherit; cursor: pointer; font-size: 15px">Отправить заявку</button></sc-if>
+<sc-if value="{{isMember}}" hint-placeholder-val="{{ false }}"><a href="Main.dc.html" style="flex-grow: 1; height: 46px; border-radius: 12px; border: 1px solid #3A3631; color: #ECE6DD; text-decoration: none; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 600">Открыть сервер</a></sc-if>
+</div>
+</aside>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent": {"editor": "color", "default": "#C9A06B", "options": ["#C9A06B", "#D97A4A", "#5FA8A0"]}, "start": {"editor": "enum", "default": "none", "options": ["none", "detail"]}, "$preview": {"width": 1440, "height": 900}}'>
+class Component extends DCLogic {
+  state = { touched: false, tag: 'Все', sort: 0, q: '', sel: null, applied: {} };
+  renderVals() {
+    const accent = this.props.accent ?? '#C9A06B';
+    const st = this.state;
+    const SERVERS = [
+      { id: 'np', name: 'Ночной привал', ini: 'НП', banner: '#3A3026', icon: '#3A3026', desc: 'Пятничные партии в НРИ, карты и долгие разговоры в голосовом.', tags: ['НРИ'], online: 6, members: 9, ping: 38, mode: 'member', isNew: false, adult: false },
+      { id: 'px', name: 'Пиксельная мастерская', ini: 'ПМ', banner: '#2E3540', icon: '#4A5A6E', desc: 'Пиксель-арт и маленькие игры на Godot. Разборы работ по воскресеньям.', tags: ['Разработка', 'Арт'], online: 38, members: 214, ping: 24, mode: 'free', isNew: false, adult: false },
+      { id: 'kb', name: 'Кодовая база', ini: 'КБ', banner: '#2F3529', icon: '#55664A', desc: 'Go, Rust и всё self-hosted. Помогаем поднять свой сервер с нуля.', tags: ['Разработка'], online: 71, members: 540, ping: 33, mode: 'free', isNew: false, adult: false },
+      { id: 'zc', name: 'Заводской цех', ini: 'ЗЦ', banner: '#3A3328', icon: '#6E6048', desc: 'Factorio, Satisfactory и автоматизация. Общие сейвы и стримы стройки.', tags: ['Игры'], online: 12, members: 86, ping: 61, mode: 'apply', isNew: true, adult: false },
+      { id: 'ln', name: 'Лисья нора', ini: 'ЛН', banner: '#3A2E28', icon: '#7A5A48', desc: 'Тёплое общение, ночные разговоры и подкасты в прямом эфире.', tags: ['Общение'], online: 230, members: 1204, ping: 112, mode: 'free', isNew: false, adult: false },
+      { id: 'tb', name: 'Тихий бард', ini: 'ТБ', banner: '#352C33', icon: '#6A5466', desc: 'Музыканты-любители: джемы в голосовом, разборы песен, свои треки.', tags: ['Музыка'], online: 9, members: 97, ping: 48, mode: 'apply', isNew: true, adult: false },
+      { id: 'pd', name: 'Подземелья по средам', ini: 'ПС', banner: '#2B2523', icon: '#5A4440', desc: 'Мрачные кампании по D&D 5e. Ищем игроков в долгую кампанию.', tags: ['НРИ'], online: 7, members: 63, ping: 140, mode: 'apply', isNew: true, adult: true },
+      { id: 'vp', name: 'Вечерний просмотр', ini: 'ВП', banner: '#263236', icon: '#456068', desc: 'Смотрим аниме и кино вместе через стрим, обсуждаем после серии.', tags: ['Аниме', 'Общение'], online: 40, members: 320, ping: 57, mode: 'free', isNew: false, adult: false }
+    ];
+    const pingColor = (p) => (p < 60 ? '#8BAA7A' : p < 120 ? '#D9A55B' : '#D98C7A');
+    const modeLabel = { free: 'Вход свободный', apply: 'По заявке', member: 'Вы участник' };
+    const sel = st.touched ? st.sel : (this.props.start === 'detail' ? 'zc' : null);
+    const set = (p) => this.setState({ touched: true, sel, ...p });
+    const TAGS = ['Все', 'НРИ', 'Игры', 'Разработка', 'Общение', 'Музыка', 'Арт', 'Аниме'];
+    let list = SERVERS.filter((s) => (st.tag === 'Все' || s.tags.includes(st.tag)) && (!st.q || s.name.toLowerCase().includes(st.q.toLowerCase()) || s.desc.toLowerCase().includes(st.q.toLowerCase())));
+    if (st.sort === 0) list = [...list].sort((a, b) => b.online - a.online);
+    if (st.sort === 1) list = [...list].sort((a, b) => Number(b.isNew) - Number(a.isNew));
+    if (st.sort === 2) list = [...list].sort((a, b) => a.ping - b.ping);
+    const fmt = (n) => n.toLocaleString('ru-RU');
+    const view = (s) => ({ ...s, online: fmt(s.online), members: fmt(s.members), tagList: s.tags.map((t) => ({ t })), pingColor: pingColor(s.ping), mode: modeLabel[s.mode], modeColor: s.mode === 'member' ? '#9DB58A' : s.mode === 'free' ? accent : '#A39A8D', key: s.id.toUpperCase() + '4A·7C' + s.ping + '·B2', open: () => set({ sel: s.id }) });
+    const cur = SERVERS.find((s) => s.id === sel);
+    const applied = !!(cur && st.applied[cur.id]);
+    return {
+      accent,
+      list: list.map(view), empty: list.length === 0,
+      tagChips: TAGS.map((t) => ({ t, border: st.tag === t ? accent : '#3A3631', bg: st.tag === t ? '#2A251F' : 'transparent', color: st.tag === t ? '#ECE6DD' : '#A39A8D', pick: () => set({ tag: t }) })),
+      sorts: ['Популярные', 'Новые', 'Ближе по пингу'].map((label, i) => ({ label, bg: st.sort === i ? '#2D2A26' : 'transparent', color: st.sort === i ? '#ECE6DD' : '#8A8276', pick: () => set({ sort: i }) })),
+      onSearch: (e) => set({ q: e.target.value }),
+      hasSel: !!cur, sel: cur ? view(cur) : view(SERVERS[1]),
+      canJoin: !!cur && cur.mode === 'free', canApply: !!cur && cur.mode === 'apply' && !applied, applied, isMember: !!cur && cur.mode === 'member',
+      apply: () => set({ applied: { ...st.applied, [cur.id]: true } }),
+      close: () => set({ sel: null })
+    };
+  }
+}
+</script>
+</body>
+</html>

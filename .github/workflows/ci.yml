@@ -1,0 +1,93 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  server:
+    name: Сервер (Go)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: server
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-go@v6
+        with:
+          go-version-file: server/go.mod
+          cache-dependency-path: server/go.sum
+
+      - name: go vet
+        run: go vet ./...
+
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v8
+        with:
+          version: v2.14.0
+          working-directory: server
+
+      - name: Тесты (с векторами testdata/vectors)
+        run: go test -race ./...
+
+      - name: Векторы совпадают с генератором
+        run: |
+          go run ./internal/vectorgen -out ../testdata/vectors/codec
+          git add -N ../testdata/vectors
+          git diff --exit-code --stat -- ../testdata/vectors
+
+  client:
+    name: Клиент (Flutter)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: client
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Версия Flutter
+        id: flutter
+        run: echo "version=$(cat .flutter-version)" >> "$GITHUB_OUTPUT"
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: ${{ steps.flutter.outputs.version }}
+          cache: true
+
+      - run: flutter pub get
+
+      - name: Токены и локализация совпадают с генераторами
+        run: |
+          dart run tool/gen_tokens.dart
+          flutter gen-l10n
+          git add -N lib/ui/theme/tokens.g.dart lib/l10n/gen
+          git diff --exit-code --stat -- lib/ui/theme/tokens.g.dart lib/l10n/gen
+
+      - name: flutter analyze
+        run: flutter analyze --fatal-infos
+
+      - name: Форматирование
+        run: dart format --page-width 100 --output=none --set-exit-if-changed lib/ui lib/core lib/showcase lib/main.dart lib/main_showcase.dart test tool
+
+      - name: Правила CLAUDE.md (токены, обёртки, локализация)
+        run: dart run tool/check_rules.dart
+
+      - name: Тесты (кодек на векторах, виджеты, golden-снимки витрины)
+        run: flutter test
+
+      - name: Отличия golden-снимков
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: golden-failures
+          path: client/test/**/failures/
+          if-no-files-found: ignore

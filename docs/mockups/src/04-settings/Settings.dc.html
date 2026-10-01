@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>YeenLink — настройки, ПК</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="width: 1440px; height: 900px; position: relative; overflow: hidden; font-family: 'Manrope', system-ui, sans-serif">
+<dc-import name="Main" accent="{{accent}}" hint-size="1440px,900px"></dc-import>
+<div style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; background: rgba(15,14,13,0.68); display: flex; align-items: center; justify-content: center">
+<div role="dialog" aria-label="Настройки" style="width: 980px; height: 680px; border-radius: 18px; background: #1C1B19; border: 1px solid #2D2A26; box-shadow: 0 30px 80px rgba(0,0,0,0.5); display: flex; overflow: hidden; color: #ECE6DD">
+<nav aria-label="Разделы настроек" style="width: 260px; flex-shrink: 0; background: #201E1C; padding: 20px 12px; box-sizing: border-box; display: flex; flex-direction: column; gap: 2px">
+<div style="display: flex; align-items: center; gap: 10px; padding: 0 8px 16px">
+<div style="width: 40px; height: 40px; border-radius: 20px; background: #7D6A7A; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; color: #1C1B19">ПЯ</div>
+<div style="display: flex; flex-direction: column; gap: 1px; min-width: 0"><span style="font-size: 14px; font-weight: 700">Пятнистый</span><span style="font-size: 11px; color: #8A8276; font-family: 'JetBrains Mono', monospace">@nightcamp.ru</span></div>
+</div>
+<span style="padding: 4px 12px 8px; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; color: #8A8276">НАСТРОЙКИ</span>
+<button onClick="{{nav.profile.pick}}" style="height: 40px; padding: 0 12px; border: none; border-radius: 9px; background: {{nav.profile.bg}}; color: {{nav.profile.color}}; display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; text-align: left; font-family: inherit; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"></circle><path d="M4 21a8 8 0 0 1 16 0"></path></svg>Профиль</button>
+<button onClick="{{nav.appearance.pick}}" style="height: 40px; padding: 0 12px; border: none; border-radius: 9px; background: {{nav.appearance.bg}}; color: {{nav.appearance.color}}; display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; text-align: left; font-family: inherit; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 1 0 0 18c1.1 0 2-.9 2-2 0-.5-.2-1-.5-1.3-.3-.4-.5-.8-.5-1.3 0-1.1.9-2 2-2h2.4A4.6 4.6 0 0 0 21 9.8C21 6 17 3 12 3z"></path><circle cx="7.5" cy="11" r="1"></circle><circle cx="10.5" cy="7" r="1"></circle><circle cx="15.5" cy="7.5" r="1"></circle></svg>Внешний вид</button>
+<button onClick="{{nav.voice.pick}}" style="height: 40px; padding: 0 12px; border: none; border-radius: 9px; background: {{nav.voice.bg}}; color: {{nav.voice.color}}; display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; text-align: left; font-family: inherit; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M5 11a7 7 0 0 0 14 0M12 18v3"></path></svg>Голос и видео</button>
+<button onClick="{{nav.notifications.pick}}" style="height: 40px; padding: 0 12px; border: none; border-radius: 9px; background: {{nav.notifications.bg}}; color: {{nav.notifications.color}}; display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; text-align: left; font-family: inherit; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 16v-5a6 6 0 0 1 12 0v5l2 2H4z"></path><path d="M10 20a2 2 0 0 0 4 0"></path></svg>Уведомления</button>
+<button onClick="{{nav.streamer.pick}}" style="height: 40px; padding: 0 12px; border: none; border-radius: 9px; background: {{nav.streamer.bg}}; color: {{nav.streamer.color}}; display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; text-align: left; font-family: inherit; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3l18 18"></path><path d="M10.6 6.1A9.8 9.8 0 0 1 12 6c6 0 10 6 10 6a17 17 0 0 1-3.2 3.7M6.6 6.6A17 17 0 0 0 2 12s4 6 10 6a9.6 9.6 0 0 0 4.2-1"></path><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"></path></svg>Режим стримера</button>
+<button onClick="{{nav.security.pick}}" style="height: 40px; padding: 0 12px; border: none; border-radius: 9px; background: {{nav.security.bg}}; color: {{nav.security.color}}; display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; text-align: left; font-family: inherit; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 5 6v6c0 4.5 3 7.5 7 9 4-1.5 7-4.5 7-9V6z"></path><path d="m9 12 2 2 4-4"></path></svg>Безопасность и устройства</button>
+<button onClick="{{nav.keybinds.pick}}" style="height: 40px; padding: 0 12px; border: none; border-radius: 9px; background: {{nav.keybinds.bg}}; color: {{nav.keybinds.color}}; display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; text-align: left; font-family: inherit; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"></rect><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M7 14h10"></path></svg>Горячие клавиши</button>
+<button onClick="{{nav.language.pick}}" style="height: 40px; padding: 0 12px; border: none; border-radius: 9px; background: {{nav.language.bg}}; color: {{nav.language.color}}; display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; text-align: left; font-family: inherit; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"></path></svg>Язык</button>
+<div style="flex-grow: 1"></div>
+<button style="height: 40px; padding: 0 12px; border: none; border-radius: 9px; background: transparent; color: #D98C7A; display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; font-family: inherit; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 4h4v16h-4M10 8l-4 4 4 4M6 12h11"></path></svg>Выйти из профиля</button>
+<span style="padding: 8px 12px 0; font-size: 11px; color: #6E675E">YeenLink 0.1 · Linux</span>
+</nav>
+<div style="flex-grow: 1; min-width: 0; display: flex; flex-direction: column">
+<div style="height: 72px; flex-shrink: 0; padding: 0 20px 0 36px; display: flex; align-items: center; justify-content: space-between">
+<h2 style="margin: 0; font-size: 22px; font-weight: 800">{{title}}</h2>
+<a href="Main.dc.html" aria-label="Закрыть настройки" style="width: 36px; height: 36px; border-radius: 18px; border: 1px solid #3A3631; color: #A39A8D; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"></path></svg></a>
+</div>
+<div style="flex-grow: 1; overflow-y: auto; padding: 0 36px 36px">
+<dc-import name="SettingsSection" framed="{{ false }}" section="{{section}}" accent="{{accent}}" hint-size="100%,560px"></dc-import>
+</div>
+</div>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent": {"editor": "color", "default": "#C9A06B", "options": ["#C9A06B", "#D97A4A", "#5FA8A0"]}, "section": {"editor": "enum", "default": "profile", "options": ["profile", "appearance", "voice", "notifications", "streamer", "security", "keybinds", "language"]}, "$preview": {"width": 1440, "height": 900}}'>
+class Component extends DCLogic {
+  state = { section: null };
+  renderVals() {
+    const accent = this.props.accent ?? '#C9A06B';
+    const section = this.state.section ?? this.props.section ?? 'profile';
+    const titles = {profile: 'Профиль', appearance: 'Внешний вид', voice: 'Голос и видео', notifications: 'Уведомления', streamer: 'Режим стримера', security: 'Безопасность и устройства', keybinds: 'Горячие клавиши', language: 'Язык'};
+    const nav = {};
+    Object.keys(titles).forEach((k) => {
+      nav[k] = { bg: k === section ? '#2D2A26' : 'transparent', color: k === section ? '#ECE6DD' : '#A39A8D', pick: () => this.setState({ section: k }) };
+    });
+    return { accent, section, nav, title: titles[section] };
+  }
+}
+</script>
+</body>
+</html>

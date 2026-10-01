@@ -1,0 +1,22 @@
+{
+  "description": "Конверт Signed внутри d: p — байты CBOR, хранятся как есть (s — заглушка, не подпись)",
+  "valid": true,
+  "canonical": true,
+  "frame": {
+    "d": {
+      "profile": {
+        "k": {
+          "$bytes": "s6UOrGQ3Pwdnp2_dVaYUKJPyz5MSf6aAAEZxFN9aAZA"
+        },
+        "p": {
+          "$bytes": "o2F2AWNzZXEDZG5hbWVy0J_Rj9GC0L3QuNGB0YLRi9C5"
+        },
+        "s": {
+          "$bytes": "xoIHdbmceHI_baEH-_rtgjBouVGJZGdeebyzcstk1HE6QQhzBS7YJfC08FlbuQD5oPGUZQ9yHvaSZxx9w75EXA"
+        },
+        "t": "profile"
+      }
+    },
+    "op": "member.update"
+  }
+}

@@ -1,0 +1,7 @@
+<!-- @dsCard group="Действия" height=96 -->
+<!doctype html>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap"><style>body{margin:0;background:var(--bg-100);color:var(--ink);font-family:var(--font-sans)} .row{display:flex;gap:var(--space-3);align-items:center;flex-wrap:wrap;padding:var(--space-4)} button{font-family:inherit;cursor:pointer} .t{width:44px;height:26px;border:none;border-radius:var(--radius-full);position:relative;background:var(--border)} .t span{position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:var(--radius-full);background:var(--ink);transition:left .15s} .t[aria-pressed="true"]{background:var(--accent)} .t[aria-pressed="true"] span{left:21px} .lab{font-size:14px;font-weight:600}</style></head>
+<body>
+<div class="row"><button class="t" aria-pressed="true" aria-label="Шумоподавление"><span></span></button><span class="lab">Шумоподавление</span><button class="t" aria-pressed="false" aria-label="Режим рации"><span></span></button><span class="lab">Режим рации</span></div>
+<script>document.querySelectorAll(".t").forEach(b=>b.onclick=()=>b.setAttribute("aria-pressed",b.getAttribute("aria-pressed")!=="true"))</script>
+</body></html>

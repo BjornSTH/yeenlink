@@ -1,0 +1,6 @@
+{
+  "description": "Кадр — массив, а не словарь",
+  "valid": false,
+  "canonical": false,
+  "error": "frame_shape"
+}

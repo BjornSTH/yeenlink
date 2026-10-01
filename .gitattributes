@@ -1,0 +1,8 @@
+# Векторы и снимки — бинарные, без преобразования концов строк.
+*.cbor binary
+*.png binary
+*.ttf binary
+# Сгенерированные файлы сворачиваются в диффах.
+client/lib/ui/theme/tokens.g.dart linguist-generated=true
+client/lib/l10n/gen/** linguist-generated=true
+testdata/vectors/** linguist-generated=true

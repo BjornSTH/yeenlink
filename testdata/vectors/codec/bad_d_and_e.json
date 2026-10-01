@@ -1,0 +1,6 @@
+{
+  "description": "В кадре одновременно d и e",
+  "valid": false,
+  "canonical": false,
+  "error": "frame_shape"
+}

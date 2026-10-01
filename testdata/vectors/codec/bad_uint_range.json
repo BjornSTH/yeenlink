@@ -1,0 +1,6 @@
+{
+  "description": "Целое 2^64 − 1 не помещается в int64",
+  "valid": false,
+  "canonical": false,
+  "error": "int_range"
+}

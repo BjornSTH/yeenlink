@@ -1,0 +1,17 @@
+{
+  "description": "Числа с плавающей точкой всегда кодируются в 64 бита",
+  "valid": true,
+  "canonical": true,
+  "frame": {
+    "d": {
+      "values": [
+        1.0,
+        1.5,
+        -2.5,
+        0.1,
+        1e+300
+      ]
+    },
+    "op": "test.floats"
+  }
+}

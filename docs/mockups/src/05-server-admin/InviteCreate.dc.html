@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>YeenLink — создание приглашения, ПК</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="width: 1440px; height: 900px; position: relative; overflow: hidden; color: #ECE6DD; font-family: 'Manrope', system-ui, sans-serif">
+<dc-import name="Main" accent="{{accent}}" hint-size="1440px,900px"></dc-import>
+<div style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; background: rgba(15,14,13,0.7); display: flex; align-items: center; justify-content: center">
+<div role="dialog" aria-label="Создать приглашение" style="width: 580px; border-radius: 18px; background: #1C1B19; border: 1px solid #2D2A26; box-shadow: 0 30px 80px rgba(0,0,0,0.5); padding: 22px 24px 24px; box-sizing: border-box; display: flex; flex-direction: column; gap: 18px">
+<div style="display: flex; align-items: center; justify-content: space-between"><h2 style="margin: 0; font-size: 20px; font-weight: 800">Пригласить в «Ночной привал»</h2><a href="Main.dc.html" aria-label="Закрыть" style="width: 36px; height: 36px; border-radius: 18px; border: 1px solid #3A3631; color: #A39A8D; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"></path></svg></a></div>
+<div style="display: flex; gap: 8px">
+<div style="flex-grow: 1; min-width: 0; height: 46px; padding: 0 14px; border-radius: 10px; border: 1px solid #3A3631; background: #151412; display: flex; align-items: center; gap: 10px"><span style="color: #8A8276; display: flex"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"></path></svg></span><span style="font-family: 'JetBrains Mono', monospace; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{link}}</span></div>
+<button onClick="{{copy}}" style="height: 46px; padding: 0 16px; border: none; border-radius: 10px; background: {{copyBg}}; color: {{copyColor}}; display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 700; font-family: inherit; cursor: pointer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="12" height="12" rx="2"></rect><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"></path></svg>{{copyLabel}}</button>
+</div>
+<div style="display: flex; gap: 16px; align-items: center">
+<div style="width: 120px; height: 120px; flex-shrink: 0; border-radius: 12px; background: #E8E4DF; color: #4A443D; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600">[QR-код]</div>
+<span style="font-size: 13px; line-height: 1.55; color: #A39A8D">Отсканируйте в приложении на телефоне. В ссылке и QR-коде зашиты все адреса сервера и отпечаток его ключа — подменить сервер по дороге не получится. Подобрать ссылку тоже: в ней случайный секрет на 128 бит, поэтому она такая длинная.</span>
+</div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px">
+<div style="display: flex; flex-direction: column; gap: 6px"><span style="font-size: 12px; font-weight: 600; color: #A39A8D">Срок действия</span><div style="display: flex; padding: 3px; gap: 3px; border-radius: 10px; background: #151412"><sc-for list="{{seg.ttl}}" as="o" hint-placeholder-count="4"><button onClick="{{o.pick}}" style="flex-grow: 1; height: 32px; border: none; border-radius: 8px; background: {{o.bg}}; color: {{o.color}}; font-size: 12px; font-weight: 600; font-family: inherit; cursor: pointer">{{o.label}}</button></sc-for></div></div>
+<div style="display: flex; flex-direction: column; gap: 6px"><span style="font-size: 12px; font-weight: 600; color: #A39A8D">Использований</span><div style="display: flex; padding: 3px; gap: 3px; border-radius: 10px; background: #151412"><sc-for list="{{seg.uses}}" as="o" hint-placeholder-count="4"><button onClick="{{o.pick}}" style="flex-grow: 1; height: 32px; border: none; border-radius: 8px; background: {{o.bg}}; color: {{o.color}}; font-size: 12px; font-weight: 600; font-family: inherit; cursor: pointer">{{o.label}}</button></sc-for></div></div>
+</div>
+<div style="border-radius: 12px; background: #24221F; display: flex; flex-direction: column; overflow: hidden">
+<div style="padding: 12px 14px; display: flex; align-items: center; justify-content: space-between; gap: 14px; border-top: none">
+<div style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 14px; font-weight: 600">Одобрять новичков вручную</span><span style="font-size: 12px; line-height: 1.45; color: #8A8276">Пришедшие по ссылке ждут, пока вы их пустите</span></div>
+<button aria-label="Одобрять новичков вручную" aria-pressed="{{t.approve.on}}" onClick="{{t.approve.flip}}" style="width: 44px; height: 26px; flex-shrink: 0; border: none; border-radius: 13px; background: {{t.approve.track}}; position: relative; cursor: pointer"><span style="position: absolute; top: 3px; left: {{t.approve.x}}px; width: 20px; height: 20px; border-radius: 10px; background: #ECE6DD"></span></button>
+</div>
+<div style="padding: 12px 14px; display: flex; align-items: center; justify-content: space-between; gap: 14px; border-top: 1px solid #2D2A26">
+<div style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 14px; font-weight: 600">Добавить запасные адреса</span><span style="font-size: 12px; line-height: 1.45; color: #8A8276">Если основной адрес заблокируют, клиенты переключатся сами</span></div>
+<button aria-label="Добавить запасные адреса" aria-pressed="{{t.backup.on}}" onClick="{{t.backup.flip}}" style="width: 44px; height: 26px; flex-shrink: 0; border: none; border-radius: 13px; background: {{t.backup.track}}; position: relative; cursor: pointer"><span style="position: absolute; top: 3px; left: {{t.backup.x}}px; width: 20px; height: 20px; border-radius: 10px; background: #ECE6DD"></span></button>
+</div>
+<sc-if value="{{t.backup.on}}" hint-placeholder-val="{{ true }}"><div style="padding: 0 14px 14px; display: flex; flex-wrap: wrap; gap: 6px">
+<span style="height: 28px; padding: 0 10px; border-radius: 8px; background: #151412; display: flex; align-items: center; font-family: 'JetBrains Mono', monospace; font-size: 12px">nightcamp.ru:443</span>
+<span style="height: 28px; padding: 0 10px; border-radius: 8px; background: #151412; display: flex; align-items: center; font-family: 'JetBrains Mono', monospace; font-size: 12px">185.12.40.7:8443</span>
+<span style="height: 28px; padding: 0 10px; border-radius: 8px; background: #151412; display: flex; align-items: center; font-family: 'JetBrains Mono', monospace; font-size: 12px">mirror.nightcamp.ru:443</span>
+<button style="height: 28px; padding: 0 10px; border: 1px dashed #4A443D; border-radius: 8px; background: transparent; color: #A39A8D; font-size: 12px; font-weight: 600; font-family: inherit; cursor: pointer">+ адрес</button>
+</div></sc-if>
+</div>
+<div style="display: flex; align-items: center; justify-content: space-between">
+<span style="font-size: 12px; color: #8A8276">Активных приглашений: 3 · <span style="color: {{accent}}; font-weight: 600">управлять</span></span>
+<button onClick="{{regen}}" style="height: 42px; padding: 0 16px; border: 1px solid #3A3631; border-radius: 10px; background: transparent; color: #ECE6DD; display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; font-family: inherit; cursor: pointer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11a8 8 0 1 0-2.3 5.7M20 5v6h-6"></path></svg>Новая ссылка</button>
+</div>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent": {"editor": "color", "default": "#C9A06B", "options": ["#C9A06B", "#D97A4A", "#5FA8A0"]}, "$preview": {"width": 1440, "height": 900}}'>
+class Component extends DCLogic {
+  state = { i: 0, copied: false, ttl: 2, uses: 3, approve: false, backup: true };
+  renderVals() {
+    const accent = this.props.accent ?? '#C9A06B';
+    const st = this.state;
+    const codes = ['oWdzcnZyX2tleVggTJ4hr30Dtuh2aWFkZHJzg3BuaWdodGNhbXAucnU6NDQz…Qe7T', 'oWdzcnZyX2tleVggTJ4hr30Dtuh2aWFkZHJzg3BuaWdodGNhbXAucnU6NDQz…Wm2R', 'oWdzcnZyX2tleVggTJ4hr30Dtuh2aWFkZHJzg3BuaWdodGNhbXAucnU6NDQz…x9Lc'];
+    const seg = (key, labels) => labels.map((label, i) => ({ label, bg: st[key] === i ? '#2D2A26' : 'transparent', color: st[key] === i ? '#ECE6DD' : '#8A8276', pick: () => this.setState({ [key]: i }) }));
+    const tg = (k) => ({ on: st[k], track: st[k] ? accent : '#3A3631', x: st[k] ? 21 : 3, flip: () => this.setState({ [k]: !this.state[k] }) });
+    return {
+      accent,
+      link: 'yl://i/' + codes[st.i % codes.length],
+      copy: () => this.setState({ copied: true }),
+      copyLabel: st.copied ? 'Скопировано' : 'Скопировать', copyBg: st.copied ? '#2D2A26' : accent, copyColor: st.copied ? '#9DB58A' : '#1C1B19',
+      regen: () => this.setState({ i: st.i + 1, copied: false }),
+      seg: { ttl: seg('ttl', ['1 час', '1 день', '7 дней', 'Всегда']), uses: seg('uses', ['1', '10', '50', 'Без лимита']) },
+      t: { approve: tg('approve'), backup: tg('backup') }
+    };
+  }
+}
+</script>
+</body>
+</html>

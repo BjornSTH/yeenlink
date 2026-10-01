@@ -1,0 +1,6 @@
+{
+  "description": "Лишний байт после кадра",
+  "valid": false,
+  "canonical": false,
+  "error": "trailing"
+}

@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>YeenLink — панель профиля</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<aside aria-label="Профиль участника" style="width: 360px; height: 900px; box-sizing: border-box; color: #ECE6DD; font-family: 'Manrope', system-ui, sans-serif; flex-shrink: 0; background: #201E1C; border-left: 1px solid #2D2A26; display: flex; flex-direction: column; overflow: hidden">
+<div style="height: 120px; flex-shrink: 0; position: relative; background: #3A3026; overflow: visible">
+<div style="position: absolute; left: 30px; top: 18px; width: 46px; height: 34px; border-radius: 50%; background: #4E3E2D"></div>
+<div style="position: absolute; left: 130px; top: 54px; width: 30px; height: 24px; border-radius: 50%; background: #4E3E2D"></div>
+<div style="position: absolute; left: 210px; top: 14px; width: 54px; height: 40px; border-radius: 50%; background: #46382A"></div>
+<div style="position: absolute; left: 290px; top: 64px; width: 36px; height: 28px; border-radius: 50%; background: #4E3E2D"></div>
+<div style="position: absolute; left: 180px; top: 90px; width: 22px; height: 18px; border-radius: 50%; background: #46382A"></div>
+<button aria-label="Закрыть профиль" onClick="{{onClose}}" style="position: absolute; right: 12px; top: 12px; width: 32px; height: 32px; border: none; border-radius: 16px; background: rgba(21,20,18,0.6); color: #ECE6DD; display: flex; align-items: center; justify-content: center; cursor: pointer; font-family: inherit">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"></path></svg>
+</button>
+<div style="position: absolute; left: 20px; bottom: -42px; width: 84px; height: 84px; border-radius: 42px; background: {{avatarColor}}; border: 5px solid #201E1C; box-sizing: border-box; display: flex; align-items: center; justify-content: center; font-size: 26px; font-weight: 800; color: #1C1B19">{{initials}}</div>
+</div>
+
+<div style="padding: 52px 20px 20px; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; flex-direction: column; gap: 4px">
+<span style="font-size: 20px; font-weight: 800">{{nameText}}</span>
+<span style="font-size: 12px; color: #8A8276; font-family: 'JetBrains Mono', monospace">{{handle}}</span>
+<span style="font-size: 13px; color: #A39A8D; display: flex; align-items: center; gap: 6px; margin-top: 4px"><span style="width: 8px; height: 8px; border-radius: 4px; background: {{statusColor}}"></span>{{status}}</span>
+</div>
+<div style="font-size: 13px; line-height: 1.55; color: #CFC7BC">{{about}}</div>
+<div style="display: flex; gap: 8px">
+<button style="flex-grow: 1; height: 38px; border: none; border-radius: 10px; background: {{accent}}; color: #1C1B19; font-size: 13px; font-weight: 700; cursor: pointer; font-family: inherit">Написать</button>
+<button style="flex-grow: 1; height: 38px; border: 1px solid #3A3631; border-radius: 10px; background: transparent; color: #ECE6DD; font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit">Открыть страницу</button>
+</div>
+
+<div style="display: flex; gap: 18px; border-bottom: 1px solid #2D2A26; margin-top: 4px">
+<button style="padding: 8px 0; border: none; border-bottom: 2px solid {{accent}}; background: transparent; color: #ECE6DD; font-size: 13px; font-weight: 700; cursor: pointer; font-family: inherit">Стена</button>
+<button style="padding: 8px 0; border: none; border-bottom: 2px solid transparent; background: transparent; color: #8A8276; font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit">Инфо</button>
+<button style="padding: 8px 0; border: none; border-bottom: 2px solid transparent; background: transparent; color: #8A8276; font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit">Общие серверы · 3</button>
+</div>
+
+<article style="padding: 14px; border-radius: 12px; background: #24221F; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; align-items: center; gap: 8px">
+<div style="width: 26px; height: 26px; border-radius: 13px; background: {{avatarColor}}; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; color: #1C1B19">{{initials}}</div>
+<span style="font-size: 13px; font-weight: 700">{{nameText}}</span>
+<span style="font-size: 12px; color: #8A8276">· 2 дня назад</span>
+</div>
+<div style="font-size: 13px; line-height: 1.55">Дорисовал карту побережья для новой кампании. Финальная версия будет в пятницу.</div>
+<div style="height: 130px; border-radius: 8px; background: #2D2A26; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #8A8276">[изображение]</div>
+<div style="display: flex; gap: 6px">
+<button style="height: 26px; padding: 0 10px; border-radius: 13px; border: 1px solid {{accent}}; background: #2A251F; color: #ECE6DD; font-size: 12px; font-weight: 600; display: flex; align-items: center; gap: 5px; cursor: pointer; font-family: inherit">
+<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"></path></svg>12</button>
+<button style="height: 26px; padding: 0 10px; border-radius: 13px; border: 1px solid #3A3631; background: transparent; color: #A39A8D; font-size: 12px; font-weight: 600; cursor: pointer; font-family: inherit">к20 · 3</button>
+</div>
+</article>
+
+<article style="padding: 14px; border-radius: 12px; background: #24221F; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; align-items: center; gap: 8px">
+<div style="width: 26px; height: 26px; border-radius: 13px; background: {{avatarColor}}; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; color: #1C1B19">{{initials}}</div>
+<span style="font-size: 13px; font-weight: 700">{{nameText}}</span>
+<span style="font-size: 12px; color: #8A8276">· неделю назад</span>
+</div>
+<div style="font-size: 13px; line-height: 1.55">Ищу двух игроков на воскресные сессии. Новичкам тоже рады.</div>
+</article>
+</div>
+</aside>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#C9A06B","options":["#C9A06B","#D97A4A","#5FA8A0"]},"nameText":{"editor":null,"default":"Кривозуб"},"initials":{"editor":null,"default":"КР"},"avatarColor":{"editor":null,"default":"#8A6E4B"},"handle":{"editor":null,"default":"кривозуб@nightcamp.ru · 7F3A·C21E"},"status":{"editor":null,"default":"Готовит карту к пятнице"},"statusColor":{"editor":null,"default":"#8BAA7A"},"about":{"editor":null,"default":"Мастер по пятницам. Рисую карты, собираю миниатюры и пишу о своих кампаниях."},"onClose":{"editor":null},"$preview":{"width":360,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const p = this.props;
+    return {
+      accent: p.accent ?? '#C9A06B',
+      nameText: p.nameText ?? 'Кривозуб',
+      initials: p.initials ?? 'КР',
+      avatarColor: p.avatarColor ?? '#8A6E4B',
+      handle: p.handle ?? 'кривозуб@nightcamp.ru · 7F3A·C21E',
+      status: p.status ?? 'Готовит карту к пятнице',
+      statusColor: p.statusColor ?? '#8BAA7A',
+      about: p.about ?? 'Мастер по пятницам. Рисую карты, собираю миниатюры и пишу о своих кампаниях.',
+      onClose: p.onClose ?? (() => {})
+    };
+  }
+}
+</script>
+</body>
+</html>

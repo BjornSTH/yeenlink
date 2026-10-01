@@ -1,0 +1,17 @@
+{
+  "description": "Событие сервера без id с байтовыми полями",
+  "valid": true,
+  "canonical": true,
+  "frame": {
+    "d": {
+      "ts": 1790000000000,
+      "nonce": {
+        "$bytes": "KfsJfzlADYu5eo3Q3G3pzBs9MG_M2779EKdkT3auruA"
+      },
+      "server_pub": {
+        "$bytes": "Ehv22FcSmI81KzkrfVvI5OE3uWf6B5aQvQWc6MwyUp0"
+      }
+    },
+    "op": "challenge"
+  }
+}

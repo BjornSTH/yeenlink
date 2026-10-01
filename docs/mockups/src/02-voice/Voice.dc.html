@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>YeenLink — голосовой канал</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="width: 1440px; height: 900px; position: relative; display: flex; background: #1C1B19; color: #ECE6DD; font-family: 'Manrope', system-ui, sans-serif; overflow: hidden">
+<nav aria-label="Серверы" style="width: 72px; flex-shrink: 0; background: #151412; display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 14px 0">
+<a href="Main.dc.html" aria-label="Главный экран" style="width: 44px; height: 44px; border-radius: 14px; background: {{accent}}; color: #1C1B19; display: flex; align-items: center; justify-content: center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4 8.5 10M19 4l-3.5 6"></path><path d="M6 13a6 6 0 0 0 12 0c0-2-1.5-3-3-3H9c-1.5 0-3 1-3 3z"></path><circle cx="10" cy="13.5" r=".8" fill="currentColor"></circle><circle cx="14" cy="13.5" r=".8" fill="currentColor"></circle></svg></a>
+<div style="width: 32px; height: 2px; border-radius: 1px; background: #2D2A26"></div>
+<div style="position: relative"><div style="position: absolute; left: -14px; top: 8px; width: 4px; height: 28px; border-radius: 0 4px 4px 0; background: {{accent}}"></div><button aria-label="Ночной привал" style="width: 44px; height: 44px; border: none; border-radius: 14px; background: #3A3026; color: #ECE6DD; font-weight: 700; font-size: 14px; font-family: inherit; cursor: pointer">НП</button></div>
+<button aria-label="Мастерская" style="width: 44px; height: 44px; border: none; border-radius: 22px; background: #2D2A26; color: #A39A8D; font-weight: 700; font-size: 14px; font-family: inherit; cursor: pointer">МС</button>
+<button aria-label="Кооператив по средам" style="width: 44px; height: 44px; border: none; border-radius: 22px; background: #2D2A26; color: #A39A8D; font-weight: 700; font-size: 14px; font-family: inherit; cursor: pointer">КС</button>
+<div style="flex-grow: 1"></div>
+<button aria-label="Каталог серверов" style="width: 44px; height: 44px; border: 1px dashed #4A443D; border-radius: 22px; background: transparent; color: #A39A8D; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="m15.5 8.5-2 5-5 2 2-5z"></path></svg></button>
+<button aria-label="Добавить сервер" style="width: 44px; height: 44px; border: 1px dashed #4A443D; border-radius: 22px; background: transparent; color: #A39A8D; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"></path></svg></button>
+</nav>
+<aside aria-label="Каналы" style="width: 248px; flex-shrink: 0; background: #201E1C; display: flex; flex-direction: column">
+<div style="height: 56px; flex-shrink: 0; padding: 0 16px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #2D2A26"><span style="font-weight: 700; font-size: 15px">Ночной привал</span><span style="color: #A39A8D; display: flex"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg></span></div>
+<div style="flex-grow: 1; padding: 16px 8px; display: flex; flex-direction: column; gap: 2px">
+<div style="padding: 0 8px 6px; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; color: #8A8276">ТЕКСТОВЫЕ</div>
+<a href="Main.dc.html" style="text-decoration: none"><div style="height: 34px; padding: 0 8px; border-radius: 8px; background: transparent; display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 500; color: #A39A8D"><span style="color: #7A7268; display: flex"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 9h14M4 15h14M10 3 8 21M16 3l-2 18"></path></svg></span>общий</div></a>
+<div style="height: 34px; padding: 0 8px; border-radius: 8px; background: transparent; display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 700; color: #ECE6DD"><span style="color: #7A7268; display: flex"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 9h14M4 15h14M10 3 8 21M16 3l-2 18"></path></svg></span>анонсы</div>
+<div style="height: 34px; padding: 0 8px; border-radius: 8px; background: transparent; display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 500; color: #A39A8D"><span style="color: #7A7268; display: flex"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 9h14M4 15h14M10 3 8 21M16 3l-2 18"></path></svg></span>кубики</div>
+<div style="padding: 18px 8px 6px; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; color: #8A8276">ГОЛОСОВЫЕ</div>
+<div style="height: 34px; padding: 0 8px; border-radius: 8px; background: #2D2A26; display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 700"><span style="color: #8BAA7A; display: flex"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5z"></path><path d="M15.5 8.5a5 5 0 0 1 0 7"></path></svg></span><span style="flex-grow: 1">Таверна</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #8BAA7A">1:12:40</span></div>
+<div style="padding: 6px 8px 4px 32px; display: flex; flex-direction: column; gap: 7px">
+<div style="display: flex; align-items: center; gap: 8px; font-size: 13px; color: #A39A8D"><div style="width: 24px; height: 24px; flex-shrink: 0; border-radius: 12px; background: #8A6E4B; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 800; color: #1C1B19">КР</div><span style="flex-grow: 1">Кривозуб</span><span style="padding: 2px 6px; border-radius: 4px; background: {{accent}}; color: #1C1B19; font-size: 10px; font-weight: 800; letter-spacing: 0.04em">ЭФИР</span></div>
+<div style="display: flex; align-items: center; gap: 8px; font-size: 13px; color: #ECE6DD"><div style="width: 24px; height: 24px; flex-shrink: 0; border-radius: 12px; background: #6E7A63; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 800; color: #1C1B19; box-shadow: 0 0 0 2px #201E1C, 0 0 0 4px {{accent}}">СА</div><span style="flex-grow: 1">Сайра</span></div>
+<div style="display: flex; align-items: center; gap: 8px; font-size: 13px; color: #A39A8D"><div style="width: 24px; height: 24px; flex-shrink: 0; border-radius: 12px; background: #9A8566; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 800; color: #1C1B19">ХО</div><span style="flex-grow: 1">Хохотун</span><span style="color: #C26B5A; display: flex"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M5 11a7 7 0 0 0 14 0M12 18v3M4 4l16 16"></path></svg></span></div>
+<div style="display: flex; align-items: center; gap: 8px; font-size: 13px; color: #ECE6DD"><div style="width: 24px; height: 24px; flex-shrink: 0; border-radius: 12px; background: #7D6A7A; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 800; color: #1C1B19">ПЯ</div><span style="flex-grow: 1">Пятнистый</span><sc-if value="{{streaming}}" hint-placeholder-val="{{ false }}"><span style="padding: 2px 6px; border-radius: 4px; background: {{accent}}; color: #1C1B19; font-size: 10px; font-weight: 800; letter-spacing: 0.04em">ЭФИР</span></sc-if></div>
+</div>
+<div style="height: 34px; padding: 0 8px; border-radius: 8px; background: transparent; display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 500; color: #A39A8D"><span style="color: #7A7268; display: flex"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5z"></path><path d="M15.5 8.5a5 5 0 0 1 0 7"></path></svg></span>Тихий угол</div>
+</div>
+<div style="margin: 0 8px 8px; padding: 10px; border-radius: 12px; background: #191816; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; align-items: center; gap: 10px">
+<span style="width: 32px; height: 32px; border-radius: 8px; background: #232A20; color: #8BAA7A; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 18v-3M10 18v-6M15 18V9M20 18V6"></path></svg></span>
+<div style="flex-grow: 1; display: flex; flex-direction: column; min-width: 0"><span style="font-size: 13px; font-weight: 700; color: #9DB58A">Голос подключён</span><span style="font-size: 11px; color: #8A8276">Таверна · 38 мс</span></div>
+<button aria-label="Отключиться" style="width: 32px; height: 32px; border-radius: 8px; border: none; background: transparent; color: #A39A8D; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #D98C7A"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13c5-5 13-5 18 0l-2.5 2.5-3-1.5v-2.5a10 10 0 0 0-7 0V14l-3 1.5z"></path></svg></button>
+</div>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px">
+<button aria-label="Камера" style="height: 34px; border-radius: 8px; border: none; background: transparent; color: #A39A8D; display: flex; align-items: center; justify-content: center; cursor: pointer; background: #24221F"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="13" height="12" rx="2"></rect><path d="m16 10 5-3v10l-5-3M3 3l18 18"></path></svg></button>
+<button aria-label="Демонстрация экрана" onClick="{{openPicker}}" style="height: 34px; border-radius: 8px; border: none; background: transparent; color: #A39A8D; display: flex; align-items: center; justify-content: center; cursor: pointer; background: {{shareBg}}; color: {{shareColor}}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"></rect><path d="M8 20h8M12 16v4M12 13V7M9 10l3-3 3 3"></path></svg></button>
+<button aria-label="Шумоподавление" style="height: 34px; border-radius: 8px; border: none; background: transparent; color: #A39A8D; display: flex; align-items: center; justify-content: center; cursor: pointer; background: #24221F"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10v4M8 7v10M12 4v16M16 7v10M20 10v4"></path></svg></button>
+</div>
+</div>
+<div style="height: 60px; flex-shrink: 0; background: #191816; padding: 0 10px; display: flex; align-items: center; gap: 10px">
+<div style="position: relative; flex-shrink: 0"><div style="width: 34px; height: 34px; flex-shrink: 0; border-radius: 17px; background: #7D6A7A; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; color: #1C1B19">ПЯ</div><div style="position: absolute; right: -2px; bottom: -2px; width: 10px; height: 10px; border-radius: 5px; background: #8BAA7A; border: 3px solid #191816"></div></div>
+<div style="flex-grow: 1; min-width: 0; display: flex; flex-direction: column"><span style="font-size: 13px; font-weight: 700">Пятнистый</span><span style="font-size: 11px; color: #8BAA7A">В голосовом</span></div>
+<button aria-label="Микрофон" style="width: 32px; height: 32px; border-radius: 8px; border: none; background: transparent; color: #A39A8D; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M5 11a7 7 0 0 0 14 0M12 18v3"></path></svg></button>
+<button aria-label="Звук" style="width: 32px; height: 32px; border-radius: 8px; border: none; background: transparent; color: #A39A8D; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15v-3a8 8 0 0 1 16 0v3"></path><rect x="3" y="14" width="4" height="6" rx="1.5"></rect><rect x="17" y="14" width="4" height="6" rx="1.5"></rect></svg></button>
+<a href="Settings.dc.html" aria-label="Настройки" style="width: 32px; height: 32px; border-radius: 8px; color: #A39A8D; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></a>
+</div>
+</aside>
+<main style="flex-grow: 1; min-width: 0; display: flex; flex-direction: column; background: #161513">
+<header style="height: 56px; flex-shrink: 0; padding: 0 20px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #2D2A26">
+<span style="color: #8BAA7A; display: flex"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5z"></path><path d="M15.5 8.5a5 5 0 0 1 0 7"></path></svg></span><span style="font-weight: 700; font-size: 15px">Таверна</span>
+<span style="font-size: 13px; color: #8A8276">· 4 участника · стрим до 720p</span>
+<div style="flex-grow: 1"></div>
+<button aria-label="Чат канала" style="width: 36px; height: 36px; border-radius: 8px; border: none; background: transparent; color: #A39A8D; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"></path></svg></button>
+</header>
+<sc-if value="{{overload}}" hint-placeholder-val="{{ false }}"><div role="status" style="margin: 12px 20px 0; padding: 10px 14px; border-radius: 12px; background: #2A2119; border: 1px solid #5A4128; display: flex; align-items: center; gap: 10px; font-size: 13px; line-height: 1.45; color: #E8D9C2"><span style="color: #D9A55B; display: flex"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 20h20z"></path><path d="M12 10v4M12 17h.01"></path></svg></span><span style="flex-grow: 1">Сервер на пределе — канал загружен на 87%. Ваш стрим снижен до 1080p · 60 кадров, зрители на телефонах получают 720p. Почти никто этого не заметит.</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #C9B38F">87 / 100 Мбит/с</span></div></sc-if>
+<sc-if value="{{critical}}" hint-placeholder-val="{{ false }}"><div role="alert" style="margin: 12px 20px 0; padding: 10px 14px; border-radius: 12px; background: #2B1D1A; border: 1px solid #6A3A31; display: flex; align-items: center; gap: 10px; font-size: 13px; line-height: 1.45; color: #EBCFC8"><span style="color: #D98C7A; display: flex"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 20h20z"></path><path d="M12 10v4M12 17h.01"></path></svg></span><span style="flex-grow: 1">Канал сервера забит на 96%. Если нагрузка не спадёт, демонстрация остановится через <b>8 с</b> — иначе у всех начнёт рваться голос.</span><button style="height: 32px; padding: 0 12px; flex-shrink: 0; border: 1px solid #6A3A31; border-radius: 8px; background: transparent; color: #EBCFC8; font-size: 12px; font-weight: 700; font-family: inherit; cursor: pointer">Снизить до 720p сейчас</button></div></sc-if>
+<sc-if value="{{notWatching}}" hint-placeholder-val="{{ true }}">
+<div style="flex-grow: 1; padding: 16px 20px 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: repeat(2, minmax(0, 1fr)); gap: 12px">
+<div style="position: relative; border-radius: 14px; background: #151412; overflow: hidden; border: 1px solid #2D2A26">
+<div style="position: absolute; left: 22px; right: 22px; top: 22px; bottom: 56px; border-radius: 8px; background: #2B3330; overflow: hidden; filter: blur(4px) brightness(0.5)">
+<div style="position: absolute; left: 0; top: 0; right: 0; height: 22px; background: #232825"></div>
+<div style="position: absolute; left: 40px; top: 60px; width: 150px; height: 90px; border-radius: 50%; background: #3B4A3F"></div>
+<div style="position: absolute; left: 200px; top: 90px; width: 120px; height: 70px; border-radius: 50%; background: #4A5A47"></div>
+<div style="position: absolute; right: 30px; top: 40px; width: 90px; height: 120px; border-radius: 40%; background: #34413A"></div>
+</div>
+<div style="position: absolute; right: 12px; top: 12px; height: 26px; padding: 0 8px; border-radius: 6px; background: rgba(21,20,18,0.72); display: flex; align-items: center; gap: 6px; font-size: 12px; color: #CFC7BC"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12z"></path><circle cx="12" cy="12" r="2.5"></circle></svg>3</div>
+<div style="position: absolute; top: 0; right: 0; bottom: 40px; left: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px">
+<button onClick="{{watchStream}}" style="height: 44px; padding: 0 20px; border: none; border-radius: 12px; background: {{accent}}; color: #1C1B19; display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 700; font-family: inherit; cursor: pointer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 5v14l11-7z"></path></svg>Подключиться к эфиру</button>
+<span style="font-size: 12px; color: #CFC7BC">Показывает: Krita — карта побережья · 720p</span>
+</div>
+<div style="position: absolute; left: 12px; bottom: 12px; height: 30px; padding: 0 10px; border-radius: 8px; background: rgba(21,20,18,0.72); display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600"><span style="padding: 1px 5px; border-radius: 4px; background: {{accent}}; color: #1C1B19; font-size: 10px; font-weight: 800">ЭФИР</span>Кривозуб · экран</div>
+</div>
+<div style="position: relative; border-radius: 14px; background: #2F3529; border: 2px solid {{accent}}; display: flex; align-items: center; justify-content: center">
+<div style="width: 96px; height: 96px; flex-shrink: 0; border-radius: 48px; background: #6E7A63; display: flex; align-items: center; justify-content: center; font-size: 30px; font-weight: 800; color: #1C1B19; box-shadow: 0 0 0 4px #2F3529, 0 0 0 7px {{accent}}">СА</div>
+<div style="position: absolute; left: 12px; bottom: 12px; height: 30px; padding: 0 10px; border-radius: 8px; background: rgba(21,20,18,0.72); display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600">Сайра</div>
+</div>
+<div style="position: relative; border-radius: 14px; background: #3A3328; border: 1px solid #3A3631; display: flex; align-items: center; justify-content: center">
+<div style="width: 96px; height: 96px; flex-shrink: 0; border-radius: 48px; background: #9A8566; display: flex; align-items: center; justify-content: center; font-size: 30px; font-weight: 800; color: #1C1B19">ХО</div>
+<div style="position: absolute; left: 12px; bottom: 12px; height: 30px; padding: 0 10px; border-radius: 8px; background: rgba(21,20,18,0.72); display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600"><span style="color: #D98C7A; display: flex"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M5 11a7 7 0 0 0 14 0M12 18v3M4 4l16 16"></path></svg></span>Хохотун</div>
+</div>
+<div style="position: relative; border-radius: 14px; background: #352C33; border: 1px solid #3A3631; display: flex; align-items: center; justify-content: center">
+<div style="width: 96px; height: 96px; flex-shrink: 0; border-radius: 48px; background: #7D6A7A; display: flex; align-items: center; justify-content: center; font-size: 30px; font-weight: 800; color: #1C1B19">ПЯ</div>
+<div style="position: absolute; left: 12px; bottom: 12px; height: 30px; padding: 0 10px; border-radius: 8px; background: rgba(21,20,18,0.72); display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600">Пятнистый (вы)</div>
+<sc-if value="{{streaming}}" hint-placeholder-val="{{ false }}"><div style="position: absolute; right: 12px; top: 12px; height: 26px; padding: 0 8px; border-radius: 6px; background: {{accent}}; color: #1C1B19; display: flex; align-items: center; font-size: 11px; font-weight: 800">ВЫ В ЭФИРЕ · {{streamLabel}}</div></sc-if>
+</div>
+</div>
+</sc-if>
+<sc-if value="{{watching}}" hint-placeholder-val="{{ false }}">
+<div style="flex-grow: 1; min-height: 0; padding: 16px 20px 0; display: flex; flex-direction: column; gap: 12px">
+<div style="flex-grow: 1; position: relative; border-radius: 14px; background: #151412; border: 1px solid #2D2A26; overflow: hidden">
+<div style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; background: #2B3330">
+<div style="position: absolute; left: 0; right: 0; top: 0; height: 30px; background: #232825"></div>
+<div style="position: absolute; left: 0; top: 30px; bottom: 0; width: 48px; background: #262C29"></div>
+<div style="position: absolute; left: 14%; top: 22%; width: 26%; height: 30%; border-radius: 50%; background: #3B4A3F"></div>
+<div style="position: absolute; left: 36%; top: 40%; width: 22%; height: 24%; border-radius: 50%; background: #4A5A47"></div>
+<div style="position: absolute; left: 58%; top: 18%; width: 16%; height: 40%; border-radius: 40%; background: #34413A"></div>
+<div style="position: absolute; left: 22%; top: 62%; width: 30%; height: 20%; border-radius: 50%; background: #3E4D44"></div>
+<div style="position: absolute; left: 70%; top: 58%; width: 18%; height: 26%; border-radius: 45%; background: #445243"></div>
+</div>
+<div style="position: absolute; left: 14px; top: 14px; height: 32px; padding: 0 10px; border-radius: 8px; background: rgba(21,20,18,0.78); display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600"><span style="padding: 1px 6px; border-radius: 4px; background: {{accent}}; color: #1C1B19; font-size: 10px; font-weight: 800">ЭФИР</span>Кривозуб · Krita — карта побережья</div>
+<div style="position: absolute; right: 14px; top: 14px; display: flex; gap: 6px">
+<span style="height: 32px; padding: 0 10px; border-radius: 8px; background: rgba(21,20,18,0.78); display: flex; align-items: center; gap: 6px; font-size: 12px; color: #CFC7BC"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12z"></path><circle cx="12" cy="12" r="2.5"></circle></svg>4</span>
+<span style="height: 32px; padding: 0 10px; border-radius: 8px; background: rgba(21,20,18,0.78); display: flex; align-items: center; font-size: 12px; color: #CFC7BC; font-family: 'JetBrains Mono', monospace">720p · 30</span>
+<button aria-label="Во весь экран" style="width: 32px; height: 32px; border: none; border-radius: 8px; background: rgba(21,20,18,0.78); color: #ECE6DD; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"></path></svg></button>
+<button onClick="{{leaveStream}}" style="height: 32px; padding: 0 12px; border: none; border-radius: 8px; background: rgba(21,20,18,0.78); color: #ECE6DD; display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; font-family: inherit; cursor: pointer"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 4h4v16h-4M10 8l-4 4 4 4M6 12h11"></path></svg>Покинуть эфир</button>
+</div>
+</div>
+<div style="height: 120px; flex-shrink: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px">
+<div style="position: relative; border-radius: 12px; background: #3A3026; border: 1px solid #3A3631; display: flex; align-items: center; justify-content: center">
+<div style="width: 52px; height: 52px; border-radius: 26px; background: #8A6E4B; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 800; color: #1C1B19">КР</div>
+<div style="position: absolute; left: 8px; bottom: 8px; height: 24px; padding: 0 8px; border-radius: 6px; background: rgba(21,20,18,0.72); display: flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 600">Кривозуб</div>
+</div>
+<div style="position: relative; border-radius: 12px; background: #2F3529; border: 2px solid {{accent}}; display: flex; align-items: center; justify-content: center">
+<div style="width: 52px; height: 52px; border-radius: 26px; background: #6E7A63; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 800; color: #1C1B19; box-shadow: 0 0 0 3px #2F3529, 0 0 0 5px {{accent}}">СА</div>
+<div style="position: absolute; left: 8px; bottom: 8px; height: 24px; padding: 0 8px; border-radius: 6px; background: rgba(21,20,18,0.72); display: flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 600">Сайра</div>
+</div>
+<div style="position: relative; border-radius: 12px; background: #3A3328; border: 1px solid #3A3631; display: flex; align-items: center; justify-content: center">
+<div style="width: 52px; height: 52px; border-radius: 26px; background: #9A8566; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 800; color: #1C1B19">ХО</div>
+<div style="position: absolute; left: 8px; bottom: 8px; height: 24px; padding: 0 8px; border-radius: 6px; background: rgba(21,20,18,0.72); display: flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 600"><span style="color: #D98C7A; display: flex"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M5 11a7 7 0 0 0 14 0M12 18v3M4 4l16 16"></path></svg></span>Хохотун</div>
+</div>
+<div style="position: relative; border-radius: 12px; background: #352C33; border: 1px solid #3A3631; display: flex; align-items: center; justify-content: center">
+<div style="width: 52px; height: 52px; border-radius: 26px; background: #7D6A7A; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 800; color: #1C1B19">ПЯ</div>
+<div style="position: absolute; left: 8px; bottom: 8px; height: 24px; padding: 0 8px; border-radius: 6px; background: rgba(21,20,18,0.72); display: flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 600">Пятнистый (вы)</div>
+</div>
+</div>
+</div>
+</sc-if>
+<div style="height: 88px; flex-shrink: 0; padding: 0 20px; display: flex; align-items: center; justify-content: space-between">
+<button aria-label="Пригласить" style="width: 44px; height: 44px; border-radius: 12px; border: none; background: transparent; color: #A39A8D; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"></circle><path d="M2.5 20a6.5 6.5 0 0 1 13 0M19 8v6M16 11h6"></path></svg></button>
+<div style="display: flex; align-items: center; gap: 10px">
+<div style="display: flex; gap: 4px; padding: 4px; border-radius: 14px; background: #191816">
+<button aria-label="Микрофон" style="height: 46px; padding: 0 12px; border: none; border-radius: 12px; background: #24221F; color: #ECE6DD; display: flex; align-items: center; gap: 6px; font-family: inherit; cursor: pointer"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M5 11a7 7 0 0 0 14 0M12 18v3"></path></svg><span style="color: #8A8276; display: flex"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg></span></button>
+<button aria-label="Камера" style="height: 46px; padding: 0 12px; border: none; border-radius: 12px; background: #24221F; color: #ECE6DD; display: flex; align-items: center; gap: 6px; font-family: inherit; cursor: pointer; color: #A39A8D"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="13" height="12" rx="2"></rect><path d="m16 10 5-3v10l-5-3M3 3l18 18"></path></svg><span style="color: #8A8276; display: flex"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg></span></button>
+</div>
+<div style="display: flex; gap: 4px; padding: 4px; border-radius: 14px; background: #191816">
+<button aria-label="Демонстрация экрана" onClick="{{openPicker}}" style="height: 46px; padding: 0 12px; border: none; border-radius: 12px; background: #24221F; color: #ECE6DD; display: flex; align-items: center; gap: 6px; font-family: inherit; cursor: pointer; background: {{shareBg}}; color: {{shareColor}}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"></rect><path d="M8 20h8M12 16v4M12 13V7M9 10l3-3 3 3"></path></svg></button>
+<button aria-label="Шумоподавление" style="height: 46px; padding: 0 12px; border: none; border-radius: 12px; background: #24221F; color: #ECE6DD; display: flex; align-items: center; gap: 6px; font-family: inherit; cursor: pointer"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10v4M8 7v10M12 4v16M16 7v10M20 10v4"></path></svg></button>
+<button aria-label="Ещё" style="height: 46px; padding: 0 12px; border: none; border-radius: 12px; background: #24221F; color: #ECE6DD; display: flex; align-items: center; gap: 6px; font-family: inherit; cursor: pointer"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="12" r="1"></circle><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle></svg></button>
+</div>
+<button aria-label="Покинуть канал" style="height: 54px; width: 72px; border: none; border-radius: 14px; background: #A9493E; color: #F3ECE4; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13c5-5 13-5 18 0l-2.5 2.5-3-1.5v-2.5a10 10 0 0 0-7 0V14l-3 1.5z"></path></svg></button>
+</div>
+<div style="display: flex; gap: 4px">
+<button aria-label="Открыть в отдельном окне" style="width: 40px; height: 40px; border-radius: 10px; border: none; background: transparent; color: #A39A8D; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M20 4l-8 8M18 14v6H4V6h6"></path></svg></button>
+<button aria-label="Во весь экран" style="width: 40px; height: 40px; border-radius: 10px; border: none; background: transparent; color: #A39A8D; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"></path></svg></button>
+</div>
+</div>
+</main>
+<sc-if value="{{pickerOpen}}" hint-placeholder-val="{{ false }}">
+<button aria-label="Закрыть выбор демонстрации" onClick="{{closePicker}}" style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; border: none; background: rgba(15,14,13,0.68); cursor: default"></button>
+<div role="dialog" aria-label="Демонстрация экрана" style="position: absolute; left: 50%; top: 50%; width: 900px; height: 640px; margin-left: -450px; margin-top: -320px; border-radius: 18px; background: #1C1B19; border: 1px solid #2D2A26; box-shadow: 0 30px 80px rgba(0,0,0,0.5); display: flex; flex-direction: column; overflow: hidden">
+<div style="height: 68px; flex-shrink: 0; padding: 0 16px 0 28px; display: flex; align-items: center; justify-content: space-between">
+<h2 style="margin: 0; font-size: 20px; font-weight: 800">Что показать?</h2>
+<button aria-label="Закрыть" onClick="{{closePicker}}" style="width: 36px; height: 36px; border: 1px solid #3A3631; border-radius: 18px; background: transparent; color: #A39A8D; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"></path></svg></button>
+</div>
+<div style="padding: 0 28px">
+<div style="display: flex; padding: 3px; gap: 3px; border-radius: 12px; background: #151412">
+<button onClick="{{tabApps}}" style="flex-grow: 1; height: 40px; border: none; border-radius: 9px; background: {{appsTabBg}}; color: {{appsTabColor}}; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 14px; font-weight: 600; font-family: inherit; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M3 9h18"></path></svg>Экраны и окна</button>
+<button onClick="{{tabDevices}}" style="flex-grow: 1; height: 40px; border: none; border-radius: 9px; background: {{devTabBg}}; color: {{devTabColor}}; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 14px; font-weight: 600; font-family: inherit; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="13" height="12" rx="2"></rect><path d="m16 10 5-3v10l-5-3"></path></svg>Камеры и устройства</button>
+</div>
+</div>
+<div style="flex-grow: 1; overflow-y: auto; padding: 20px 28px; display: flex; flex-direction: column; gap: 18px">
+<sc-if value="{{showApps}}" hint-placeholder-val="{{ true }}">
+<span style="font-size: 11px; font-weight: 700; letter-spacing: 0.08em; color: #8A8276">ЭКРАНЫ</span>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px">
+<sc-for list="{{screens}}" as="s" hint-placeholder-count="2">
+<button onClick="{{s.pick}}" style="padding: 8px; border-radius: 12px; border: 2px solid {{s.border}}; background: #24221F; color: #ECE6DD; display: flex; flex-direction: column; gap: 8px; text-align: left; font-family: inherit; cursor: pointer">
+<div style="position: relative; height: 112px; border-radius: 8px; background: #151412; overflow: hidden"><div style="position: absolute; left: 10%; top: 14%; width: 46%; height: 60%; border-radius: 4px; background: #3A3631"></div><div style="position: absolute; left: 60%; top: 24%; width: 30%; height: 50%; border-radius: 4px; background: #2D3330"></div><div style="position: absolute; left: 0; right: 0; bottom: 0; height: 10%; background: #24221F"></div></div>
+<span style="display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600"><span style="color: #A39A8D; display: flex"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"></rect><path d="M8 20h8M12 16v4"></path></svg></span>{{s.title}}</span>
+<span style="font-size: 11px; color: #8A8276">{{s.sub}}</span>
+</button>
+</sc-for>
+</div>
+<span style="font-size: 11px; font-weight: 700; letter-spacing: 0.08em; color: #8A8276">ОКНА ПРИЛОЖЕНИЙ</span>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px">
+<sc-for list="{{windows}}" as="w" hint-placeholder-count="6">
+<button onClick="{{w.pick}}" style="padding: 8px; border-radius: 12px; border: 2px solid {{w.border}}; background: #24221F; color: #ECE6DD; display: flex; flex-direction: column; gap: 8px; text-align: left; font-family: inherit; cursor: pointer">
+<div style="position: relative; height: 96px; border-radius: 8px; background: #151412; overflow: hidden"><div style="position: absolute; left: 0; right: 0; top: 0; height: 16%; background: #3A3631"></div><div style="position: absolute; left: 8%; top: 28%; width: 50%; height: 8%; border-radius: 3px; background: #3A3631"></div><div style="position: absolute; left: 8%; top: 44%; width: 70%; height: 8%; border-radius: 3px; background: #33302B"></div><div style="position: absolute; left: 8%; top: 60%; width: 40%; height: 8%; border-radius: 3px; background: #33302B"></div></div>
+<span style="display: flex; align-items: center; gap: 8px; min-width: 0"><span style="width: 20px; height: 20px; flex-shrink: 0; border-radius: 5px; background: {{w.color}}; color: #1C1B19; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 800">{{w.ini}}</span><span style="font-size: 13px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{w.title}}</span></span>
+</button>
+</sc-for>
+</div>
+<div style="padding: 10px 12px; border-radius: 10px; background: #24221F; display: flex; align-items: center; gap: 10px; font-size: 12px; line-height: 1.5; color: #A39A8D"><span style="color: {{accent}}; display: flex"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 11v5M12 8h.01"></path></svg></span>На Linux с Wayland список окон покажет системный диалог — это требование безопасности самой системы.</div>
+</sc-if>
+<sc-if value="{{showDevices}}" hint-placeholder-val="{{ false }}">
+<span style="font-size: 11px; font-weight: 700; letter-spacing: 0.08em; color: #8A8276">ВИДЕОУСТРОЙСТВА</span>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px">
+<sc-for list="{{devices}}" as="d" hint-placeholder-count="2">
+<button onClick="{{d.pick}}" style="padding: 8px; border-radius: 12px; border: 2px solid {{d.border}}; background: #24221F; color: #ECE6DD; display: flex; flex-direction: column; gap: 8px; text-align: left; font-family: inherit; cursor: pointer">
+<div style="height: 200px; border-radius: 8px; background: {{d.prev}}; display: flex; align-items: center; justify-content: center; color: #7A7268"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="13" height="12" rx="2"></rect><path d="m16 10 5-3v10l-5-3"></path></svg></div>
+<span style="display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600"><span style="color: #A39A8D; display: flex"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="13" height="12" rx="2"></rect><path d="m16 10 5-3v10l-5-3"></path></svg></span>{{d.title}}</span>
+<span style="font-size: 11px; color: #8A8276">{{d.sub}}</span>
+</button>
+</sc-for>
+</div>
+</sc-if>
+</div>
+<div style="flex-shrink: 0; padding: 14px 28px 18px; border-top: 1px solid #2D2A26; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; gap: 18px; align-items: flex-end">
+<div style="display: flex; flex-direction: column; gap: 6px"><span style="font-size: 12px; font-weight: 600; color: #A39A8D">Режим</span><div style="display: flex; padding: 3px; gap: 3px; border-radius: 10px; background: #151412"><sc-for list="{{presets}}" as="o" hint-placeholder-count="2"><button onClick="{{o.pick}}" title="{{o.why}}" style="height: 32px; padding: 0 12px; border: none; border-radius: 8px; background: {{o.bg}}; color: {{o.color}}; font-size: 13px; font-weight: 600; font-family: inherit; cursor: pointer; white-space: nowrap">{{o.label}}</button></sc-for></div></div>
+<div style="display: flex; flex-direction: column; gap: 6px"><span style="font-size: 12px; font-weight: 600; color: #A39A8D">Разрешение</span><div style="display: flex; padding: 3px; gap: 3px; border-radius: 10px; background: #151412"><sc-for list="{{quality}}" as="o" hint-placeholder-count="3"><button onClick="{{o.pick}}" title="{{o.why}}" style="height: 32px; padding: 0 12px; border: none; border-radius: 8px; background: {{o.bg}}; color: {{o.color}}; font-size: 13px; font-weight: 600; font-family: inherit; cursor: pointer; white-space: nowrap">{{o.label}}</button></sc-for></div></div>
+<div style="display: flex; flex-direction: column; gap: 6px"><span style="font-size: 12px; font-weight: 600; color: #A39A8D">Кадры</span><div style="display: flex; padding: 3px; gap: 3px; border-radius: 10px; background: #151412"><sc-for list="{{fps}}" as="o" hint-placeholder-count="4"><button onClick="{{o.pick}}" title="{{o.why}}" style="height: 32px; padding: 0 12px; border: none; border-radius: 8px; background: {{o.bg}}; color: {{o.color}}; font-size: 13px; font-weight: 600; font-family: inherit; cursor: pointer; white-space: nowrap">{{o.label}}</button></sc-for></div></div>
+<label style="height: 38px; margin-left: auto; display: flex; align-items: center; gap: 8px; font-size: 13px; color: #CFC7BC; cursor: pointer"><input type="checkbox" checked="{{audio}}" onChange="{{toggleAudio}}" style="width: 16px; height: 16px; margin: 0; accent-color: {{accent}}">Звук приложения</label>
+</div>
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 20px">
+<div style="display: flex; flex-direction: column; gap: 4px; min-width: 0">
+<span style="display: flex; align-items: center; gap: 8px; font-size: 12px; color: #CFC7BC"><span style="width: 8px; height: 8px; border-radius: 4px; background: #8BAA7A"></span>Аппаратный кодировщик NVENC найден — доступно до 144 кадров</span>
+<span style="font-size: 12px; color: #8A8276"><span style="{{rateColor}}">{{rateLine}}</span> · {{presetHint}}</span>
+</div>
+<div style="display: flex; flex-direction: column; align-items: flex-end; gap: 6px; flex-shrink: 0">
+<span style="font-size: 11px; color: #8A8276">{{hint}}</span>
+<button onClick="{{startStream}}" style="height: 44px; padding: 0 22px; border: none; border-radius: 12px; background: {{startBg}}; color: {{startColor}}; font-size: 14px; font-weight: 700; font-family: inherit; cursor: pointer">{{startLabel}}</button>
+</div>
+</div>
+</div>
+</div>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent": {"editor": "color", "default": "#C9A06B", "options": ["#C9A06B", "#D97A4A", "#5FA8A0"]}, "start": {"editor": "enum", "default": "none", "options": ["none", "picker", "devices", "watching", "overload", "critical"]}, "$preview": {"width": 1440, "height": 900}}'>
+class Component extends DCLogic {
+  state = { touched: false, open: false, tab: 'apps', sel: null, q: 1, f: 1, pr: 0, audio: true, streaming: false };
+  renderVals() {
+    const accent = this.props.accent ?? '#C9A06B';
+    const start = this.props.start ?? 'none';
+    const st = this.state;
+    const open = st.touched ? st.open : (start === 'picker' || start === 'devices');
+    const tab = st.touched ? st.tab : (start === 'devices' ? 'devices' : 'apps');
+    const sel = st.touched ? st.sel : (start === 'devices' ? 'cam1' : (start === 'picker' ? 'w2' : null));
+    const watching = st.touched ? !!st.watching : start === 'watching';
+    const ov = start === 'overload' || start === 'critical';
+    const set = (p) => this.setState({ touched: true, open, tab, sel, watching, ...p });
+    const card = (id) => ({ border: sel === id ? accent : 'transparent', pick: () => set({ sel: id }) });
+    const screens = [
+      { id: 's1', title: 'Весь экран 1', sub: '2560 × 1440 · основной' },
+      { id: 's2', title: 'Весь экран 2', sub: '1920 × 1080' }
+    ].map((s) => ({ ...s, ...card(s.id) }));
+    const windows = [
+      { id: 'w1', title: 'Firefox — вики кампании', ini: 'FF', color: '#D9A55B' },
+      { id: 'w2', title: 'Krita — карта_побережья.kra', ini: 'KR', color: '#A9A0C9' },
+      { id: 'w3', title: 'Obsidian — заметки мастера', ini: 'OB', color: '#9DB58A' },
+      { id: 'w4', title: 'Steam', ini: 'ST', color: '#7FA9B5' },
+      { id: 'w5', title: 'Терминал — ~/yeenlink', ini: '>_', color: '#CFC7BC' },
+      { id: 'w6', title: 'Factorio', ini: 'FA', color: '#C9907A' }
+    ].map((w) => ({ ...w, ...card(w.id) }));
+    const devices = [
+      { id: 'cam1', title: 'USB-камера HD', sub: '1280 × 720 · 30 кадров', prev: '#3A3328' },
+      { id: 'cam2', title: 'Карта захвата', sub: 'Не подключена', prev: '#24221F' }
+    ].map((d) => ({ ...d, ...card(d.id) }));
+    const segs = (labels, cur, key, locked) => labels.map((label, i) => ({
+      label: locked && locked.includes(i) ? label + ' · нет' : label,
+      bg: cur === i ? '#2D2A26' : 'transparent',
+      color: locked && locked.includes(i) ? '#5E5850' : (cur === i ? '#ECE6DD' : '#8A8276'),
+      pick: () => { if (!(locked && locked.includes(i))) set({ [key]: i }); }
+    }));
+    const RES = ['720p', '1080p', '1440p'], FPS = [30, 60, 90, 144], CAP = 12, HW = true;
+    const est = (r, f, p) => 4 * [0.55, 1, 1.7][r] * [1, 1.5, 2, 2.8][f] * (p === 1 ? 0.6 : 1);
+    const all = [...screens, ...windows, ...devices];
+    const chosen = all.find((x) => x.id === sel);
+    return {
+      accent, pickerOpen: open, streaming: st.streaming || ov,
+      overload: start === 'overload', critical: start === 'critical',
+      watching, notWatching: !watching,
+      watchStream: () => set({ watching: true }), leaveStream: () => set({ watching: false }),
+      streamLabel: st.streamTitle || (ov ? '1080p · 60' : ''),
+      shareBg: open || st.streaming || ov ? accent : '#24221F', shareColor: open || st.streaming || ov ? '#1C1B19' : '#ECE6DD',
+      openPicker: () => set({ open: true }), closePicker: () => set({ open: false }),
+      showApps: tab === 'apps', showDevices: tab === 'devices',
+      appsTabBg: tab === 'apps' ? '#2D2A26' : 'transparent', appsTabColor: tab === 'apps' ? '#ECE6DD' : '#8A8276',
+      devTabBg: tab === 'devices' ? '#2D2A26' : 'transparent', devTabColor: tab === 'devices' ? '#ECE6DD' : '#8A8276',
+      tabApps: () => set({ tab: 'apps', sel: null }), tabDevices: () => set({ tab: 'devices', sel: null }),
+      screens, windows, devices,
+      presets: ['Игра', 'Текст и код'].map((label, i) => ({ label, why: i === 0 ? 'Плавность важнее чёткости' : 'Чёткость важнее плавности', bg: st.pr === i ? '#2D2A26' : 'transparent', color: st.pr === i ? '#ECE6DD' : '#8A8276', pick: () => set(i === 0 ? { pr: 0, q: 1, f: 1 } : { pr: 1, q: 2, f: 0 }) })),
+      quality: RES.map((label, i) => { const ok = est(i, st.f, st.pr) <= CAP; return { label: ok ? label : label + ' · нет', why: ok ? '' : 'Не влезает в лимит сервера ' + CAP + ' Мбит/с при ' + FPS[st.f] + ' кадрах', bg: st.q === i ? '#2D2A26' : 'transparent', color: !ok ? '#5E5850' : (st.q === i ? '#ECE6DD' : '#8A8276'), pick: () => { if (ok) set({ q: i }); } }; }),
+      fps: FPS.map((n, j) => { const ok = est(st.q, j, st.pr) <= CAP && (n < 90 || HW); return { label: ok ? String(n) : n + ' · нет', why: ok ? '' : (n >= 90 && !HW ? 'Нужен аппаратный кодировщик' : 'Не влезает в лимит сервера ' + CAP + ' Мбит/с'), bg: st.f === j ? '#2D2A26' : 'transparent', color: !ok ? '#5E5850' : (st.f === j ? '#ECE6DD' : '#8A8276'), pick: () => { if (ok) set({ f: j }); } }; }),
+      rateLine: '≈ ' + est(st.q, st.f, st.pr).toFixed(1).replace('.', ',') + ' Мбит/с из ' + CAP + ' разрешённых · сервер потянет ~' + Math.floor(80 / est(st.q, st.f, st.pr)) + ' зрителей',
+      rateColor: 'color: #CFC7BC',
+      presetHint: st.pr === 0 ? 'при перегрузке сначала снизится разрешение' : 'при перегрузке сначала снизятся кадры',
+      audio: st.audio, toggleAudio: () => set({ audio: !st.audio }),
+      hint: chosen ? 'Покажете: ' + chosen.title : 'Сервер: до 1440p · 144 кадров, не больше 12 Мбит/с на стрим',
+      startBg: chosen ? accent : '#2D2A26', startColor: chosen ? '#1C1B19' : '#7A7268',
+      startLabel: chosen ? 'Начать стрим' : 'Выберите, что показать',
+      startStream: () => { if (chosen) set({ open: false, streaming: true, streamTitle: RES[st.q] + ' · ' + FPS[st.f] }); }
+    };
+  }
+}
+</script>
+</body>
+</html>

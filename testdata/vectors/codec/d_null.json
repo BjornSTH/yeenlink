@@ -1,0 +1,9 @@
+{
+  "description": "Поле d со значением null отличается от отсутствующего d",
+  "valid": true,
+  "canonical": true,
+  "frame": {
+    "d": null,
+    "op": "test.null"
+  }
+}

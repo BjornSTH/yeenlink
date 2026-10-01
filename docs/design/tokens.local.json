@@ -1,0 +1,111 @@
+{
+ "_note": "ВРЕМЕННЫЙ файл. Значения из превью компонентов (docs/design/components/*/preview.html), которых нет в tokens.json. Их перенесут в дизайн-систему; после следующей выгрузки tokens.json этот файл удалить, а из client/tool/gen_tokens.dart убрать его чтение (константа localTokensPath). См. CLAUDE.md.",
+ "color": {
+  "tokens": [
+   {
+    "name": "avatar-1",
+    "value": { "dark": "#8A6E4B", "light": "#8A6E4B" },
+    "usage": "Фон аватара без картинки (инициалы on-accent). Avatar/preview.html."
+   },
+   {
+    "name": "avatar-2",
+    "value": { "dark": "#6E7A63", "light": "#6E7A63" },
+    "usage": "Фон аватара без картинки."
+   },
+   {
+    "name": "avatar-3",
+    "value": { "dark": "#9A8566", "light": "#9A8566" },
+    "usage": "Фон аватара без картинки."
+   },
+   {
+    "name": "avatar-4",
+    "value": { "dark": "#7D6A7A", "light": "#7D6A7A" },
+    "usage": "Фон аватара без картинки."
+   }
+  ]
+ },
+ "type": {
+  "styles": [
+   {
+    "name": "button",
+    "family": "sans",
+    "fontSize": "15px",
+    "lineHeight": 1.2,
+    "fontWeight": 700,
+    "usage": "Текст кнопки высоты control-lg (вторичная и тихая — 600). Button/preview.html."
+   },
+   {
+    "name": "badge",
+    "family": "sans",
+    "fontSize": "10px",
+    "lineHeight": 1.2,
+    "fontWeight": 800,
+    "letterSpacing": "0.04em",
+    "usage": "Бейджи ЭФИР и БОТ. Badge/preview.html."
+   },
+   {
+    "name": "banner",
+    "family": "sans",
+    "fontSize": "13px",
+    "lineHeight": 1.45,
+    "fontWeight": 400,
+    "usage": "Текст полосы состояния. StatusBanner/preview.html."
+   },
+   {
+    "name": "mono-sm",
+    "family": "mono",
+    "fontSize": "12px",
+    "lineHeight": 1.45,
+    "fontWeight": 400,
+    "usage": "Адрес в полосе состояния. StatusBanner/preview.html."
+   },
+   {
+    "name": "mono-xs",
+    "family": "mono",
+    "fontSize": "11px",
+    "lineHeight": 1.3,
+    "fontWeight": 400,
+    "usage": "Таймер голосового канала в строке. ChannelRow/preview.html."
+   }
+  ]
+ },
+ "metric": {
+  "tokens": [
+   { "name": "icon-stroke", "value": 1.8, "usage": "Обводка иконок 24 px (design/README.md)." },
+   { "name": "icon-stroke-sm", "value": 2, "usage": "Обводка мелких иконок 16 px." },
+   { "name": "icon-sm", "value": "16px", "usage": "Иконка в строке канала." },
+   { "name": "focus-ring", "value": "2px", "usage": "Обводка фокуса с клавиатуры (в макетах нет; доступность)." },
+   { "name": "disabled-opacity", "value": 0.6, "usage": "Заблокированная строка с переключателем (Toggle/README.md)." },
+
+   { "name": "toggle-width", "value": "44px", "usage": "Переключатель." },
+   { "name": "toggle-height", "value": "26px", "usage": "Переключатель." },
+   { "name": "toggle-thumb", "value": "20px", "usage": "Бегунок переключателя." },
+   { "name": "toggle-inset", "value": "3px", "usage": "Отступ бегунка от края дорожки." },
+
+   { "name": "segment-height", "value": "34px", "usage": "Высота варианта сегментированного выбора." },
+   { "name": "segment-inset", "value": "3px", "usage": "Отступ и зазор внутри подложки сегментов." },
+
+   { "name": "chip-height", "value": "28px", "usage": "Чип роли и реакции." },
+   { "name": "chip-pad-x", "value": "10px", "usage": "Горизонтальный отступ чипа." },
+   { "name": "chip-gap", "value": "6px", "usage": "Зазор между точкой и текстом чипа." },
+   { "name": "chip-dot", "value": "8px", "usage": "Точка цвета роли." },
+
+   { "name": "badge-pad-x", "value": "6px", "usage": "Бейдж и счётчик." },
+   { "name": "badge-pad-y", "value": "2px", "usage": "Бейдж." },
+   { "name": "counter-size", "value": "20px", "usage": "Высота и минимальная ширина счётчика." },
+
+   { "name": "banner-pad-y", "value": "10px", "usage": "Полоса состояния (по горизонтали — space-4)." },
+   { "name": "banner-gap", "value": "10px", "usage": "Зазор в полосе состояния." },
+   { "name": "banner-action-height", "value": "30px", "usage": "Кнопка «Повторить сейчас» в полосе." },
+
+   { "name": "channel-column-width", "value": "248px", "usage": "Ширина колонки каналов в превью ChannelRow." },
+   { "name": "channel-row-height", "value": "34px", "usage": "Строка канала на ПК." },
+   { "name": "channel-row-height-touch", "value": "40px", "usage": "Строка канала на телефоне." },
+
+   { "name": "avatar-dot", "value": "10px", "usage": "Точка статуса на аватаре." },
+   { "name": "avatar-dot-border", "value": "3px", "usage": "Обводка точки статуса цветом фона." },
+   { "name": "avatar-dot-offset", "value": "-2px", "usage": "Сдвиг точки статуса за край аватара." },
+   { "name": "avatar-ring", "value": "3px", "usage": "Зазор и толщина кольца говорящего." }
+  ]
+ }
+}

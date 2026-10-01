@@ -1,0 +1,40 @@
+; Кадр протокола клиент–сервер (docs/spec.md, «Протокол клиент–сервер»).
+; Один WebSocket на сервер, кадры CBOR по профилю из spec/README.md.
+
+frame = request / response / error-response / event
+
+; Запрос клиента: несёт id.
+request = {
+  op: op-name,
+  id: request-id,
+  ? d: any,
+}
+
+; Ответ сервера: тот же id и d (успех) ...
+response = {
+  op: op-name,
+  id: request-id,
+  ? d: any,
+}
+
+; ... или e (ошибка). d и e в одном кадре не бывают. Если id запроса
+; неизвестен (кадр не разобран), сервер шлёт ошибку без id.
+error-response = {
+  op: op-name,
+  ? id: request-id,
+  e: frame-error,
+}
+
+; Событие сервера: без id.
+event = {
+  op: op-name,
+  ? d: any,
+}
+
+frame-error = {
+  code: tstr .size (1..64),   ; машинный код: "bad_sig", "rate_limited", …
+  msg: tstr,                  ; текст для человека, может быть пустым
+}
+
+op-name = tstr .size (1..64)  ; "hello", "msg.send", "voice.token", …
+request-id = uint .le 9223372036854775807   ; в пределах int64 (Dart)

@@ -1,0 +1,11 @@
+# Сборка сервера
+/server/bin/
+/server/coverage.out
+
+# Редакторы и ОС
+.DS_Store
+.idea/
+*.swp
+
+# Локальные настройки Claude Code
+.claude/settings.local.json

@@ -1,0 +1,13 @@
+{
+  "description": "Ответ сервера с ошибкой e вместо d",
+  "valid": true,
+  "canonical": true,
+  "frame": {
+    "e": {
+      "msg": "Подпись не сошлась",
+      "code": "bad_sig"
+    },
+    "id": 2,
+    "op": "auth"
+  }
+}

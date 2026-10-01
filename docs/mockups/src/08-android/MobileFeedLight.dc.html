@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Светлая тема — YeenLink — лента, Android</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; position: relative; display: flex; flex-direction: column; background: #F4F0EA; color: #2A2622; font-family: 'Manrope', system-ui, sans-serif; overflow: hidden">
+<header style="height: 60px; flex-shrink: 0; padding: 0 16px 0 20px; display: flex; align-items: center; justify-content: space-between"><h1 style="margin: 0; font-size: 24px; font-weight: 800">Лента</h1><button aria-label="Новый пост" onClick="{{openCompose}}" style="width: 40px; height: 40px; border: none; border-radius: 20px; background: {{accent}}; color: #1C1B19; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9l-4-4L4 16z"></path></svg></button></header>
+<div style="display: flex; gap: 6px; padding: 0 16px 10px; overflow-x: auto"><sc-for list="{{tagChips}}" as="c" hint-placeholder-count="6"><button onClick="{{c.pick}}" style="height: 34px; padding: 0 14px; border: 1px solid {{c.border}}; border-radius: 17px; background: {{c.bg}}; color: {{c.color}}; font-size: 13px; font-weight: 600; font-family: inherit; cursor: pointer; white-space: nowrap">{{c.t}}</button></sc-for></div>
+<div style="flex-grow: 1; min-height: 0; overflow-y: auto; padding: 4px 16px 16px; display: flex; flex-direction: column; gap: 12px">
+<button onClick="{{openCompose}}" style="padding: 12px; border: none; border-radius: 14px; background: #FBF8F3; color: #6E655B; display: flex; align-items: center; gap: 12px; text-align: left; font-size: 15px; font-family: inherit; cursor: pointer"><div style="width: 36px; height: 36px; flex-shrink: 0; border-radius: 18px; background: #7D6A7A; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; color: #1C1B19">ПЯ</div>Что нового?<span style="margin-left: auto; color: #6B6258; display: flex"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"></rect><circle cx="9" cy="10" r="2"></circle><path d="m21 17-5-5-8 8"></path></svg></span></button>
+<sc-for list="{{posts}}" as="p" hint-placeholder-count="3">
+<article style="padding: 14px; border-radius: 14px; background: #FBF8F3; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; align-items: center; gap: 10px"><div style="width: 36px; height: 36px; flex-shrink: 0; border-radius: 18px; background: {{p.col}}; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; color: #1C1B19">{{p.ini}}</div><span style="flex-grow: 1; display: flex; flex-direction: column"><span style="font-size: 14px; font-weight: 700">{{p.name}}</span><span style="font-size: 12px; color: #6E655B">{{p.time}} · {{p.where}}</span></span><button aria-label="Ещё" style="width: 32px; height: 32px; border-radius: 16px; border: none; background: transparent; color: #6B6258; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="12" r="1"></circle><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle></svg></button></div>
+<span style="font-size: 15px; line-height: 1.55">{{p.text}}</span>
+<sc-if value="{{p.hasImage}}" hint-placeholder-val="{{ false }}"><div style="height: 180px; border-radius: 12px; position: relative; overflow: hidden; background: #2B3330"><div style="position: absolute; left: 10%; top: 20%; width: 34%; height: 40%; border-radius: 50%; background: #3B4A3F"></div><div style="position: absolute; left: 42%; top: 44%; width: 26%; height: 32%; border-radius: 50%; background: #4A5A47"></div><div style="position: absolute; right: 10%; top: 14%; width: 20%; height: 50%; border-radius: 40%; background: #34413A"></div></div></sc-if>
+<div style="display: flex; gap: 6px"><sc-for list="{{p.reacts}}" as="r" hint-placeholder-count="2"><button onClick="{{r.toggle}}" style="height: 30px; padding: 0 12px; border-radius: 15px; border: 1px solid {{r.border}}; background: {{r.bg}}; color: #2A2622; font-size: 13px; font-weight: 600; font-family: inherit; cursor: pointer">{{r.label}}</button></sc-for><button aria-label="Добавить реакцию" style="width: 30px; height: 30px; border-radius: 15px; border: 1px dashed #BFB5A7; background: transparent; color: #6B6258; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"></path></svg></button></div>
+</article>
+</sc-for>
+<span style="padding: 8px 0 4px; text-align: center; font-size: 12px; color: #6E655B">Это все посты за неделю с ваших серверов</span>
+</div>
+<nav aria-label="Основная навигация" style="height: 66px; flex-shrink: 0; background: #E9E3DA; border-top: 1px solid #E3DCD1; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr))"><a href="MobileAppLight.dc.html" style="color: #6E655B; text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; font-size: 11px; font-weight: 600"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="7" height="7" rx="2"></rect><rect x="13" y="4" width="7" height="7" rx="2"></rect><rect x="4" y="13" width="7" height="7" rx="2"></rect><rect x="13" y="13" width="7" height="7" rx="2"></rect></svg>Серверы</a><a href="MobileFeedLight.dc.html" style="color: #86602F; text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; font-size: 11px; font-weight: 700"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 6h14M5 12h14M5 18h9"></path></svg>Лента</a><a href="MobileLight-dms.dc.html" style="color: #6E655B; text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; font-size: 11px; font-weight: 600"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"></path></svg>Личные</a><a href="PhoneLight.dc.html" style="color: #6E655B; text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; font-size: 11px; font-weight: 600"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"></circle><path d="M4 21a8 8 0 0 1 16 0"></path></svg>Профиль</a></nav>
+<sc-if value="{{composing}}" hint-placeholder-val="{{ false }}">
+<button aria-label="Закрыть" onClick="{{closeCompose}}" style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; border: none; background: rgba(42,38,34,0.45); cursor: default"></button>
+<div role="dialog" aria-label="Новый пост" style="position: absolute; left: 0; right: 0; bottom: 0; top: 70px; border-radius: 22px 22px 0 0; background: #EDE7DE; display: flex; flex-direction: column; overflow: hidden">
+<div style="height: 56px; flex-shrink: 0; padding: 0 8px 0 16px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #E3DCD1"><button onClick="{{closeCompose}}" style="height: 36px; padding: 0 6px; border: none; background: transparent; color: #6B6258; font-size: 15px; font-weight: 600; font-family: inherit; cursor: pointer">Отмена</button><span style="font-size: 16px; font-weight: 700">Новый пост</span><button onClick="{{publish}}" style="height: 36px; padding: 0 14px; border: none; border-radius: 12px; background: {{accent}}; color: #1C1B19; font-weight: 700; font-family: inherit; cursor: pointer; font-size: 14px">Опубликовать</button></div>
+<div style="flex-grow: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; gap: 12px"><div style="width: 40px; height: 40px; flex-shrink: 0; border-radius: 20px; background: #7D6A7A; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; color: #1C1B19">ПЯ</div><textarea aria-label="Текст поста" onInput="{{onText}}" rows="5" placeholder="Что нового? Пост увидят на выбранных серверах" style="flex-grow: 1; padding: 6px 0; border: none; background: transparent; color: #2A2622; font-family: inherit; font-size: 16px; line-height: 1.5; outline: none; resize: none"></textarea></div>
+<div style="display: flex; gap: 8px"><button style="height: 38px; padding: 0 14px; border: 1px solid #D6CEC2; border-radius: 12px; background: transparent; color: #2A2622; font-weight: 600; font-family: inherit; cursor: pointer; font-size: 13px; display: flex; align-items: center; gap: 8px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"></rect><circle cx="9" cy="10" r="2"></circle><path d="m21 17-5-5-8 8"></path></svg>Фото</button><button style="height: 38px; padding: 0 14px; border: 1px solid #D6CEC2; border-radius: 12px; background: transparent; color: #2A2622; font-weight: 600; font-family: inherit; cursor: pointer; font-size: 13px; display: flex; align-items: center; gap: 8px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6v18h12V7z"></path><path d="M14 3v4h4"></path></svg>Файл</button></div>
+<div style="display: flex; flex-direction: column; gap: 8px"><span style="font-size: 11px; font-weight: 700; letter-spacing: 0.08em; color: #6E655B">ГДЕ ВИДНО</span>
+<div style="border-radius: 12px; background: #FBF8F3; display: flex; flex-direction: column"><sc-for list="{{where}}" as="w" hint-placeholder-count="3"><label style="padding: 12px 14px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid #E3DCD1; cursor: pointer"><input type="checkbox" checked="{{w.on}}" onChange="{{w.flip}}" style="width: 18px; height: 18px; margin: 0; accent-color: #86602F"><span style="flex-grow: 1; display: flex; flex-direction: column; gap: 2px"><span style="font-size: 14px; font-weight: 600">{{w.name}}</span><span style="font-size: 12px; color: #6E655B">{{w.note}}</span></span></label></sc-for></div></div>
+<span style="font-size: 12px; line-height: 1.5; color: #6E655B">Пост подписан вашим ключом и хранится на выбранных серверах. Комментариев пока нет — только реакции.</span>
+</div>
+</div>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent": {"editor": "color", "default": "#C9A06B", "options": ["#C9A06B", "#D97A4A", "#5FA8A0"]}, "start": {"editor": "enum", "default": "none", "options": ["none", "compose"]}, "$preview": {"width": 390, "height": 844}}'>
+class Component extends DCLogic {
+  state = { touched: false, tag: 'Все', mine: {}, text: '', extra: [], where: { np: true, ms: true, ks: false }, compose: false };
+  renderVals() {
+    const accent = this.props.accent ?? '#C9A06B';
+    const st = this.state;
+    const composing = st.touched ? st.compose : this.props.start === 'compose';
+    const set = (p) => this.setState({ touched: true, compose: composing, ...p });
+    const base = [
+      { id: 1, ini: 'КР', col: '#8A6E4B', name: 'Кривозуб', time: '2 ч', where: 'Ночной привал', srv: 'Ночной привал', text: 'Дорисовал карту побережья для новой кампании. Финальная версия будет в пятницу.', hasImage: true, reacts: [['+1', 12], ['к20', 3]] },
+      { id: 2, ini: 'ХО', col: '#9A8566', name: 'Хохотун', time: '5 ч', where: 'Кооператив по средам', srv: 'Кооператив по средам', text: 'Наконец-то запустил ракету. Завод в комментариях не нуждается.', hasImage: false, reacts: [['+1', 7]] },
+      { id: 3, ini: 'СА', col: '#6E7A63', name: 'Сайра', time: 'вчера', where: 'Мастерская', srv: 'Мастерская', text: 'Собрала новые листы персонажей в одну таблицу, если кому надо — пишите в личку.', hasImage: false, reacts: [['+1', 4], ['спасибо', 2]] }
+    ];
+    const SRV = ['Все', 'Ночной привал', 'Мастерская', 'Кооператив по средам'];
+    const all = [...st.extra, ...base].filter((p) => st.tag === 'Все' || p.srv === st.tag || p.srv === 'Несколько серверов');
+    const posts = all.map((p) => ({ ...p, reacts: p.reacts.map(([label, n], i) => { const k = p.id + ':' + i; const on = !!st.mine[k]; return { label: label + ' · ' + (n + (on ? 1 : 0)), border: on ? accent : '#D6CEC2', bg: on ? '#F1E6D4' : 'transparent', toggle: () => set({ mine: { ...st.mine, [k]: !on } }) }; }) }));
+    const W = [['np', 'Ночной привал', 'Хранит до 20 постов на человека'], ['ms', 'Мастерская', 'Хранит до 50 постов'], ['ks', 'Кооператив по средам', 'Стены на сервере отключены']];
+    return {
+      accent, posts, composing,
+      tagChips: SRV.map((t) => ({ t, border: st.tag === t ? accent : '#D6CEC2', bg: st.tag === t ? '#F1E6D4' : 'transparent', color: st.tag === t ? '#2A2622' : '#6B6258', pick: () => set({ tag: t }) })),
+      openCompose: () => set({ compose: true }), closeCompose: () => set({ compose: false }),
+      onText: (e) => set({ text: e.target.value }),
+      where: W.map(([id, name, note]) => ({ name, note, on: st.where[id], flip: () => set({ where: { ...st.where, [id]: !st.where[id] } }) })),
+      publish: () => {
+        const text = (st.text || '').trim() || 'Собрал новый стол для игр, фото позже.';
+        const n = Object.values(st.where).filter(Boolean).length;
+        set({ compose: false, text: '', extra: [{ id: 100 + st.extra.length, ini: 'ПЯ', col: '#7D6A7A', name: 'Пятнистый', time: 'только что', where: n > 1 ? n + ' сервера' : 'Ночной привал', srv: 'Несколько серверов', text, hasImage: false, reacts: [['+1', 0]] }, ...st.extra] });
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

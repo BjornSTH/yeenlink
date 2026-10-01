@@ -1,0 +1,70 @@
+; Подписанные форматы (docs/spec.md, «Форматы данных»). Подписи и проверка —
+; фаза 1; здесь — только формы, общие для Go и Dart.
+
+; Конверт: payload кодируется в CBOR один раз и дальше никогда не
+; пересобирается, поэтому канонизация не нужна.
+signed = {
+  t: signed-type,
+  p: bstr,                    ; CBOR-байты payload, хранятся и пересылаются как есть
+  k: pubkey,                  ; ключ подписавшего
+  s: bstr .size 64,           ; Ed25519( "yl-v1" | t | p )
+}
+
+signed-type = "profile" / "post" / "device_cert" / "revoke" / "devices" / "addresses" / "invite"
+
+pubkey = bstr .size 32
+sha256 = bstr .size 32
+unix-ms = uint
+blob-ref = { sha256: sha256, mime: tstr, size: uint }
+
+; t = "profile", подписывает master.
+profile = {
+  v: 1,
+  master: pubkey,
+  seq: uint,                  ; сервер принимает только больший
+  name: tstr .size (1..128),  ; 1–32 символа (проверяется по символам, не байтам)
+  about: tstr,                ; ≤ 300 символов
+  ? avatar: blob-ref,         ; WebP/PNG ≤ 512 КБ
+  ? (banner: blob-ref // banner_color: tstr),
+  wall: bool,
+  next_key_hash: sha256,      ; на будущее (ротация главного ключа)
+  ? home: tstr,               ; адрес родного сервера-зеркала
+  updated: unix-ms,
+}
+
+; t = "post", подписывает ключ устройства.
+post = {
+  v: 1,
+  id: tstr,                   ; ULID
+  author_master: pubkey,
+  text: tstr,                 ; ≤ 4000 символов
+  media: [* blob-ref],        ; ≤ 4
+  servers: [+ pubkey],
+  created: unix-ms,
+}
+
+; t = "device_cert", подписывает master.
+device-cert = { device_pub: pubkey, name: tstr, platform: tstr, created: unix-ms }
+
+; t = "revoke", подписывает master.
+revoke = { device_pub: pubkey, reason: tstr, at: unix-ms }
+
+; t = "devices", подписывает master.
+devices = { seq: uint, active: [* pubkey], revoked: [* pubkey] }
+
+; t = "invite", подписывает сервер.
+invite = {
+  v: 1,
+  server: pubkey,
+  name: tstr,
+  addrs: [+ address],
+  secret: bstr .size 16,
+  ? exp: unix-ms,             ; в спецификации — «unix-время»; единицы уточнить в фазе 4
+  ? uses: uint,
+  approve: bool,
+}
+
+; t = "addresses", подписывает сервер.
+addresses = { seq: uint, addrs: [+ address] }
+
+address = { h: tstr, p: uint .le 65535, kind: "main" / "backup" / "mirror" }

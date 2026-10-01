@@ -1,0 +1,6 @@
+{
+  "description": "Вложенность MaxDepth + 1",
+  "valid": false,
+  "canonical": false,
+  "error": "depth"
+}

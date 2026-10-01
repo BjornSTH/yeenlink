@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Светлая тема — YeenLink — страничка профиля, Android</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap">
+<style>
+body{margin:0}
+button{font-family:inherit}
+a{color:#C9A06B}a:hover{color:#86602F}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; display: flex; flex-direction: column; background: #F4F0EA; color: #2A2622; font-family: 'Manrope', system-ui, sans-serif; overflow: hidden">
+
+<header style="height: 56px; flex-shrink: 0; padding: 0 6px; display: flex; align-items: center; justify-content: space-between">
+<button aria-label="Назад" style="width: 44px; height: 44px; border: none; border-radius: 22px; background: transparent; color: #2A2622; display: flex; align-items: center; justify-content: center; cursor: pointer">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>
+</button>
+<span style="font-size: 16px; font-weight: 700">Профиль</span>
+<a href="SettingsPhoneLight.dc.html" aria-label="Настройки" style="width: 44px; height: 44px; border-radius: 22px; color: #2A2622; display: flex; align-items: center; justify-content: center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></a>
+</header>
+
+<div style="flex-grow: 1; overflow: hidden; display: flex; flex-direction: column">
+<div style="height: 130px; flex-shrink: 0; margin: 0 12px; border-radius: 16px; position: relative; background: #E3D3BC">
+<div style="position: absolute; left: 26px; top: 16px; width: 44px; height: 32px; border-radius: 50%; background: #CDB596"></div>
+<div style="position: absolute; left: 120px; top: 60px; width: 28px; height: 22px; border-radius: 50%; background: #CDB596"></div>
+<div style="position: absolute; left: 200px; top: 12px; width: 52px; height: 38px; border-radius: 50%; background: #D3BE9F"></div>
+<div style="position: absolute; left: 290px; top: 70px; width: 34px; height: 26px; border-radius: 50%; background: #CDB596"></div>
+<div style="position: absolute; left: 16px; bottom: -40px; width: 88px; height: 88px; border-radius: 44px; background: #8A6E4B; border: 5px solid #F4F0EA; box-sizing: border-box; display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: 800; color: #1C1B19">КР</div>
+</div>
+
+<div style="padding: 50px 20px 0; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; flex-direction: column; gap: 4px">
+<span style="font-size: 22px; font-weight: 800">Кривозуб</span>
+<span style="font-size: 12px; color: #6E655B; font-family: 'JetBrains Mono', monospace">кривозуб@nightcamp.ru · 7F3A·C21E</span>
+</div>
+<div style="font-size: 14px; line-height: 1.55; color: #4A443D">Мастер по пятницам. Рисую карты, собираю миниатюры и пишу о своих кампаниях.</div>
+<div style="display: flex; gap: 8px">
+<button style="flex-grow: 1; height: 44px; border: none; border-radius: 12px; background: {{accent}}; color: #1C1B19; font-size: 14px; font-weight: 700; cursor: pointer">Написать</button>
+<button style="flex-grow: 1; height: 44px; border: 1px solid #D6CEC2; border-radius: 12px; background: transparent; color: #2A2622; font-size: 14px; font-weight: 600; cursor: pointer">Общие серверы · 3</button>
+</div>
+<div style="display: flex; gap: 20px; border-bottom: 1px solid #E3DCD1">
+<button style="padding: 10px 0; border: none; border-bottom: 2px solid {{accent}}; background: transparent; color: #2A2622; font-size: 14px; font-weight: 700; cursor: pointer">Стена</button>
+<button style="padding: 10px 0; border: none; border-bottom: 2px solid transparent; background: transparent; color: #6E655B; font-size: 14px; font-weight: 600; cursor: pointer">Инфо</button>
+<button style="padding: 10px 0; border: none; border-bottom: 2px solid transparent; background: transparent; color: #6E655B; font-size: 14px; font-weight: 600; cursor: pointer">Медиа</button>
+</div>
+<article style="padding: 14px; border-radius: 14px; background: #FBF8F3; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; align-items: center; gap: 8px">
+<div style="width: 28px; height: 28px; border-radius: 14px; background: #8A6E4B; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: #1C1B19">КР</div>
+<span style="font-size: 14px; font-weight: 700">Кривозуб</span>
+<span style="font-size: 12px; color: #6E655B">· 2 дня назад</span>
+</div>
+<div style="font-size: 14px; line-height: 1.55">Дорисовал карту побережья для новой кампании. Финальная версия будет в пятницу.</div>
+<div style="height: 150px; border-radius: 10px; background: #E3DCD1; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #6E655B">[изображение]</div>
+<div style="display: flex; gap: 6px">
+<button style="height: 32px; padding: 0 12px; border-radius: 16px; border: 1px solid {{accent}}; background: #F1E6D4; color: #2A2622; font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 6px; cursor: pointer">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>12</button>
+<button style="height: 32px; padding: 0 12px; border-radius: 16px; border: 1px solid #D6CEC2; background: transparent; color: #6B6258; font-size: 13px; font-weight: 600; cursor: pointer">к20 · 3</button>
+</div>
+</article>
+</div>
+</div>
+
+<nav aria-label="Основная навигация" style="height: 68px; flex-shrink: 0; background: #E9E3DA; border-top: 1px solid #E3DCD1; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr))">
+<button style="border: none; background: transparent; color: #6E655B; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; font-size: 11px; font-weight: 600; cursor: pointer">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="4" y="4" width="7" height="7" rx="2"/><rect x="13" y="4" width="7" height="7" rx="2"/><rect x="4" y="13" width="7" height="7" rx="2"/><rect x="13" y="13" width="7" height="7" rx="2"/></svg>Серверы</button>
+<button style="border: none; background: transparent; color: #6E655B; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; font-size: 11px; font-weight: 600; cursor: pointer">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 6h14M5 12h14M5 18h9"/></svg>Лента</button>
+<button style="border: none; background: transparent; color: #6E655B; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; font-size: 11px; font-weight: 600; cursor: pointer">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/></svg>Личные</button>
+<button style="border: none; background: transparent; color: #86602F; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; font-size: 11px; font-weight: 700; cursor: pointer">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>Профиль</button>
+</nav>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#C9A06B","options":["#C9A06B","#D97A4A","#5FA8A0"]},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { accent: this.props.accent ?? '#C9A06B' };
+  }
+}
+</script>
+</body>
+</html>

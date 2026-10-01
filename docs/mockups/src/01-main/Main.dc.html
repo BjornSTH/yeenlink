@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>YeenLink — главный экран, ПК</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap">
+<style>
+body{margin:0}
+button{font-family:inherit}
+a{color:#C9A06B}a:hover{color:#E0BC8A}
+</style>
+</helmet>
+<div style="width: 1440px; height: 900px; position: relative; display: flex; background: #1C1B19; color: #ECE6DD; font-family: 'Manrope', system-ui, sans-serif; overflow: hidden">
+
+<nav aria-label="Серверы" style="width: 72px; flex-shrink: 0; background: #151412; display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 14px 0">
+<button aria-label="YeenLink — личные сообщения" style="width: 44px; height: 44px; border: none; border-radius: 14px; background: {{accent}}; color: #1C1B19; display: flex; align-items: center; justify-content: center; cursor: pointer">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4 8.5 10M19 4l-3.5 6"></path><path d="M6 13a6 6 0 0 0 12 0c0-2-1.5-3-3-3H9c-1.5 0-3 1-3 3z"></path><circle cx="10" cy="13.5" r=".8" fill="currentColor"></circle><circle cx="14" cy="13.5" r=".8" fill="currentColor"></circle></svg>
+</button>
+<div style="width: 32px; height: 2px; border-radius: 1px; background: #2D2A26"></div>
+<div style="position: relative">
+<div style="position: absolute; left: -14px; top: 8px; width: 4px; height: 28px; border-radius: 0 4px 4px 0; background: {{accent}}"></div>
+<button aria-label="Ночной привал" style="filter: {{smBlur}}; width: 44px; height: 44px; border: none; border-radius: 14px; background: #3A3026; color: #ECE6DD; font-weight: 700; font-size: 14px; cursor: pointer">НП</button>
+</div>
+<div style="position: relative">
+<button aria-label="Мастерская" style="filter: {{smBlur}}; width: 44px; height: 44px; border: none; border-radius: 22px; background: #2D2A26; color: #A39A8D; font-weight: 700; font-size: 14px; cursor: pointer">МС</button>
+<div style="position: absolute; right: -2px; bottom: -2px; width: 12px; height: 12px; border-radius: 6px; background: {{accent}}; border: 3px solid #151412"></div>
+</div>
+<button aria-label="Кооператив по средам" style="filter: {{smBlur}}; width: 44px; height: 44px; border: none; border-radius: 22px; background: #2D2A26; color: #A39A8D; font-weight: 700; font-size: 14px; cursor: pointer">КС</button>
+<div style="flex-grow: 1"></div>
+<a href="Discovery.dc.html" aria-label="Каталог серверов" style="width: 44px; height: 44px; box-sizing: border-box; border: 1px dashed #4A443D; border-radius: 22px; color: #A39A8D; display: flex; align-items: center; justify-content: center">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="m15.5 8.5-2 5-5 2 2-5z"></path></svg>
+</a>
+<button aria-label="Добавить сервер" style="width: 44px; height: 44px; border: 1px dashed #4A443D; border-radius: 22px; background: transparent; color: #A39A8D; display: flex; align-items: center; justify-content: center; cursor: pointer">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg>
+</button>
+</nav>
+
+<aside aria-label="Каналы" style="width: 248px; flex-shrink: 0; background: #201E1C; display: flex; flex-direction: column">
+<div style="height: 56px; flex-shrink: 0; padding: 0 16px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #2D2A26">
+<a href="ServerSettings.dc.html" style="font-weight: 700; font-size: 15px; color: inherit; text-decoration: none">{{serverName}}</a>
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#A39A8D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg>
+</div>
+<div style="flex-grow: 1; padding: 16px 8px; display: flex; flex-direction: column; gap: 2px">
+<sc-if value="{{sm}}" hint-placeholder-val="{{ false }}"><div role="status" style="margin: 0 0 10px; padding: 8px 10px; border-radius: 10px; background: #2A251F; border: 1px solid {{accent}}; display: flex; align-items: center; gap: 8px"><span style="color: {{accent}}; display: flex; flex-shrink: 0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3l18 18"></path><path d="M10.6 6.1A9.8 9.8 0 0 1 12 6c6 0 10 6 10 6a17 17 0 0 1-3.2 3.7M6.6 6.6A17 17 0 0 0 2 12s4 6 10 6a9.6 9.6 0 0 0 4.2-1"></path><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"></path></svg></span><span style="flex-grow: 1; display: flex; flex-direction: column; gap: 1px; min-width: 0"><span style="font-size: 12px; font-weight: 700; color: #ECE6DD">Режим стримера</span><span style="font-size: 11px; color: #A39A8D">Найден OBS · серверы скрыты</span></span><button onClick="{{smOff}}" style="height: 26px; padding: 0 8px; flex-shrink: 0; border: 1px solid #3A3631; border-radius: 7px; background: transparent; color: #CFC7BC; font-size: 11px; font-weight: 600; font-family: inherit; cursor: pointer">Выкл.</button></div></sc-if>
+<div style="padding: 0 8px 6px; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; color: #8A8276">ТЕКСТОВЫЕ</div>
+<div style="height: 34px; padding: 0 8px; border-radius: 8px; background: #2D2A26; display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#A39A8D" stroke-width="2" stroke-linecap="round"><path d="M5 9h14M4 15h14M10 3 8 21M16 3l-2 18"></path></svg>общий</div>
+<div style="height: 34px; padding: 0 8px; border-radius: 8px; display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 700; color: #ECE6DD">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#A39A8D" stroke-width="2" stroke-linecap="round"><path d="M5 9h14M4 15h14M10 3 8 21M16 3l-2 18"></path></svg>анонсы</div>
+<div style="height: 34px; padding: 0 8px; border-radius: 8px; display: flex; align-items: center; gap: 8px; font-size: 14px; color: #A39A8D">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7A7268" stroke-width="2" stroke-linecap="round"><path d="M5 9h14M4 15h14M10 3 8 21M16 3l-2 18"></path></svg>скриншоты</div>
+<div style="height: 34px; padding: 0 8px; border-radius: 8px; display: flex; align-items: center; gap: 8px; font-size: 14px; color: #A39A8D">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7A7268" stroke-width="2" stroke-linecap="round"><path d="M5 9h14M4 15h14M10 3 8 21M16 3l-2 18"></path></svg>кубики</div>
+
+<div style="padding: 18px 8px 6px; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; color: #8A8276">ГОЛОСОВЫЕ</div>
+<a href="Voice.dc.html" style="text-decoration: none; color: inherit"><div style="height: 34px; padding: 0 8px; border-radius: 8px; display: flex; align-items: center; gap: 8px; font-size: 14px; color: #ECE6DD">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#A39A8D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5z"></path><path d="M15.5 8.5a5 5 0 0 1 0 7"></path></svg>Таверна</div></a>
+<div style="padding: 2px 8px 2px 32px; display: flex; flex-direction: column; gap: 6px">
+<div style="display: flex; align-items: center; gap: 8px; font-size: 13px">
+<div style="width: 24px; height: 24px; border-radius: 12px; background: #8A6E4B; box-shadow: 0 0 0 2px #201E1C, 0 0 0 4px {{accent}}; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; color: #1C1B19">КР</div>
+<span style="flex-grow: 1">Кривозуб</span>
+<span style="padding: 2px 6px; border-radius: 4px; background: {{accent}}; color: #1C1B19; font-size: 10px; font-weight: 800; letter-spacing: 0.04em">ЭФИР</span>
+</div>
+<div style="display: flex; align-items: center; gap: 8px; font-size: 13px; color: #A39A8D">
+<div style="width: 24px; height: 24px; border-radius: 12px; background: #6E7A63; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; color: #1C1B19">СА</div>
+<span style="flex-grow: 1">Сайра</span>
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7A7268" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="13" height="12" rx="2"></rect><path d="m16 10 5-3v10l-5-3"></path></svg>
+</div>
+<div style="display: flex; align-items: center; gap: 8px; font-size: 13px; color: #A39A8D">
+<div style="width: 24px; height: 24px; border-radius: 12px; background: #7D6A7A; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; color: #1C1B19">ПЯ</div>
+<span>Пятнистый</span>
+</div>
+</div>
+<div style="height: 34px; margin-top: 4px; padding: 0 8px; border-radius: 8px; display: flex; align-items: center; gap: 8px; font-size: 14px; color: #A39A8D">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7A7268" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5z"></path><path d="M15.5 8.5a5 5 0 0 1 0 7"></path></svg>Тихий угол</div>
+</div>
+
+<div style="height: 60px; flex-shrink: 0; background: #191816; padding: 0 10px; display: flex; align-items: center; gap: 10px">
+<div style="position: relative; flex-shrink: 0">
+<div style="width: 34px; height: 34px; border-radius: 17px; background: #7D6A7A; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #1C1B19">ПЯ</div>
+<div style="position: absolute; right: -2px; bottom: -2px; width: 10px; height: 10px; border-radius: 5px; background: #8BAA7A; border: 3px solid #191816"></div>
+</div>
+<div style="flex-grow: 1; min-width: 0; display: flex; flex-direction: column">
+<span style="font-size: 13px; font-weight: 700">Пятнистый</span>
+<span style="font-size: 11px; color: #8A8276; font-family: 'JetBrains Mono', monospace">{{myHandle}}</span>
+</div>
+<button aria-label="Микрофон" style="width: 32px; height: 32px; border: none; border-radius: 8px; background: transparent; color: #A39A8D; display: flex; align-items: center; justify-content: center; cursor: pointer">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M5 11a7 7 0 0 0 14 0M12 18v3"></path></svg>
+</button>
+<button aria-label="Звук" style="width: 32px; height: 32px; border: none; border-radius: 8px; background: transparent; color: #A39A8D; display: flex; align-items: center; justify-content: center; cursor: pointer">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 15v-3a8 8 0 0 1 16 0v3"></path><rect x="3" y="14" width="4" height="6" rx="1.5"></rect><rect x="17" y="14" width="4" height="6" rx="1.5"></rect></svg>
+</button>
+<a href="Settings.dc.html" aria-label="Настройки" style="width: 32px; height: 32px; border: none; border-radius: 8px; background: transparent; color: #A39A8D; display: flex; align-items: center; justify-content: center; text-decoration: none">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="3"></circle><path stroke-linejoin="round" d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+</a>
+</div>
+</aside>
+
+<main style="flex-grow: 1; min-width: 0; position: relative; display: flex; flex-direction: column">
+<header style="height: 56px; flex-shrink: 0; padding: 0 20px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid #2D2A26">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#A39A8D" stroke-width="2" stroke-linecap="round"><path d="M5 9h14M4 15h14M10 3 8 21M16 3l-2 18"></path></svg>
+<span style="font-weight: 700; font-size: 15px">общий</span>
+<span style="width: 1px; height: 20px; background: #3A3631"></span>
+<span style="font-size: 13px; color: #A39A8D; flex-grow: 1">Сбор на пятничную партию — пишите, кто идёт</span>
+<button aria-label="Закреплённые" style="width: 36px; height: 36px; border: none; border-radius: 8px; background: transparent; color: #A39A8D; display: flex; align-items: center; justify-content: center; cursor: pointer">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6l-1 6 4 4H6l4-4z"></path><path d="M12 13v8"></path></svg>
+</button>
+<button aria-label="Участники" style="width: 36px; height: 36px; border: none; border-radius: 8px; background: transparent; color: #A39A8D; display: flex; align-items: center; justify-content: center; cursor: pointer">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="9" cy="8" r="3.5"></circle><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 7M18 14a6 6 0 0 1 3.5 6"></path></svg>
+</button>
+<label style="height: 34px; width: 200px; padding: 0 10px; border-radius: 8px; background: #151412; display: flex; align-items: center; gap: 8px; color: #8A8276; font-size: 13px">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
+<input aria-label="Поиск" placeholder="Поиск" style="background: transparent; border: none; outline: none; color: #ECE6DD; font-family: inherit; font-size: 13px; width: 100%">
+</label>
+</header>
+<sc-if value="{{conn_reconnecting}}" hint-placeholder-val="{{ false }}">
+<div role="status" style="position: absolute; left: 0; right: 0; top: 56px; z-index: 2; min-height: 44px; padding: 8px 20px; box-sizing: border-box; background: #2A2119; border-bottom: 1px solid #5A4128; display: flex; align-items: center; gap: 10px; color: #E8D9C2; font-size: 13px">
+<span style="color: #D9A55B; display: flex; flex-shrink: 0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11a8 8 0 1 0-2.3 5.7M20 5v6h-6"></path></svg></span><span style="flex-grow: 1; line-height: 1.45">Связь с nightcamp.ru потеряна. Пробую запасной адрес 2 из 3…</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #C9B38F">185.12.40.7:8443</span>
+</div>
+</sc-if>
+<sc-if value="{{conn_failover}}" hint-placeholder-val="{{ false }}">
+<div role="status" style="position: absolute; left: 0; right: 0; top: 56px; z-index: 2; min-height: 44px; padding: 8px 20px; box-sizing: border-box; background: #1F261C; border-bottom: 1px solid #3A4A33; display: flex; align-items: center; gap: 10px; color: #DCE8D3; font-size: 13px">
+<span style="color: #9DB58A; display: flex; flex-shrink: 0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"></path></svg></span><span style="flex-grow: 1; line-height: 1.45">Подключено через запасной адрес. Основной nightcamp.ru пока недоступен — проверяю его раз в минуту.</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #B9CBAE">185.12.40.7:8443</span>
+</div>
+</sc-if>
+<sc-if value="{{conn_offline}}" hint-placeholder-val="{{ false }}">
+<div role="status" style="position: absolute; left: 0; right: 0; top: 56px; z-index: 2; min-height: 44px; padding: 8px 20px; box-sizing: border-box; background: #2B1D1A; border-bottom: 1px solid #6A3A31; display: flex; align-items: center; gap: 10px; color: #EBCFC8; font-size: 13px">
+<span style="color: #D98C7A; display: flex; flex-shrink: 0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 20h20z"></path><path d="M12 10v4M12 17h.01"></path></svg></span><span style="flex-grow: 1; line-height: 1.45">Сервер недоступен по всем трём адресам. Повтор через 10 с — сообщения сохранятся и уйдут, когда связь вернётся.</span><button style="height: 30px; padding: 0 12px; flex-shrink: 0; border: 1px solid #6A3A31; border-radius: 8px; background: transparent; color: #EBCFC8; font-size: 12px; font-weight: 700; font-family: inherit; cursor: pointer">Повторить сейчас</button>
+</div>
+</sc-if>
+
+<div style="flex-grow: 1; padding: 20px 24px; display: flex; flex-direction: column; justify-content: flex-end; gap: 20px">
+<div style="display: flex; gap: 14px">
+<div style="width: 40px; height: 40px; flex-shrink: 0; border-radius: 20px; background: #8A6E4B; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: #1C1B19">КР</div>
+<div style="display: flex; flex-direction: column; gap: 4px">
+<div style="display: flex; align-items: baseline; gap: 8px"><span style="font-weight: 700; font-size: 14px; color: {{accent}}">Кривозуб</span><span style="font-size: 12px; color: #8A8276">Сегодня в 19:42</span></div>
+<div style="font-size: 14px; line-height: 1.55">Пятница в силе? Новую карту побережья я дорисовал, выложил у себя на стене.</div>
+</div>
+</div>
+
+<div style="display: flex; gap: 14px">
+<div style="width: 40px; height: 40px; flex-shrink: 0; border-radius: 20px; background: #6E7A63; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: #1C1B19">СА</div>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; align-items: baseline; gap: 8px"><span style="font-weight: 700; font-size: 14px">Сайра</span><span style="font-size: 12px; color: #8A8276">Сегодня в 19:45</span></div>
+<div style="font-size: 14px; line-height: 1.55">Буду к девяти. Листы персонажей обновила, кидаю сюда.</div>
+<div style="width: 300px; padding: 12px; border-radius: 10px; background: #24221F; border: 1px solid #2D2A26; display: flex; align-items: center; gap: 12px">
+<div style="width: 36px; height: 36px; border-radius: 8px; background: #2D2A26; display: flex; align-items: center; justify-content: center">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#A39A8D" stroke-width="1.8" stroke-linejoin="round"><path d="M14 3H6v18h12V7z"></path><path d="M14 3v4h4"></path></svg>
+</div>
+<div style="display: flex; flex-direction: column"><span style="font-size: 13px; font-weight: 600">листы_партии.pdf</span><span style="font-size: 12px; color: #8A8276">248 КБ</span></div>
+</div>
+<div style="display: flex; gap: 6px">
+<button style="height: 26px; padding: 0 10px; border-radius: 13px; border: 1px solid {{accent}}; background: #2A251F; color: #ECE6DD; font-size: 12px; font-weight: 600; cursor: pointer">+1 · 4</button>
+<button style="height: 26px; padding: 0 10px; border-radius: 13px; border: 1px solid #3A3631; background: transparent; color: #A39A8D; font-size: 12px; font-weight: 600; cursor: pointer">к20 · 2</button>
+</div>
+</div>
+</div>
+
+<div style="display: flex; gap: 14px">
+<div style="width: 40px; height: 40px; flex-shrink: 0; border-radius: 12px; background: #2D2A26; display: flex; align-items: center; justify-content: center; color: {{accent}}">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 2 21 7v10l-9 5-9-5V7z"></path><path d="M12 2v20M3 7l18 10M21 7 3 17"></path></svg>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<div style="display: flex; align-items: center; gap: 8px"><span style="font-weight: 700; font-size: 14px">Кубики</span><span style="padding: 1px 5px; border-radius: 4px; background: #2D2A26; color: #A39A8D; font-size: 10px; font-weight: 800">БОТ</span><span style="font-size: 12px; color: #8A8276">Сегодня в 19:46</span></div>
+<div style="padding: 8px 12px; border-radius: 8px; background: #151412; font-family: 'JetBrains Mono', monospace; font-size: 13px">Сайра бросает 1d20+5 → <span style="color: {{accent}}; font-weight: 500">17</span></div>
+</div>
+</div>
+
+<div style="display: flex; gap: 14px">
+<div style="width: 40px; height: 40px; flex-shrink: 0; border-radius: 20px; background: #7D6A7A; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: #1C1B19">ПЯ</div>
+<div style="display: flex; flex-direction: column; gap: 4px">
+<div style="display: flex; align-items: baseline; gap: 8px"><span style="font-weight: 700; font-size: 14px">Пятнистый</span><span style="font-size: 12px; color: #8A8276">Сегодня в 19:51</span></div>
+<div style="font-size: 14px; line-height: 1.55">Тогда в 21:00 в Таверне. Карту покажу оттуда же стримом.</div>
+</div>
+</div>
+</div>
+
+<sc-if value="{{slashOpen}}" hint-placeholder-val="{{ false }}">
+<div role="listbox" aria-label="Команды" style="position: absolute; left: 24px; right: 24px; bottom: 80px; z-index: 3; border-radius: 12px; background: #201E1C; border: 1px solid #2D2A26; box-shadow: 0 18px 48px rgba(0,0,0,0.45); padding: 8px; display: flex; flex-direction: column; gap: 2px">
+<span style="padding: 4px 8px 6px; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; color: #8A8276">КОМАНДЫ</span>
+<sc-for list="{{cmds}}" as="c" hint-placeholder-count="3"><button onClick="{{c.pick}}" style="padding: 8px; border: none; border-radius: 8px; background: {{c.bg}}; color: #ECE6DD; display: flex; align-items: center; gap: 12px; text-align: left; font-family: inherit; cursor: pointer">
+<span style="width: 32px; height: 32px; flex-shrink: 0; border-radius: 9px; background: {{c.col}}; color: #1C1B19; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800">{{c.ini}}</span>
+<span style="flex-grow: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px"><span style="display: flex; gap: 8px; align-items: baseline"><span style="font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 500">{{c.name}}</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #8A8276">{{c.args}}</span></span><span style="font-size: 12px; color: #A39A8D">{{c.desc}}</span></span>
+<span style="flex-shrink: 0; font-size: 11px; color: #8A8276">{{c.src}}</span>
+</button></sc-for>
+<span style="padding: 6px 8px 2px; font-size: 11px; color: #8A8276">↑ ↓ — выбрать · Tab — вставить · Esc — закрыть</span>
+</div>
+</sc-if>
+<div style="padding: 0 24px 20px">
+<div style="height: 52px; padding: 0 8px 0 6px; border-radius: 12px; background: #24221F; border: 1px solid #2D2A26; display: flex; align-items: center; gap: 6px">
+<button aria-label="Прикрепить файл" style="width: 38px; height: 38px; border: none; border-radius: 10px; background: transparent; color: #A39A8D; display: flex; align-items: center; justify-content: center; cursor: pointer">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg>
+</button>
+<input aria-label="Сообщение" onInput="{{onCompose}}" defaultValue="{{composeDefault}}" placeholder="Сообщение в #общий" style="flex-grow: 1; background: transparent; border: none; outline: none; color: #ECE6DD; font-family: inherit; font-size: 14px">
+<button aria-label="Реакции" style="width: 38px; height: 38px; border: none; border-radius: 10px; background: transparent; color: #A39A8D; display: flex; align-items: center; justify-content: center; cursor: pointer">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"></circle><path d="M8.5 14a4 4 0 0 0 7 0M9 9.5h.01M15 9.5h.01"></path></svg>
+</button>
+<button aria-label="Отправить" style="width: 38px; height: 38px; border: none; border-radius: 10px; background: {{accent}}; color: #1C1B19; display: flex; align-items: center; justify-content: center; cursor: pointer">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 12 20 4l-6 16-3-7z"></path></svg>
+</button>
+</div>
+</div>
+</main>
+
+<aside aria-label="Участники сервера" style="width: 240px; flex-shrink: 0; background: #201E1C; border-left: 1px solid #2D2A26; display: flex; flex-direction: column">
+<div style="height: 56px; flex-shrink: 0; padding: 0 16px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #2D2A26">
+<span style="font-weight: 700; font-size: 14px">Участники</span>
+<span style="font-size: 12px; color: #8A8276">6 в сети</span>
+</div>
+<div style="flex-grow: 1; padding: 8px 8px; display: flex; flex-direction: column">
+<sc-for list="{{groups}}" as="g" hint-placeholder-count="4">
+<div style="height: 30px; padding: 12px 8px 0; box-sizing: border-box; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; color: #8A8276">{{g.label}}</div>
+<sc-for list="{{g.members}}" as="m" hint-placeholder-count="2">
+<button onClick="{{m.pick}}" aria-label="Профиль: {{m.name}}" style="width: 100%; height: 46px; margin-top: 2px; padding: 0 8px; border: none; border-radius: 8px; background: {{m.rowBg}}; display: flex; align-items: center; gap: 10px; text-align: left; opacity: {{m.opacity}}; font-family: inherit; cursor: pointer">
+<div style="position: relative; flex-shrink: 0">
+<div style="width: 32px; height: 32px; border-radius: 16px; background: {{m.avatarColor}}; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: #1C1B19">{{m.initials}}</div>
+<div style="position: absolute; right: -2px; bottom: -2px; width: 10px; height: 10px; border-radius: 5px; background: {{m.statusColor}}; border: 3px solid #201E1C"></div>
+</div>
+<div style="min-width: 0; flex-grow: 1; display: flex; flex-direction: column; gap: 1px">
+<span style="font-size: 14px; font-weight: 600; color: {{m.nameColor}}; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{m.name}}</span>
+<span style="font-size: 11px; color: #8A8276; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{m.line}}</span>
+</div>
+</button>
+</sc-for>
+</sc-for>
+</div>
+</aside>
+
+<sc-if value="{{showCard}}" hint-placeholder-val="{{ false }}">
+<button aria-label="Закрыть карточку" onClick="{{closeAll}}" style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; border: none; background: transparent; cursor: default"></button>
+<div style="position: absolute; right: 252px; top: {{sel.cardTop}}px; width: 320px; border-radius: 16px; background: #201E1C; border: 1px solid #2D2A26; box-shadow: 0 18px 48px rgba(0,0,0,0.45); overflow: hidden; display: flex; flex-direction: column">
+<div style="height: 88px; position: relative; background: {{sel.bannerColor}}">
+<div style="position: absolute; left: 30px; top: 14px; width: 42px; height: 30px; border-radius: 50%; background: rgba(0,0,0,0.14)"></div>
+<div style="position: absolute; left: 160px; top: 44px; width: 26px; height: 20px; border-radius: 50%; background: rgba(0,0,0,0.14)"></div>
+<div style="position: absolute; left: 236px; top: 12px; width: 48px; height: 34px; border-radius: 50%; background: rgba(0,0,0,0.12)"></div>
+<div style="position: absolute; left: 16px; bottom: -36px; width: 76px; height: 76px; border-radius: 38px; background: {{sel.avatarColor}}; border: 5px solid #201E1C; box-sizing: border-box; display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 800; color: #1C1B19">{{sel.initials}}</div>
+<div style="position: absolute; left: 74px; bottom: -34px; width: 14px; height: 14px; border-radius: 7px; background: {{sel.statusColor}}; border: 4px solid #201E1C"></div>
+</div>
+<div style="padding: 44px 16px 16px; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; flex-direction: column; gap: 3px">
+<span style="font-size: 19px; font-weight: 800">{{sel.name}}</span>
+<span style="font-size: 11px; color: #8A8276; font-family: 'JetBrains Mono', monospace">{{sel.handle}}</span>
+<span style="font-size: 12px; color: #A39A8D; margin-top: 2px">{{sel.mutual}}</span>
+</div>
+<sc-if value="{{sel.hasActivity}}" hint-placeholder-val="{{ true }}">
+<div style="padding: 12px; border-radius: 12px; background: #24221F; display: flex; flex-direction: column; gap: 10px">
+<span style="font-size: 11px; font-weight: 700; letter-spacing: 0.06em; color: #8A8276">СЕЙЧАС</span>
+<div style="display: flex; align-items: center; gap: 12px">
+<div style="width: 44px; height: 44px; flex-shrink: 0; border-radius: 10px; background: #2D2A26; display: flex; align-items: center; justify-content: center; color: {{accent}}">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5z"></path><path d="M15.5 8.5a5 5 0 0 1 0 7"></path></svg>
+</div>
+<div style="display: flex; flex-direction: column; gap: 2px; min-width: 0">
+<span style="font-size: 13px; font-weight: 700">{{sel.actTitle}}</span>
+<span style="font-size: 12px; color: #A39A8D">{{sel.actSub}}</span>
+</div>
+</div>
+<sc-if value="{{sel.canJoin}}" hint-placeholder-val="{{ true }}">
+<button style="height: 34px; border: 1px solid #3A3631; border-radius: 9px; background: #2D2A26; color: #ECE6DD; font-size: 13px; font-weight: 600; font-family: inherit; cursor: pointer">Присоединиться</button>
+</sc-if>
+</div>
+</sc-if>
+<sc-if value="{{sel.hasWall}}" hint-placeholder-val="{{ true }}">
+<button onClick="{{openPage}}" style="padding: 10px 12px; border-radius: 12px; border: 1px solid #2D2A26; background: transparent; color: #ECE6DD; text-align: left; display: flex; flex-direction: column; gap: 3px; font-family: inherit; cursor: pointer">
+<span style="font-size: 11px; font-weight: 700; letter-spacing: 0.06em; color: #8A8276">НОВОЕ НА СТЕНЕ</span>
+<span style="font-size: 13px; line-height: 1.45">{{sel.wall}}</span>
+</button>
+</sc-if>
+<div style="display: flex; flex-wrap: wrap; gap: 6px">
+<sc-for list="{{sel.roles}}" as="r" hint-placeholder-count="2">
+<span style="height: 26px; padding: 0 10px; border-radius: 13px; background: #24221F; display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600"><span style="width: 8px; height: 8px; border-radius: 4px; background: {{r.color}}"></span>{{r.name}}</span>
+</sc-for>
+<button aria-label="Выдать роль" style="width: 26px; height: 26px; border: 1px dashed #4A443D; border-radius: 13px; background: transparent; color: #A39A8D; display: flex; align-items: center; justify-content: center; cursor: pointer">
+<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg>
+</button>
+</div>
+<button onClick="{{openPage}}" style="height: 38px; border: none; border-radius: 10px; background: {{accent}}; color: #1C1B19; font-size: 13px; font-weight: 700; font-family: inherit; cursor: pointer">Открыть страницу</button>
+<label style="height: 40px; padding: 0 12px; border-radius: 10px; background: #151412; display: flex; align-items: center">
+<input aria-label="Сообщение участнику" placeholder="Сообщение для @{{sel.name}}" style="width: 100%; background: transparent; border: none; outline: none; color: #ECE6DD; font-family: inherit; font-size: 13px">
+</label>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{showPage}}" hint-placeholder-val="{{ false }}">
+<button aria-label="Закрыть страницу" onClick="{{closeAll}}" style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; border: none; background: rgba(21,20,18,0.6); cursor: default"></button>
+<div style="position: absolute; top: 0; right: 0; bottom: 0; box-shadow: -16px 0 40px rgba(0,0,0,0.45)">
+<dc-import name="ProfilePanel" accent="{{accent}}" name-text="{{sel.name}}" initials="{{sel.initials}}" avatar-color="{{sel.avatarColor}}" handle="{{sel.handle}}" status="{{sel.actTitle}}" status-color="{{sel.statusColor}}" about="{{sel.about}}" on-close="{{closeAll}}" hint-size="360px,900px"></dc-import>
+</div>
+</sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#C9A06B","options":["#C9A06B","#D97A4A","#5FA8A0"]},"streamer":{"editor":"enum","default":"off","options":["off","on"]},"conn":{"editor":"enum","default":"none","options":["none","reconnecting","failover","offline"]},"start":{"editor":"enum","default":"none","options":["none","card","page","slash"]},"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  state = { touched: false, card: null, page: false };
+
+  renderVals() {
+    const ON = '#8BAA7A', IDLE = '#D9A55B', DND = '#C26B5A', OFF = '#5E5850';
+    const R = {
+      master: { name: 'Мастер', color: '#E0B26A' },
+      player: { name: 'Игрок', color: '#9DB58A' },
+      guest: { name: 'Гость', color: '#A9A0C9' },
+      bot: { name: 'Бот', color: '#7FA9B5' },
+      artist: { name: 'Картограф', color: '#C9907A' }
+    };
+    const people = {
+      kr: { name: 'Кривозуб', initials: 'КР', avatarColor: '#8A6E4B', bannerColor: '#3A3026', statusColor: ON, nameColor: '#E0B26A', line: 'Ведёт стрим в «Таверне»', handle: 'кривозуб@nightcamp.ru · 7F3A·C21E', mutual: '2 общих сервера', hasActivity: true, actTitle: 'Голосовой канал «Таверна»', actSub: 'Ведёт стрим · 12 мин', canJoin: true, hasWall: true, wall: 'Дорисовал карту побережья для новой кампании…', roles: [R.master, R.artist], about: 'Мастер по пятницам. Рисую карты, собираю миниатюры и пишу о своих кампаниях.', cardTop: 70 },
+      sa: { name: 'Сайра', initials: 'СА', avatarColor: '#6E7A63', bannerColor: '#2F3529', statusColor: ON, nameColor: '#9DB58A', line: 'Смотрит стрим', handle: 'saira@tihaya-gavan.ru · 19B4·E07A', mutual: '1 общий сервер', hasActivity: true, actTitle: 'Голосовой канал «Таверна»', actSub: 'Смотрит стрим', canJoin: true, hasWall: false, wall: '', roles: [R.player], about: 'Играю за плута. Отвечаю за листы персонажей.', cardTop: 150 },
+      py: { name: 'Пятнистый', initials: 'ПЯ', avatarColor: '#7D6A7A', bannerColor: '#352C33', statusColor: ON, nameColor: '#9DB58A', line: 'Это вы', handle: 'пятнистый@nightcamp.ru · A0D2·5F11', mutual: 'Ваш профиль', hasActivity: true, actTitle: 'Голосовой канал «Таверна»', actSub: 'В канале · 12 мин', canJoin: false, hasWall: true, wall: 'Собрал новый стол для игр, фото позже', roles: [R.player], about: 'Создатель этого сервера.', cardTop: 190 },
+      ho: { name: 'Хохотун', initials: 'ХО', avatarColor: '#9A8566', bannerColor: '#3A3328', statusColor: DND, nameColor: '#9DB58A', line: 'Играет в Factorio', handle: 'hohotun@kobold.su · 33C8·91AE', mutual: '3 общих сервера', hasActivity: true, actTitle: 'Играет в Factorio', actSub: '1 ч 24 мин', canJoin: false, hasWall: true, wall: 'Наконец-то запустил ракету. Завод в комментариях не нуждается.', roles: [R.player], about: 'Строю заводы, ломаю заводы.', cardTop: 240 },
+      li: { name: 'Лисий хвост', initials: 'ЛХ', avatarColor: '#A07C6A', bannerColor: '#3A2E28', statusColor: IDLE, nameColor: '#A9A0C9', line: 'Отошёл', handle: 'lis@lis-nora.ru · 7C01·D4B9', mutual: '1 общий сервер', hasActivity: false, actTitle: 'Отошёл', actSub: '', canJoin: false, hasWall: false, wall: '', roles: [R.guest], about: 'Зашёл посмотреть на партию.', cardTop: 320 },
+      ku: { name: 'Кубики', initials: 'К20', avatarColor: '#7FA9B5', bannerColor: '#263236', statusColor: ON, nameColor: '#7FA9B5', line: 'Бот · /roll', handle: 'бот сервера nightcamp.ru', mutual: 'Бот этого сервера', hasActivity: false, actTitle: 'Бот', actSub: '', canJoin: false, hasWall: false, wall: '', roles: [R.bot], about: 'Бросает кубики: /roll 1d20+5', cardTop: 364 },
+      sh: { name: 'Шакалёнок', initials: 'ША', avatarColor: '#6B635A', bannerColor: '#2D2A26', statusColor: OFF, nameColor: '#A39A8D', line: 'Был вчера', handle: 'shakal@nightcamp.ru · 5E77·0B3C', mutual: '1 общий сервер', hasActivity: false, actTitle: 'Не в сети', actSub: '', canJoin: false, hasWall: true, wall: 'Ушёл в отпуск до понедельника', roles: [R.guest], about: 'Иногда играю, чаще наблюдаю.', cardTop: 364 }
+    };
+    const start = this.props.start ?? 'none';
+    const card = this.state.touched ? this.state.card : (start === 'card' ? 'kr' : null);
+    const page = this.state.touched ? this.state.page : start === 'page';
+    const selId = card || (page ? (this.state.card || this.state.last || 'kr') : 'kr');
+    const mk = (ids, offline) => ids.map((id) => ({
+      ...people[id],
+      rowBg: card === id ? '#2D2A26' : 'transparent',
+      opacity: offline ? '0.55' : '1',
+      pick: () => this.setState({ touched: true, card: id, last: id, page: false })
+    }));
+    const groups = [
+      { label: 'МАСТЕР — 1', members: mk(['kr']) },
+      { label: 'ИГРОКИ — 3', members: mk(['sa', 'py', 'ho']) },
+      { label: 'ГОСТИ — 1', members: mk(['li']) },
+      { label: 'БОТЫ — 1', members: mk(['ku']) },
+      { label: 'НЕ В СЕТИ — 1', members: mk(['sh'], true) }
+    ];
+    const conn = this.props.conn ?? 'none';
+    const slashQ = this.state.slashSet ? this.state.slashQ : ((this.props.start ?? 'none') === 'slash' ? '/r' : null);
+    const CMDS = [
+      { name: '/roll', args: '1d20+5', desc: 'Бросить кубики', src: 'Кубики · бот', ini: 'К20', col: '#7FA9B5' },
+      { name: '/init', args: '', desc: 'Порядок инициативы для партии', src: 'Кубики · бот', ini: 'К20', col: '#7FA9B5' },
+      { name: '/sessions', args: '', desc: 'Ближайшие игры', src: 'Расписание · бот', ini: 'РС', col: '#9A8566' },
+      { name: '/me', args: 'действие', desc: 'Сообщение от третьего лица', src: 'YeenLink', ini: 'YL', col: '#C9A06B' },
+      { name: '/streamer', args: '', desc: 'Включить режим стримера', src: 'YeenLink', ini: 'YL', col: '#C9A06B' }
+    ];
+    const cmdList = slashQ == null ? [] : CMDS.filter((c) => c.name.startsWith(slashQ.split(' ')[0]) || slashQ === '/');
+    const sm = !this.state.smOffed && (this.props.streamer ?? 'off') === 'on';
+    return {
+      slashOpen: cmdList.length > 0,
+      cmds: cmdList.map((c, i) => ({ ...c, bg: i === 0 ? '#2D2A26' : 'transparent', pick: () => this.setState({ slashSet: true, slashQ: null }) })),
+      composeDefault: (this.props.start ?? 'none') === 'slash' ? '/r' : '',
+      onCompose: (e) => { const v = e.target.value; this.setState({ slashSet: true, slashQ: v.startsWith('/') ? v : null }); },
+      sm, smBlur: sm ? 'blur(7px)' : 'none', serverName: sm ? 'Сервер скрыт' : 'Ночной привал', myHandle: sm ? 'скрыто' : '@nightcamp.ru',
+      smOff: () => this.setState({ smOffed: true }),
+      conn_reconnecting: conn === 'reconnecting', conn_failover: conn === 'failover', conn_offline: conn === 'offline',
+      accent: this.props.accent ?? '#C9A06B',
+      groups,
+      sel: sm ? { ...people[selId], handle: 'скрыто · режим стримера' } : people[selId],
+      showCard: !!card,
+      showPage: page,
+      openPage: () => this.setState({ touched: true, last: card || this.state.last, card: null, page: true }),
+      closeAll: () => this.setState({ touched: true, card: null, page: false })
+    };
+  }
+}
+</script>
+</body>
+</html>

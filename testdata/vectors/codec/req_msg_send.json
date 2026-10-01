@@ -1,0 +1,14 @@
+{
+  "description": "Запрос клиента с id и текстом на кириллице и эмодзи",
+  "valid": true,
+  "canonical": true,
+  "frame": {
+    "d": {
+      "text": "Пятница в силе? 🎲",
+      "channel": "общий",
+      "client_id": "01J9Z3K8Q4V5M2N7P6R1S0T2W3"
+    },
+    "id": 1,
+    "op": "msg.send"
+  }
+}

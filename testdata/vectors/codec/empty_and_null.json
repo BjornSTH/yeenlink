@@ -1,0 +1,19 @@
+{
+  "description": "null, логические, пустые коллекции, байты и строка",
+  "valid": true,
+  "canonical": true,
+  "frame": {
+    "d": {
+      "no": false,
+      "map": {},
+      "yes": true,
+      "list": [],
+      "null": null,
+      "text": "",
+      "bytes": {
+        "$bytes": ""
+      }
+    },
+    "op": "test.empty"
+  }
+}
