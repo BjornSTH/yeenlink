@@ -11,6 +11,9 @@ const tokensPath = '../docs/design/tokens.json';
 
 /// Группы верхнего уровня, которые генератор знает. Новая группа в выгрузке —
 /// ошибка, чтобы её значения не потерялись молча.
+/// Семейства цветов с номерами (avatar-1…N): для них генерируется список.
+const paletteFamilies = ['avatar', 'banner'];
+
 const knownGroups = {
   'name',
   'version',
@@ -173,11 +176,18 @@ void _colors(StringBuffer out, List<Map<String, dynamic>> colors, List<String> t
     ..writeln('  static YlColors of(BuildContext context) =>')
     ..writeln('      _ylExtension<YlColors>(context);')
     ..writeln()
-    ..writeln('  /// Фоны аватаров без картинки (avatar-1…N), по порядку.')
-    ..writeln(
-      '  List<Color> get avatarPalette => [${[for (final n in names)
-        if (RegExp(r'^avatar\d+$').hasMatch(n)) n].join(', ')}];',
-    )
+    ..writeAll([
+      for (final family in paletteFamilies)
+        '  /// Палитра $family-1…N по порядку.\n'
+            '  List<Color> get ${family}Palette => '
+            '[${[for (final n in names)
+              if (RegExp('^$family\\d+\$').hasMatch(n)) n].join(', ')}];\n\n',
+    ])
+    ..writeln('  /// Цвет баннера по имени токена (banner-N); неизвестное имя — banner-1.')
+    ..writeln('  Color bannerByName(String? token) {')
+    ..writeln("    final i = int.tryParse(token?.replaceFirst('banner-', '') ?? '') ?? 1;")
+    ..writeln('    return bannerPalette[i >= 1 && i <= bannerPalette.length ? i - 1 : 0];')
+    ..writeln('  }')
     ..writeln()
     ..writeln('  @override')
     ..writeln('  YlColors copyWith({')

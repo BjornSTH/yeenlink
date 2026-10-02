@@ -55,6 +55,11 @@ class YlColors extends ThemeExtension<YlColors> {
     required this.avatar6,
     required this.avatar7,
     required this.avatar8,
+    required this.banner1,
+    required this.banner2,
+    required this.banner3,
+    required this.banner4,
+    required this.banner5,
   });
 
   /// Самый глубокий фон: рельса серверов, нижняя навигация, поля ввода внутри карточек.
@@ -198,6 +203,21 @@ class YlColors extends ThemeExtension<YlColors> {
   /// Фон аватара без картинки.
   final Color avatar8;
 
+  /// Фон баннера профиля без картинки. В профиле хранится имя токена (banner-1…5), каждый клиент рисует его в своей теме; неизвестное имя → banner-1.
+  final Color banner1;
+
+  /// Фон баннера профиля без картинки.
+  final Color banner2;
+
+  /// Фон баннера профиля без картинки.
+  final Color banner3;
+
+  /// Фон баннера профиля без картинки.
+  final Color banner4;
+
+  /// Фон баннера профиля без картинки.
+  final Color banner5;
+
   static const YlColors dark = YlColors(
     bg000: Color(0xFF151412),
     bg100: Color(0xFF1C1B19),
@@ -246,6 +266,11 @@ class YlColors extends ThemeExtension<YlColors> {
     avatar6: Color(0xFF8D8378),
     avatar7: Color(0xFF8F7E9C),
     avatar8: Color(0xFF7A8C6A),
+    banner1: Color(0xFF3A3026),
+    banner2: Color(0xFF2F3529),
+    banner3: Color(0xFF352C33),
+    banner4: Color(0xFF263236),
+    banner5: Color(0xFF3A2E28),
   );
 
   static const YlColors light = YlColors(
@@ -296,11 +321,16 @@ class YlColors extends ThemeExtension<YlColors> {
     avatar6: Color(0xFF8D8378),
     avatar7: Color(0xFF8F7E9C),
     avatar8: Color(0xFF7A8C6A),
+    banner1: Color(0xFFE3D3BC),
+    banner2: Color(0xFFD9E0CF),
+    banner3: Color(0xFFE2D5DE),
+    banner4: Color(0xFFCFDDE0),
+    banner5: Color(0xFFE8D3C6),
   );
 
   static YlColors of(BuildContext context) => _ylExtension<YlColors>(context);
 
-  /// Фоны аватаров без картинки (avatar-1…N), по порядку.
+  /// Палитра avatar-1…N по порядку.
   List<Color> get avatarPalette => [
     avatar1,
     avatar2,
@@ -311,6 +341,15 @@ class YlColors extends ThemeExtension<YlColors> {
     avatar7,
     avatar8,
   ];
+
+  /// Палитра banner-1…N по порядку.
+  List<Color> get bannerPalette => [banner1, banner2, banner3, banner4, banner5];
+
+  /// Цвет баннера по имени токена (banner-N); неизвестное имя — banner-1.
+  Color bannerByName(String? token) {
+    final i = int.tryParse(token?.replaceFirst('banner-', '') ?? '') ?? 1;
+    return bannerPalette[i >= 1 && i <= bannerPalette.length ? i - 1 : 0];
+  }
 
   @override
   YlColors copyWith({
@@ -361,6 +400,11 @@ class YlColors extends ThemeExtension<YlColors> {
     Color? avatar6,
     Color? avatar7,
     Color? avatar8,
+    Color? banner1,
+    Color? banner2,
+    Color? banner3,
+    Color? banner4,
+    Color? banner5,
   }) => YlColors(
     bg000: bg000 ?? this.bg000,
     bg100: bg100 ?? this.bg100,
@@ -409,6 +453,11 @@ class YlColors extends ThemeExtension<YlColors> {
     avatar6: avatar6 ?? this.avatar6,
     avatar7: avatar7 ?? this.avatar7,
     avatar8: avatar8 ?? this.avatar8,
+    banner1: banner1 ?? this.banner1,
+    banner2: banner2 ?? this.banner2,
+    banner3: banner3 ?? this.banner3,
+    banner4: banner4 ?? this.banner4,
+    banner5: banner5 ?? this.banner5,
   );
 
   @override
@@ -462,6 +511,11 @@ class YlColors extends ThemeExtension<YlColors> {
       avatar6: Color.lerp(avatar6, other.avatar6, t)!,
       avatar7: Color.lerp(avatar7, other.avatar7, t)!,
       avatar8: Color.lerp(avatar8, other.avatar8, t)!,
+      banner1: Color.lerp(banner1, other.banner1, t)!,
+      banner2: Color.lerp(banner2, other.banner2, t)!,
+      banner3: Color.lerp(banner3, other.banner3, t)!,
+      banner4: Color.lerp(banner4, other.banner4, t)!,
+      banner5: Color.lerp(banner5, other.banner5, t)!,
     );
   }
 }
@@ -814,6 +868,39 @@ abstract final class YlSize {
 
   /// Аватар на плитке голосового канала на телефоне.
   static const double avatarTileSm = 60;
+
+  /// Галочка YlCheckbox: квадрат radius-xs, отмечено — заливка accent и галочка on-accent.
+  static const double checkbox = 18;
+
+  /// Кружок выбора цвета баннера.
+  static const double swatch = 30;
+
+  /// Кнопка выбора аватара в онбординге, пунктир border-strong 2 px.
+  static const double avatarPicker = 84;
+
+  /// Полоса шагов онбординга.
+  static const double stepBarH = 4;
+
+  /// Зазор между сегментами полосы шагов.
+  static const double stepBarGap = 6;
+
+  /// Ячейка слова секретной фразы.
+  static const double seedCellH = 40;
+
+  /// Круг с галочкой на экране «Готово».
+  static const double successMark = 72;
+
+  /// Левая колонка экрана приветствия на ПК.
+  static const double onboardingAsideW = 580;
+
+  /// Плитка логотипа на экране приветствия ПК; скругление 30% от размера (14).
+  static const double logoLg = 48;
+
+  /// Плитка логотипа в рельсе (= rail-item).
+  static const double logoMd = 44;
+
+  /// Плитка логотипа на телефоне; скругление 11.
+  static const double logoSm = 36;
 }
 
 /// Прозрачность состояний.
