@@ -60,8 +60,15 @@ jobs:
           if-no-files-found: error
       - name: Модульные тесты (golden на Windows пропускаются)
         run: flutter test
-      - name: Интеграционный тест (Диспетчер учётных данных, подписи)
-        run: flutter test integration_test -d windows
+      # Каждый файл отдельно: при запуске нескольких подряд второе приложение
+      # на ПК не успевает подключиться («Error waiting for a debug connection»).
+      - name: Интеграционные тесты (Диспетчер учётных данных, подписи, путь восстановления)
+        shell: pwsh
+        run: |
+          foreach ($f in Get-ChildItem integration_test -Filter *_test.dart) {
+            flutter test "integration_test/$($f.Name)" -d windows
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          }
 
   linux:
     name: Linux (libsecret)
@@ -97,11 +104,13 @@ jobs:
           path: client/yeenlink-linux-x64.tar.gz
           retention-days: 14
           if-no-files-found: error
-      - name: Интеграционный тест (libsecret через gnome-keyring)
+      - name: Интеграционные тесты (libsecret через gnome-keyring), по одному файлу
         run: |
           dbus-run-session -- bash -c '
             echo -n "ci" | gnome-keyring-daemon --unlock --components=secrets >/dev/null
-            xvfb-run -a flutter test integration_test -d linux
+            for f in integration_test/*_test.dart; do
+              xvfb-run -a flutter test "$f" -d linux || exit 1
+            done
           '
 
   # APK собирается отдельно от эмулятора: демоны Gradle после сборки делят
@@ -173,4 +182,4 @@ jobs:
           disable-animations: true
           disk-size: 2048M
           working-directory: client
-          script: flutter test integration_test -d emulator-5554
+          script: for f in integration_test/*_test.dart; do flutter test "$f" -d emulator-5554 || exit 1; done

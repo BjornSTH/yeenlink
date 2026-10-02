@@ -35,9 +35,11 @@ class HomeStub extends StatelessWidget {
               children: [
                 const YlLogo(),
                 const SizedBox(height: YlSpace.s8),
+                // Баннер — не шире колонки онбординга, на телефоне — во всю ширину.
                 Container(
                   height: YlSize.avatarLg + 2 * YlSpace.s6,
-                  width: YlSize.onboardingAsideW,
+                  width: double.infinity,
+                  constraints: const BoxConstraints(maxWidth: YlSize.onboardingAsideW),
                   decoration: BoxDecoration(
                     color: c.bannerByName(profile?.bannerColor),
                     borderRadius: YlRadius.xl,
@@ -59,7 +61,11 @@ class HomeStub extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: YlSpace.s4),
-                Text(name ?? l.homeNoName, style: YlText.title.copyWith(color: c.ink)),
+                Text(
+                  name ?? l.homeNoName,
+                  textAlign: TextAlign.center,
+                  style: YlText.title.copyWith(color: c.ink),
+                ),
                 const SizedBox(height: YlSpace.s5),
                 _Row(
                   label: l.homeFingerprint,
@@ -100,11 +106,14 @@ class _Row extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final c = YlColors.of(context);
-    return Row(
-      mainAxisSize: MainAxisSize.min,
+    // На узком экране значение переносится под подпись.
+    return Wrap(
+      alignment: WrapAlignment.center,
+      crossAxisAlignment: WrapCrossAlignment.center,
+      spacing: YlSpace.s3,
+      runSpacing: YlSpace.s1,
       children: [
         Text(label, style: YlText.label.copyWith(color: c.muted)),
-        const SizedBox(width: YlSpace.s3),
         value,
       ],
     );

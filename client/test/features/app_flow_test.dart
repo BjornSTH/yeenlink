@@ -48,7 +48,11 @@ void main() {
   tearDown(() => dir.delete(recursive: true));
 
   Future<(AccountStore, FakeBridge)> start(WidgetTester tester) async {
-    setSurface(tester, const Size(390, 844));
+    // Самый узкий экран (эмулятор в CI) и крупный системный шрифт, как часто
+    // на телефонах: переполнение строк падает тестом.
+    setSurface(tester, const Size(320, 640));
+    tester.platformDispatcher.textScaleFactorTestValue = 1.3;
+    addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
     final vault = SlowVault();
     final store = AccountStore(
       vault: vault,
@@ -63,20 +67,26 @@ void main() {
     return (store, bridge);
   }
 
+  Future<void> tap(WidgetTester tester, String text) async {
+    await tester.ensureVisible(find.text(text));
+    await tester.pump();
+    await tester.tap(find.text(text));
+  }
+
   Future<void> restoreToNameStep(WidgetTester tester) async {
-    await tester.tap(find.text('У меня уже есть профиль'));
+    await tap(tester, 'У меня уже есть профиль');
     await tester.pump();
     await enter(tester, '12 слов через пробел', _phrase);
-    await tester.tap(find.text('Восстановить'));
+    await tap(tester, 'Восстановить');
     await tester.pump();
     await waitFor(tester, find.text('Придумайте PIN-код'));
     await enter(tester, 'PIN-код', '135790');
     await enter(tester, 'Повторите PIN-код', '135790');
-    await tester.tap(find.text('Дальше'));
+    await tap(tester, 'Дальше');
     await tester.pump();
     expect(find.text('Восстанавливаю…'), findsOneWidget, reason: 'на время сохранения');
     // Второе нажатие во время сохранения ничего не ломает.
-    await tester.tap(find.text('Восстанавливаю…'));
+    await tap(tester, 'Восстанавливаю…');
     await waitFor(tester, find.text('Как вас называть?'));
   }
 
@@ -85,9 +95,9 @@ void main() {
   ) async {
     final (store, _) = await start(tester);
     await restoreToNameStep(tester);
-    await tester.tap(find.text('Пропустить пока'));
+    await tap(tester, 'Пропустить пока');
     await waitFor(tester, find.text('Профиль готов'));
-    await tester.tap(find.text('Открыть YeenLink'));
+    await tap(tester, 'Открыть YeenLink');
     await waitFor(tester, find.byType(HomeStub));
 
     final id = await tester.runAsync(() => Identity.fromMnemonic(_phrase));
@@ -103,9 +113,9 @@ void main() {
     final (store, _) = await start(tester);
     await restoreToNameStep(tester);
     await enter(tester, 'Имя', 'Gnoll');
-    await tester.tap(find.text('Дальше'));
+    await tap(tester, 'Дальше');
     await waitFor(tester, find.text('Профиль готов'));
-    await tester.tap(find.text('Открыть YeenLink'));
+    await tap(tester, 'Открыть YeenLink');
     await waitFor(tester, find.byType(HomeStub));
 
     expect(find.text('Gnoll'), findsOneWidget);
