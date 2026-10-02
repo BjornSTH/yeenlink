@@ -1,6 +1,6 @@
 // Генератор токенов дизайн-системы: docs/design/tokens.json →
 // lib/ui/theme/tokens.g.dart (YlColors, YlShadows, YlText, YlSpace,
-// YlRadius, YlSize, YlMetrics).
+// YlRadius, YlSize, YlOpacity).
 //
 // Запуск из client/: dart run tool/gen_tokens.dart
 // В CI файл перегенерируется и сверяется с репозиторием (git diff).
@@ -9,20 +9,31 @@ import 'dart:io';
 
 const tokensPath = '../docs/design/tokens.json';
 
-/// ВРЕМЕННО: значения, которых пока нет в выгрузке дизайн-системы. Когда все
-/// они появятся в tokens.json — удалить файл и эту константу (CLAUDE.md).
-const localTokensPath = '../docs/design/tokens.local.json';
+/// Группы верхнего уровня, которые генератор знает. Новая группа в выгрузке —
+/// ошибка, чтобы её значения не потерялись молча.
+const knownGroups = {
+  'name',
+  'version',
+  'color',
+  'type',
+  'spacing',
+  'radius',
+  'shadow',
+  'size',
+  'opacity',
+};
 
 const outPath = 'lib/ui/theme/tokens.g.dart';
 
 void main(List<String> args) {
   final tokens = _readJson(tokensPath)!;
-  final local = _readJson(localTokensPath);
+  final unknown = tokens.keys.toSet().difference(knownGroups);
+  if (unknown.isNotEmpty) {
+    stderr.writeln('В $tokensPath новые группы, генератор их не знает: ${unknown.join(', ')}');
+    exit(1);
+  }
 
-  final colors = [
-    ..._list(tokens, ['color', 'tokens']),
-    ..._list(local, ['color', 'tokens']),
-  ];
+  final colors = _list(tokens, ['color', 'tokens']);
   final themes = [
     for (final t in _list(tokens, ['color', 'themes'])) t['id'] as String,
   ];
@@ -30,18 +41,11 @@ void main(List<String> args) {
   final textStyles = [
     for (final g in _list(tokens, ['type', 'groups']))
       for (final s in g['styles'] as List) {...s as Map<String, dynamic>, 'family': g['family']},
-    ..._list(local, ['type', 'styles']),
   ];
-
-  _checkNoOverlap(tokens, local);
 
   final out = StringBuffer()
     ..writeln('// СГЕНЕРИРОВАНО tool/gen_tokens.dart из docs/design/tokens.json')
-    ..writeln(
-      local == null
-          ? '// Не править руками.'
-          : '// и docs/design/tokens.local.json (временно). Не править руками.',
-    )
+    ..writeln('// Не править руками.')
     ..writeln()
     ..writeln("import 'package:flutter/material.dart' show Theme, ThemeExtension;")
     ..writeln("import 'package:flutter/widgets.dart';")
@@ -65,15 +69,13 @@ void main(List<String> args) {
     _list(tokens, ['size', 'tokens']),
     _camel,
   );
-  if (local != null) {
-    _scalar(
-      out,
-      'YlMetrics',
-      'Размеры компонентов из превью (временно, tokens.local.json).',
-      _list(local, ['metric', 'tokens']),
-      _camel,
-    );
-  }
+  _scalar(
+    out,
+    'YlOpacity',
+    'Прозрачность состояний.',
+    _list(tokens, ['opacity', 'tokens']),
+    (n) => _camel(n.replaceFirst(RegExp(r'-opacity$'), '')),
+  );
 
   File(outPath).writeAsStringSync(out.toString());
   final fmt = Process.runSync('dart', ['format', '--page-width', '100', outPath]);
@@ -82,34 +84,6 @@ void main(List<String> args) {
     exit(1);
   }
   stdout.writeln('Записан $outPath');
-}
-
-/// Имя, перенесённое в tokens.json, должно уйти из временного файла:
-/// иначе неясно, какое значение главное.
-void _checkNoOverlap(Map<String, dynamic> tokens, Map<String, dynamic>? local) {
-  if (local == null) return;
-  Set<String> names(Iterable<Map<String, dynamic>> xs) => {for (final x in xs) x['name'] as String};
-  final main = {
-    ...names(_list(tokens, ['color', 'tokens'])),
-    ...names([
-      for (final g in _list(tokens, ['type', 'groups']))
-        for (final s in g['styles'] as List) s as Map<String, dynamic>,
-    ]),
-    for (final group in ['spacing', 'radius', 'size', 'shadow'])
-      ...names(_list(tokens, [group, 'tokens'])),
-  };
-  final dup = {
-    ...names(_list(local, ['color', 'tokens'])),
-    ...names(_list(local, ['type', 'styles'])),
-    ...names(_list(local, ['metric', 'tokens'])),
-  }.intersection(main);
-  if (dup.isNotEmpty) {
-    stderr.writeln(
-      'Эти имена уже есть в $tokensPath — удалите их из $localTokensPath: '
-      '${(dup.toList()..sort()).join(', ')}',
-    );
-    exit(1);
-  }
 }
 
 Map<String, dynamic>? _readJson(String path) {

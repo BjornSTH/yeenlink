@@ -39,7 +39,7 @@ class _IconPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final scale = size.width / 24;
-    final stroke = size.width <= YlMetrics.iconSm ? YlMetrics.iconStrokeSm : YlMetrics.iconStroke;
+    final stroke = size.width <= YlSize.iconSm ? YlSize.iconStrokeSm : YlSize.iconStroke;
     canvas.scale(scale);
     final paint = Paint()
       ..color = color

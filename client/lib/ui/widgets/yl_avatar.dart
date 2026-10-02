@@ -46,7 +46,7 @@ class YlAvatar extends StatelessWidget {
   const YlAvatar.server({
     super.key,
     required this.name,
-    this.size = 44,
+    this.size = YlSize.railItem,
     this.squared = true,
     this.image,
   }) : server = true,
@@ -100,8 +100,8 @@ class YlAvatar extends StatelessWidget {
         // Кольцо говорящего: зазор цветом фона, затем accent (Avatar/preview).
         boxShadow: speaking
             ? [
-                BoxShadow(color: c.accent, spreadRadius: 2 * YlMetrics.avatarRing),
-                BoxShadow(color: under, spreadRadius: YlMetrics.avatarRing),
+                BoxShadow(color: c.accent, spreadRadius: 2 * YlSize.avatarRing),
+                BoxShadow(color: under, spreadRadius: YlSize.avatarRing),
               ]
             : null,
       ),
@@ -109,7 +109,7 @@ class YlAvatar extends StatelessWidget {
           ? null
           : Text(
               initials(name),
-              // Размер букв — треть стороны, как в превью (40 → 13, 56 → 18).
+              // Размер букв — треть стороны, как в превью (40 → 13, 44 → 14).
               style: YlText.label.copyWith(
                 fontSize: (size * 0.32).roundToDouble(),
                 fontWeight: FontWeight.w800,
@@ -121,21 +121,21 @@ class YlAvatar extends StatelessWidget {
 
     final st = status;
     if (st != null) {
-      const dotOuter = YlSize.statusDot + 2 * YlMetrics.avatarDotBorder;
+      const dotOuter = YlSize.statusDot + 2 * YlSize.avatarDotBorder;
       face = Stack(
         clipBehavior: Clip.none,
         children: [
           face,
           Positioned(
-            right: YlMetrics.avatarDotOffset,
-            bottom: YlMetrics.avatarDotOffset,
+            right: YlSize.avatarDotOffset,
+            bottom: YlSize.avatarDotOffset,
             child: Container(
               width: dotOuter,
               height: dotOuter,
               decoration: BoxDecoration(
                 color: st.color(c),
                 shape: BoxShape.circle,
-                border: Border.all(color: under, width: YlMetrics.avatarDotBorder),
+                border: Border.all(color: under, width: YlSize.avatarDotBorder),
               ),
             ),
           ),

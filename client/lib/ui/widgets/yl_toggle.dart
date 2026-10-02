@@ -34,7 +34,7 @@ class YlToggle extends StatelessWidget {
     final hint = lockedReason ?? description;
     final enabled = !_locked && onChanged != null;
     return Opacity(
-      opacity: _locked ? YlMetrics.disabledOpacity : 1,
+      opacity: _locked ? YlOpacity.disabled : 1,
       child: Pressable(
         onTap: enabled ? () => onChanged!(!value) : null,
         button: false,
@@ -79,12 +79,12 @@ class _Track extends StatelessWidget {
       duration: const Duration(milliseconds: 150),
       width: YlSize.toggleW,
       height: YlSize.toggleH,
-      padding: const EdgeInsets.all(YlMetrics.toggleInset),
+      padding: const EdgeInsets.all(YlSize.toggleInset),
       decoration: BoxDecoration(color: track, borderRadius: YlRadius.full),
       foregroundDecoration: focused
           ? BoxDecoration(
               borderRadius: YlRadius.full,
-              border: Border.all(color: c.ink, width: YlMetrics.focusRing),
+              border: Border.all(color: c.ink, width: YlSize.focusRing),
             )
           : null,
       child: AnimatedAlign(

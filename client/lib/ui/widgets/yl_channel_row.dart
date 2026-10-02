@@ -61,7 +61,7 @@ class YlChannelRow extends StatelessWidget {
           foregroundDecoration: s.focused
               ? BoxDecoration(
                   borderRadius: YlRadius.sm,
-                  border: Border.all(color: c.accent, width: YlMetrics.focusRing),
+                  border: Border.all(color: c.accent, width: YlSize.focusRing),
                 )
               : null,
           child: Row(
@@ -69,7 +69,7 @@ class YlChannelRow extends StatelessWidget {
               YlIcon(
                 kind == YlChannelKind.text ? YlIconData.hash : YlIconData.speaker,
                 color: connected ? c.statusOnline : c.subtle,
-                size: YlMetrics.iconSm,
+                size: YlSize.iconSm,
               ),
               const SizedBox(width: YlSpace.s2),
               Expanded(

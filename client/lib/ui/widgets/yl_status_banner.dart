@@ -68,15 +68,15 @@ class YlStatusBanner extends StatelessWidget {
               child: Text(message, style: YlText.banner.copyWith(color: ink)),
             ),
             if (address != null) ...[
-              const SizedBox(width: YlMetrics.bannerGap),
+              const SizedBox(width: YlSize.bannerGap),
               RedactedText(RedactKind.address, address!, style: YlText.monoSm.copyWith(color: ink)),
             ],
             if (actionLabel != null) ...[
-              const SizedBox(width: YlMetrics.bannerGap),
+              const SizedBox(width: YlSize.bannerGap),
               Pressable(
                 onTap: onAction,
                 builder: (context, s) => Container(
-                  height: YlMetrics.bannerActionHeight,
+                  height: YlSize.bannerActionH,
                   padding: const EdgeInsets.symmetric(horizontal: YlSpace.s3),
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
@@ -84,7 +84,7 @@ class YlStatusBanner extends StatelessWidget {
                     borderRadius: YlRadius.sm,
                     border: Border.all(
                       color: s.focused ? ink : border,
-                      width: s.focused ? YlMetrics.focusRing : 1,
+                      width: s.focused ? YlSize.focusRing : 1,
                     ),
                   ),
                   child: Text(

@@ -48,11 +48,11 @@ class YlChip extends StatelessWidget {
         children: [
           if (roleColor != null) ...[
             Container(
-              width: YlMetrics.chipDot,
-              height: YlMetrics.chipDot,
+              width: YlSize.chipDot,
+              height: YlSize.chipDot,
               decoration: BoxDecoration(color: roleColor, shape: BoxShape.circle),
             ),
-            const SizedBox(width: YlMetrics.chipGap),
+            const SizedBox(width: YlSize.chipGap),
           ],
           Text(
             text,

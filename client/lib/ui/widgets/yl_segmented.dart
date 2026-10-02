@@ -81,7 +81,7 @@ class YlSegmented<T> extends StatelessWidget {
           foregroundDecoration: s.focused
               ? BoxDecoration(
                   borderRadius: YlRadius.sm,
-                  border: Border.all(color: c.accent, width: YlMetrics.focusRing),
+                  border: Border.all(color: c.accent, width: YlSize.focusRing),
                 )
               : null,
           child: Text(

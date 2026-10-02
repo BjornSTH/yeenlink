@@ -80,7 +80,7 @@ class YlButton extends StatelessWidget {
           foregroundDecoration: s.focused
               ? BoxDecoration(
                   borderRadius: YlRadius.lg,
-                  border: Border.all(color: c.accent, width: YlMetrics.focusRing),
+                  border: Border.all(color: c.accent, width: YlSize.focusRing),
                 )
               : null,
           child: Row(

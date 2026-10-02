@@ -1,5 +1,5 @@
 // СГЕНЕРИРОВАНО tool/gen_tokens.dart из docs/design/tokens.json
-// и docs/design/tokens.local.json (временно). Не править руками.
+// Не править руками.
 
 import 'package:flutter/material.dart' show Theme, ThemeExtension;
 import 'package:flutter/widgets.dart';
@@ -605,6 +605,14 @@ abstract final class YlText {
     fontWeight: FontWeight.w400,
   );
 
+  /// Текст кнопок высоты control-lg; вторичная и тихая кнопки — насыщенность 600.
+  static const TextStyle button = TextStyle(
+    fontFamily: sansFamily,
+    fontSize: 15,
+    height: 1.2,
+    fontWeight: FontWeight.w700,
+  );
+
   /// Отпечатки ключей, адреса, порты, коды приглашений, броски кубиков.
   static const TextStyle mono = TextStyle(
     fontFamily: monoFamily,
@@ -621,15 +629,7 @@ abstract final class YlText {
     fontWeight: FontWeight.w400,
   );
 
-  /// Текст кнопки высоты control-lg (вторичная и тихая — 600). Button/preview.html.
-  static const TextStyle button = TextStyle(
-    fontFamily: sansFamily,
-    fontSize: 15,
-    height: 1.2,
-    fontWeight: FontWeight.w700,
-  );
-
-  /// Таймер голосового канала в строке. ChannelRow/preview.html.
+  /// Таймер голосового канала в строке канала.
   static const TextStyle monoXs = TextStyle(
     fontFamily: monoFamily,
     fontSize: 11,
@@ -763,52 +763,61 @@ abstract final class YlSize {
 
   /// Точка статуса на аватаре; обводка 3 px цветом фона.
   static const double statusDot = 10;
-}
 
-/// Размеры компонентов из превью (временно, tokens.local.json).
-abstract final class YlMetrics {
-  /// Обводка иконок 24 px (design/README.md).
-  static const double iconStroke = 1.8;
-
-  /// Обводка мелких иконок 16 px.
-  static const double iconStrokeSm = 2;
-
-  /// Иконка в строке канала.
+  /// Иконки в строках каналов и мелких кнопках.
   static const double iconSm = 16;
 
-  /// Обводка фокуса с клавиатуры (в макетах нет; доступность).
+  /// Обводка иконок 24 px.
+  static const double iconStroke = 1.8;
+
+  /// Обводка иконок 16 px.
+  static const double iconStrokeSm = 2;
+
+  /// Обводка фокуса с клавиатуры цветом accent; в макетах не показана, но обязательна.
   static const double focusRing = 2;
 
-  /// Заблокированная строка с переключателем (Toggle/README.md).
-  static const double disabledOpacity = 0.6;
-
-  /// Отступ бегунка от края дорожки.
+  /// Отступ бегунка от края дорожки переключателя.
   static const double toggleInset = 3;
 
   /// Зазор между точкой и текстом чипа.
   static const double chipGap = 6;
 
-  /// Точка цвета роли.
+  /// Точка цвета роли в чипе.
   static const double chipDot = 8;
 
-  /// Высота и минимальная ширина счётчика.
+  /// Высота и минимальная ширина счётчика непрочитанных.
   static const double counterSize = 20;
 
-  /// Зазор в полосе состояния.
+  /// Зазор между иконкой, текстом и действием в полосе состояния.
   static const double bannerGap = 10;
 
-  /// Кнопка «Повторить сейчас» в полосе.
-  static const double bannerActionHeight = 30;
+  /// Высота кнопки действия в полосе состояния.
+  static const double bannerActionH = 30;
 
-  /// Ширина колонки каналов в превью ChannelRow.
-  static const double channelColumnWidth = 248;
+  /// Ширина колонки каналов на ПК.
+  static const double channelColumnW = 248;
 
-  /// Обводка точки статуса цветом фона.
+  /// Иконки серверов и кнопки в рельсе на ПК (48 на телефоне — touch-min с запасом).
+  static const double railItem = 44;
+
+  /// Обводка точки статуса цветом фона под аватаром.
   static const double avatarDotBorder = 3;
 
   /// Сдвиг точки статуса за край аватара.
   static const double avatarDotOffset = -2;
 
-  /// Зазор и толщина кольца говорящего.
+  /// Зазор и толщина двойного кольца говорящего.
   static const double avatarRing = 3;
+
+  /// Аватар на плитке голосового канала на ПК.
+  static const double avatarTile = 96;
+
+  /// Аватар на плитке голосового канала на телефоне.
+  static const double avatarTileSm = 60;
+}
+
+/// Прозрачность состояний.
+abstract final class YlOpacity {
+  /// Заблокированная строка с переключателем (права Владельца), офлайн-участники в списке — 0.55 → тоже 0.6.
+  static const double disabled = 0.6;
 }

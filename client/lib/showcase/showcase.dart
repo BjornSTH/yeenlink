@@ -271,7 +271,11 @@ class _PanelBodyState extends State<_PanelBody> {
                 YlAvatar.user(name: l10n.scNameSpotted, status: YlStatus.offline),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: YlSpace.s2),
-                  child: YlAvatar.user(name: l10n.scNameSpotted, size: 56, speaking: true),
+                  child: YlAvatar.user(
+                    name: l10n.scNameSpotted,
+                    size: YlSize.avatarMd,
+                    speaking: true,
+                  ),
                 ),
                 YlAvatar.server(name: l10n.scServerName),
                 YlAvatar.server(name: l10n.scServerName, squared: false),
@@ -338,7 +342,7 @@ class _PanelBodyState extends State<_PanelBody> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  width: YlMetrics.channelColumnWidth,
+                  width: YlSize.channelColumnW,
                   padding: const EdgeInsets.all(YlSpace.s2),
                   decoration: BoxDecoration(color: c.bg200, borderRadius: YlRadius.lg),
                   child: Column(

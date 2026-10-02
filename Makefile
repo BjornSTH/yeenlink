@@ -58,7 +58,7 @@ fmt:
 
 gen: gen-tokens gen-l10n vectors
 
-# YlColors, YlText, YlSpace, YlRadius, YlSize, YlMetrics из docs/design/tokens.json.
+# YlColors, YlShadows, YlText, YlSpace, YlRadius, YlSize, YlOpacity из docs/design/tokens.json.
 gen-tokens:
 	cd client && $(FLUTTER_RUN) dart run tool/gen_tokens.dart
 

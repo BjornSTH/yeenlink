@@ -27,8 +27,8 @@ class YlBadge extends StatelessWidget {
 
     if (_kind == _BadgeKind.count) {
       return Container(
-        height: YlMetrics.counterSize,
-        constraints: const BoxConstraints(minWidth: YlMetrics.counterSize),
+        height: YlSize.counterSize,
+        constraints: const BoxConstraints(minWidth: YlSize.counterSize),
         padding: const EdgeInsets.symmetric(horizontal: YlSize.badgePadX),
         decoration: BoxDecoration(color: c.accent, borderRadius: YlRadius.full),
         child: Row(

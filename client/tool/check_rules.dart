@@ -69,7 +69,7 @@ final _rules = <({String name, RegExp re, bool Function(String path) applies})>[
     applies: (p) => p != _generated,
   ),
   (
-    name: 'отступ числом (используйте YlSpace / YlMetrics)',
+    name: 'отступ числом (используйте YlSpace / YlSize)',
     re: RegExp(r'EdgeInsets\.(all|symmetric|only|fromLTRB)\([^)]*\b[1-9]\d*(\.\d+)?\b'),
     applies: (p) => p != _generated,
   ),
