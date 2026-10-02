@@ -47,12 +47,12 @@ lint-server:
 lint-client:
 	cd client && $(FLUTTER_RUN) sh -c '\
 		flutter analyze --fatal-infos && \
-		dart format --page-width 100 --output=none --set-exit-if-changed lib/ui lib/core lib/showcase lib/main.dart lib/main_showcase.dart test tool && \
+		dart format --page-width 100 --output=none --set-exit-if-changed lib/ui lib/core lib/showcase lib/main.dart lib/main_showcase.dart lib/features lib/app test tool integration_test && \
 		dart run tool/check_rules.dart'
 
 fmt:
 	cd server && gofmt -w .
-	cd client && $(FLUTTER_RUN) dart format --page-width 100 lib/ui lib/core lib/showcase lib/main.dart lib/main_showcase.dart test tool
+	cd client && $(FLUTTER_RUN) dart format --page-width 100 lib/ui lib/core lib/showcase lib/main.dart lib/main_showcase.dart lib/features lib/app test tool integration_test
 
 # --- генерация ---------------------------------------------------------------
 

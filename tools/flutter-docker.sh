@@ -5,7 +5,7 @@
 set -euo pipefail
 root="$(cd "$(dirname "$0")/.." && pwd)"
 version="$(cat "$root/client/.flutter-version")"
-image="yeenlink-flutter:$version"
+image="yeenlink-flutter:$version-2"
 if ! docker image inspect "$image" >/dev/null 2>&1; then
   docker build -q -t "$image" --build-arg FLUTTER_VERSION="$version" \
     -f "$root/tools/flutter.Dockerfile" "$root/tools" >&2
@@ -16,7 +16,7 @@ case "$PWD" in "$root"*) workdir="/w$rel" ;; *) workdir="/w/client" ;; esac
 tty=(); [ -t 1 ] && tty=(-t)
 exec docker run --rm -i "${tty[@]}" \
   -u "$(id -u):$(id -g)" \
-  -e HOME=/tmp/home -e PUB_CACHE=/cache/pub -e FLUTTER_SUPPRESS_ANALYTICS=true \
+  -e HOME=/tmp/home -e PUB_CACHE=/cache/pub -e GRADLE_USER_HOME=/cache/gradle -e FLUTTER_SUPPRESS_ANALYTICS=true \
   -v yeenlink-pub-cache:/cache \
   -v "$root:/w" -w "$workdir" \
   "$image" "$@"
