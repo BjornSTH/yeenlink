@@ -39,12 +39,12 @@ class YlSegmented<T> extends StatelessWidget {
     final c = YlColors.of(context);
     final l10n = L10n.of(context);
     final bar = Container(
-      padding: const EdgeInsets.all(YlMetrics.segmentInset),
+      padding: const EdgeInsets.all(YlSize.segmentInset),
       decoration: BoxDecoration(color: c.bg000, borderRadius: YlRadius.md),
       child: Row(
         children: [
           for (var i = 0; i < segments.length; i++) ...[
-            if (i > 0) const SizedBox(width: YlMetrics.segmentInset),
+            if (i > 0) const SizedBox(width: YlSize.segmentInset),
             Expanded(child: _segment(c, l10n, segments[i])),
           ],
         ],
@@ -75,7 +75,7 @@ class YlSegmented<T> extends StatelessWidget {
             ? c.ink
             : c.subtle;
         return Container(
-          height: YlMetrics.segmentHeight,
+          height: YlSize.segmentH,
           alignment: Alignment.center,
           decoration: BoxDecoration(color: selected ? c.bg400 : null, borderRadius: YlRadius.sm),
           foregroundDecoration: s.focused

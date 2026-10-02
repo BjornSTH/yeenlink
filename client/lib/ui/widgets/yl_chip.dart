@@ -36,8 +36,8 @@ class YlChip extends StatelessWidget {
     final fg = !isReaction || mine ? c.ink : c.muted;
 
     Widget body(bool hovered) => Container(
-      height: YlMetrics.chipHeight,
-      padding: const EdgeInsets.symmetric(horizontal: YlMetrics.chipPadX),
+      height: YlSize.chipH,
+      padding: const EdgeInsets.symmetric(horizontal: YlSize.chipPadX),
       decoration: BoxDecoration(
         color: !isReaction || mine ? c.bg300 : (hovered ? c.bg300 : null),
         borderRadius: YlRadius.full,

@@ -55,7 +55,7 @@ class YlChannelRow extends StatelessWidget {
             ? FontWeight.w600
             : FontWeight.w400;
         return Container(
-          height: touch ? YlMetrics.channelRowHeightTouch : YlMetrics.channelRowHeight,
+          height: touch ? YlSize.channelRowHTouch : YlSize.channelRowH,
           padding: const EdgeInsets.symmetric(horizontal: YlSpace.s2),
           decoration: BoxDecoration(color: selected ? c.bg400 : null, borderRadius: YlRadius.sm),
           foregroundDecoration: s.focused

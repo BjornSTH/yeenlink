@@ -51,6 +51,10 @@ class YlColors extends ThemeExtension<YlColors> {
     required this.avatar2,
     required this.avatar3,
     required this.avatar4,
+    required this.avatar5,
+    required this.avatar6,
+    required this.avatar7,
+    required this.avatar8,
   });
 
   /// Самый глубокий фон: рельса серверов, нижняя навигация, поля ввода внутри карточек.
@@ -170,7 +174,7 @@ class YlColors extends ThemeExtension<YlColors> {
   /// Затемнение под модальными окнами и нижним листом.
   final Color scrim;
 
-  /// Фон аватара без картинки (инициалы on-accent). Avatar/preview.html.
+  /// Фон аватара без картинки; цвет закреплён за человеком (хеш ключа % 8) и не меняется от темы. Инициалы — on-accent, контраст ≥ 4,6:1.
   final Color avatar1;
 
   /// Фон аватара без картинки.
@@ -181,6 +185,18 @@ class YlColors extends ThemeExtension<YlColors> {
 
   /// Фон аватара без картинки.
   final Color avatar4;
+
+  /// Фон аватара без картинки.
+  final Color avatar5;
+
+  /// Фон аватара без картинки.
+  final Color avatar6;
+
+  /// Фон аватара без картинки.
+  final Color avatar7;
+
+  /// Фон аватара без картинки.
+  final Color avatar8;
 
   static const YlColors dark = YlColors(
     bg000: Color(0xFF151412),
@@ -222,10 +238,14 @@ class YlColors extends ThemeExtension<YlColors> {
     hyenaBanner: Color(0xFF3A3026),
     hyenaSpot: Color(0xFF4E3E2D),
     scrim: Color(0xAD0F0E0D),
-    avatar1: Color(0xFF8A6E4B),
-    avatar2: Color(0xFF6E7A63),
-    avatar3: Color(0xFF9A8566),
-    avatar4: Color(0xFF7D6A7A),
+    avatar1: Color(0xFF9F7F57),
+    avatar2: Color(0xFF7C8970),
+    avatar3: Color(0xFF937F90),
+    avatar4: Color(0xFF9A8566),
+    avatar5: Color(0xFFA17D6C),
+    avatar6: Color(0xFF8D8378),
+    avatar7: Color(0xFF8F7E9C),
+    avatar8: Color(0xFF7A8C6A),
   );
 
   static const YlColors light = YlColors(
@@ -268,13 +288,29 @@ class YlColors extends ThemeExtension<YlColors> {
     hyenaBanner: Color(0xFFE3D3BC),
     hyenaSpot: Color(0xFFCDB596),
     scrim: Color(0x732A2622),
-    avatar1: Color(0xFF8A6E4B),
-    avatar2: Color(0xFF6E7A63),
-    avatar3: Color(0xFF9A8566),
-    avatar4: Color(0xFF7D6A7A),
+    avatar1: Color(0xFF9F7F57),
+    avatar2: Color(0xFF7C8970),
+    avatar3: Color(0xFF937F90),
+    avatar4: Color(0xFF9A8566),
+    avatar5: Color(0xFFA17D6C),
+    avatar6: Color(0xFF8D8378),
+    avatar7: Color(0xFF8F7E9C),
+    avatar8: Color(0xFF7A8C6A),
   );
 
   static YlColors of(BuildContext context) => _ylExtension<YlColors>(context);
+
+  /// Фоны аватаров без картинки (avatar-1…N), по порядку.
+  List<Color> get avatarPalette => [
+    avatar1,
+    avatar2,
+    avatar3,
+    avatar4,
+    avatar5,
+    avatar6,
+    avatar7,
+    avatar8,
+  ];
 
   @override
   YlColors copyWith({
@@ -321,6 +357,10 @@ class YlColors extends ThemeExtension<YlColors> {
     Color? avatar2,
     Color? avatar3,
     Color? avatar4,
+    Color? avatar5,
+    Color? avatar6,
+    Color? avatar7,
+    Color? avatar8,
   }) => YlColors(
     bg000: bg000 ?? this.bg000,
     bg100: bg100 ?? this.bg100,
@@ -365,6 +405,10 @@ class YlColors extends ThemeExtension<YlColors> {
     avatar2: avatar2 ?? this.avatar2,
     avatar3: avatar3 ?? this.avatar3,
     avatar4: avatar4 ?? this.avatar4,
+    avatar5: avatar5 ?? this.avatar5,
+    avatar6: avatar6 ?? this.avatar6,
+    avatar7: avatar7 ?? this.avatar7,
+    avatar8: avatar8 ?? this.avatar8,
   );
 
   @override
@@ -414,6 +458,10 @@ class YlColors extends ThemeExtension<YlColors> {
       avatar2: Color.lerp(avatar2, other.avatar2, t)!,
       avatar3: Color.lerp(avatar3, other.avatar3, t)!,
       avatar4: Color.lerp(avatar4, other.avatar4, t)!,
+      avatar5: Color.lerp(avatar5, other.avatar5, t)!,
+      avatar6: Color.lerp(avatar6, other.avatar6, t)!,
+      avatar7: Color.lerp(avatar7, other.avatar7, t)!,
+      avatar8: Color.lerp(avatar8, other.avatar8, t)!,
     );
   }
 }
@@ -540,10 +588,35 @@ abstract final class YlText {
     letterSpacing: 0.88,
   );
 
+  /// Бейджи ЭФИР и БОТ, всегда заглавными.
+  static const TextStyle badge = TextStyle(
+    fontFamily: sansFamily,
+    fontSize: 10,
+    height: 1.2,
+    fontWeight: FontWeight.w800,
+    letterSpacing: 0.4,
+  );
+
+  /// Текст полос состояния.
+  static const TextStyle banner = TextStyle(
+    fontFamily: sansFamily,
+    fontSize: 13,
+    height: 1.45,
+    fontWeight: FontWeight.w400,
+  );
+
   /// Отпечатки ключей, адреса, порты, коды приглашений, броски кубиков.
   static const TextStyle mono = TextStyle(
     fontFamily: monoFamily,
     fontSize: 13,
+    height: 1.4,
+    fontWeight: FontWeight.w400,
+  );
+
+  /// Отпечатки и адреса в подписях, плашках и полосах состояния.
+  static const TextStyle monoSm = TextStyle(
+    fontFamily: monoFamily,
+    fontSize: 12,
     height: 1.4,
     fontWeight: FontWeight.w400,
   );
@@ -554,31 +627,6 @@ abstract final class YlText {
     fontSize: 15,
     height: 1.2,
     fontWeight: FontWeight.w700,
-  );
-
-  /// Бейджи ЭФИР и БОТ. Badge/preview.html.
-  static const TextStyle badge = TextStyle(
-    fontFamily: sansFamily,
-    fontSize: 10,
-    height: 1.2,
-    fontWeight: FontWeight.w800,
-    letterSpacing: 0.4,
-  );
-
-  /// Текст полосы состояния. StatusBanner/preview.html.
-  static const TextStyle banner = TextStyle(
-    fontFamily: sansFamily,
-    fontSize: 13,
-    height: 1.45,
-    fontWeight: FontWeight.w400,
-  );
-
-  /// Адрес в полосе состояния. StatusBanner/preview.html.
-  static const TextStyle monoSm = TextStyle(
-    fontFamily: monoFamily,
-    fontSize: 12,
-    height: 1.45,
-    fontWeight: FontWeight.w400,
   );
 
   /// Таймер голосового канала в строке. ChannelRow/preview.html.
@@ -661,6 +709,60 @@ abstract final class YlSize {
 
   /// Рельса серверов на ПК (70px на телефоне).
   static const double railWidth = 72;
+
+  /// Аватары в голосовом канале под строкой канала.
+  static const double avatarXs = 24;
+
+  /// Аватары в списке участников и в рельсе на телефоне.
+  static const double avatarSm = 32;
+
+  /// Аватары сообщений.
+  static const double avatarMd = 40;
+
+  /// Аватар в карточке участника.
+  static const double avatarLg = 76;
+
+  /// Высота чипа роли и реакции.
+  static const double chipH = 28;
+
+  /// Горизонтальный отступ чипа.
+  static const double chipPadX = 10;
+
+  /// Ширина переключателя.
+  static const double toggleW = 44;
+
+  /// Высота переключателя; бегунок 20, отступ 3.
+  static const double toggleH = 26;
+
+  /// Бегунок переключателя.
+  static const double toggleKnob = 20;
+
+  /// Высота кнопки сегмента.
+  static const double segmentH = 34;
+
+  /// Отступ подложки сегмента и зазор между кнопками.
+  static const double segmentInset = 3;
+
+  /// Вертикальный отступ полосы состояния.
+  static const double bannerPadY = 10;
+
+  /// Горизонтальный отступ полосы состояния.
+  static const double bannerPadX = 16;
+
+  /// Горизонтальный отступ бейджа.
+  static const double badgePadX = 6;
+
+  /// Вертикальный отступ бейджа.
+  static const double badgePadY = 2;
+
+  /// Строка канала на ПК.
+  static const double channelRowH = 34;
+
+  /// Строка канала на телефоне.
+  static const double channelRowHTouch = 40;
+
+  /// Точка статуса на аватаре; обводка 3 px цветом фона.
+  static const double statusDot = 10;
 }
 
 /// Размеры компонентов из превью (временно, tokens.local.json).
@@ -680,29 +782,8 @@ abstract final class YlMetrics {
   /// Заблокированная строка с переключателем (Toggle/README.md).
   static const double disabledOpacity = 0.6;
 
-  /// Переключатель.
-  static const double toggleWidth = 44;
-
-  /// Переключатель.
-  static const double toggleHeight = 26;
-
-  /// Бегунок переключателя.
-  static const double toggleThumb = 20;
-
   /// Отступ бегунка от края дорожки.
   static const double toggleInset = 3;
-
-  /// Высота варианта сегментированного выбора.
-  static const double segmentHeight = 34;
-
-  /// Отступ и зазор внутри подложки сегментов.
-  static const double segmentInset = 3;
-
-  /// Чип роли и реакции.
-  static const double chipHeight = 28;
-
-  /// Горизонтальный отступ чипа.
-  static const double chipPadX = 10;
 
   /// Зазор между точкой и текстом чипа.
   static const double chipGap = 6;
@@ -710,17 +791,8 @@ abstract final class YlMetrics {
   /// Точка цвета роли.
   static const double chipDot = 8;
 
-  /// Бейдж и счётчик.
-  static const double badgePadX = 6;
-
-  /// Бейдж.
-  static const double badgePadY = 2;
-
   /// Высота и минимальная ширина счётчика.
   static const double counterSize = 20;
-
-  /// Полоса состояния (по горизонтали — space-4).
-  static const double bannerPadY = 10;
 
   /// Зазор в полосе состояния.
   static const double bannerGap = 10;
@@ -730,15 +802,6 @@ abstract final class YlMetrics {
 
   /// Ширина колонки каналов в превью ChannelRow.
   static const double channelColumnWidth = 248;
-
-  /// Строка канала на ПК.
-  static const double channelRowHeight = 34;
-
-  /// Строка канала на телефоне.
-  static const double channelRowHeightTouch = 40;
-
-  /// Точка статуса на аватаре.
-  static const double avatarDot = 10;
 
   /// Обводка точки статуса цветом фона.
   static const double avatarDotBorder = 3;

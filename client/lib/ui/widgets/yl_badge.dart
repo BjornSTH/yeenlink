@@ -29,7 +29,7 @@ class YlBadge extends StatelessWidget {
       return Container(
         height: YlMetrics.counterSize,
         constraints: const BoxConstraints(minWidth: YlMetrics.counterSize),
-        padding: const EdgeInsets.symmetric(horizontal: YlMetrics.badgePadX),
+        padding: const EdgeInsets.symmetric(horizontal: YlSize.badgePadX),
         decoration: BoxDecoration(color: c.accent, borderRadius: YlRadius.full),
         child: Row(
           mainAxisSize: MainAxisSize.min,
@@ -51,10 +51,7 @@ class YlBadge extends StatelessWidget {
 
     final live = _kind == _BadgeKind.live;
     return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: YlMetrics.badgePadX,
-        vertical: YlMetrics.badgePadY,
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: YlSize.badgePadX, vertical: YlSize.badgePadY),
       decoration: BoxDecoration(color: live ? c.accent : c.bg400, borderRadius: YlRadius.xs),
       child: Text(
         live ? l10n.badgeLive : l10n.badgeBot,

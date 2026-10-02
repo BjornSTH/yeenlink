@@ -77,8 +77,8 @@ class _Track extends StatelessWidget {
     final track = locked ? c.statusOffline : (on ? c.accent : c.border);
     return AnimatedContainer(
       duration: const Duration(milliseconds: 150),
-      width: YlMetrics.toggleWidth,
-      height: YlMetrics.toggleHeight,
+      width: YlSize.toggleW,
+      height: YlSize.toggleH,
       padding: const EdgeInsets.all(YlMetrics.toggleInset),
       decoration: BoxDecoration(color: track, borderRadius: YlRadius.full),
       foregroundDecoration: focused
@@ -91,8 +91,8 @@ class _Track extends StatelessWidget {
         duration: const Duration(milliseconds: 150),
         alignment: on ? Alignment.centerRight : Alignment.centerLeft,
         child: Container(
-          width: YlMetrics.toggleThumb,
-          height: YlMetrics.toggleThumb,
+          width: YlSize.toggleKnob,
+          height: YlSize.toggleKnob,
           decoration: BoxDecoration(color: c.ink, shape: BoxShape.circle),
         ),
       ),

@@ -9,8 +9,8 @@ import 'dart:io';
 
 const tokensPath = '../docs/design/tokens.json';
 
-/// ВРЕМЕННО: значения, которых пока нет в выгрузке дизайн-системы. После
-/// следующей выгрузки tokens.json удалить файл и эту константу (CLAUDE.md).
+/// ВРЕМЕННО: значения, которых пока нет в выгрузке дизайн-системы. Когда все
+/// они появятся в tokens.json — удалить файл и эту константу (CLAUDE.md).
 const localTokensPath = '../docs/design/tokens.local.json';
 
 const outPath = 'lib/ui/theme/tokens.g.dart';
@@ -32,6 +32,8 @@ void main(List<String> args) {
       for (final s in g['styles'] as List) {...s as Map<String, dynamic>, 'family': g['family']},
     ..._list(local, ['type', 'styles']),
   ];
+
+  _checkNoOverlap(tokens, local);
 
   final out = StringBuffer()
     ..writeln('// СГЕНЕРИРОВАНО tool/gen_tokens.dart из docs/design/tokens.json')
@@ -80,6 +82,34 @@ void main(List<String> args) {
     exit(1);
   }
   stdout.writeln('Записан $outPath');
+}
+
+/// Имя, перенесённое в tokens.json, должно уйти из временного файла:
+/// иначе неясно, какое значение главное.
+void _checkNoOverlap(Map<String, dynamic> tokens, Map<String, dynamic>? local) {
+  if (local == null) return;
+  Set<String> names(Iterable<Map<String, dynamic>> xs) => {for (final x in xs) x['name'] as String};
+  final main = {
+    ...names(_list(tokens, ['color', 'tokens'])),
+    ...names([
+      for (final g in _list(tokens, ['type', 'groups']))
+        for (final s in g['styles'] as List) s as Map<String, dynamic>,
+    ]),
+    for (final group in ['spacing', 'radius', 'size', 'shadow'])
+      ...names(_list(tokens, [group, 'tokens'])),
+  };
+  final dup = {
+    ...names(_list(local, ['color', 'tokens'])),
+    ...names(_list(local, ['type', 'styles'])),
+    ...names(_list(local, ['metric', 'tokens'])),
+  }.intersection(main);
+  if (dup.isNotEmpty) {
+    stderr.writeln(
+      'Эти имена уже есть в $tokensPath — удалите их из $localTokensPath: '
+      '${(dup.toList()..sort()).join(', ')}',
+    );
+    exit(1);
+  }
 }
 
 Map<String, dynamic>? _readJson(String path) {
@@ -168,6 +198,12 @@ void _colors(StringBuffer out, List<Map<String, dynamic>> colors, List<String> t
     ..writeln()
     ..writeln('  static YlColors of(BuildContext context) =>')
     ..writeln('      _ylExtension<YlColors>(context);')
+    ..writeln()
+    ..writeln('  /// Фоны аватаров без картинки (avatar-1…N), по порядку.')
+    ..writeln(
+      '  List<Color> get avatarPalette => [${[for (final n in names)
+        if (RegExp(r'^avatar\d+$').hasMatch(n)) n].join(', ')}];',
+    )
     ..writeln()
     ..writeln('  @override')
     ..writeln('  YlColors copyWith({')

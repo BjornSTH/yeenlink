@@ -14,7 +14,7 @@ signed-type = "profile" / "post" / "device_cert" / "revoke" / "devices" / "addre
 
 pubkey = bstr .size 32
 sha256 = bstr .size 32
-unix-ms = uint
+unix-ms = uint                ; все времена — unix-время в миллисекундах (docs/spec.md)
 blob-ref = { sha256: sha256, mime: tstr, size: uint }
 
 ; t = "profile", подписывает master.
@@ -59,7 +59,7 @@ invite = {
   name: tstr,
   addrs: [+ address],
   secret: bstr .size 16,
-  ? exp: unix-ms,             ; в спецификации — «unix-время»; единицы уточнить в фазе 4
+  ? exp: unix-ms,             ; срок, unix-время в мс, как все времена
   ? uses: uint,
   approve: bool,
 }

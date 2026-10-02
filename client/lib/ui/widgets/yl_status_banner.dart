@@ -54,7 +54,10 @@ class YlStatusBanner extends StatelessWidget {
       liveRegion: true,
       container: true,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: YlSpace.s4, vertical: YlMetrics.bannerPadY),
+        padding: const EdgeInsets.symmetric(
+          horizontal: YlSize.bannerPadX,
+          vertical: YlSize.bannerPadY,
+        ),
         decoration: BoxDecoration(
           color: bg,
           border: Border(bottom: BorderSide(color: border)),

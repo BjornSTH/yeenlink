@@ -33,7 +33,7 @@ class YlAvatar extends StatelessWidget {
   const YlAvatar.user({
     super.key,
     required this.name,
-    this.size = 40,
+    this.size = YlSize.avatarMd,
     this.status,
     this.speaking = false,
     this.image,
@@ -77,7 +77,7 @@ class YlAvatar extends StatelessWidget {
   }
 
   static Color _fill(YlColors c, String name) {
-    final palette = [c.avatar1, c.avatar2, c.avatar3, c.avatar4];
+    final palette = c.avatarPalette;
     final hash = name.runes.fold<int>(0, (h, r) => (h * 31 + r) & 0x7fffffff);
     return palette[hash % palette.length];
   }
@@ -121,7 +121,7 @@ class YlAvatar extends StatelessWidget {
 
     final st = status;
     if (st != null) {
-      const dotOuter = YlMetrics.avatarDot + 2 * YlMetrics.avatarDotBorder;
+      const dotOuter = YlSize.statusDot + 2 * YlMetrics.avatarDotBorder;
       face = Stack(
         clipBehavior: Clip.none,
         children: [
