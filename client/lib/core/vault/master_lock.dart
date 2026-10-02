@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:isolate';
 import 'dart:typed_data';
 
 import 'package:cryptography/cryptography.dart';
@@ -69,8 +70,33 @@ class MasterLock {
 
   static final _aead = Xchacha20.poly1305Aead();
 
-  /// Шифрует энтропию фразы под секрет.
+  /// Шифрует энтропию фразы под секрет. Argon2id и шифр — в отдельном изоляте.
   static Future<Uint8List> seal({
+    required List<int> entropy,
+    required String secret,
+    required SecretKind kind,
+    required List<int> masterPub,
+    KdfParams params = KdfParams.standard,
+    List<int>? salt,
+    List<int>? nonce,
+  }) {
+    final e = List<int>.of(entropy), pub = List<int>.of(masterPub);
+    final s = salt == null ? null : List<int>.of(salt),
+        n = nonce == null ? null : List<int>.of(nonce);
+    return Isolate.run(
+      () => _seal(
+        entropy: e,
+        secret: secret,
+        kind: kind,
+        masterPub: pub,
+        params: params,
+        salt: s,
+        nonce: n,
+      ),
+    );
+  }
+
+  static Future<Uint8List> _seal({
     required List<int> entropy,
     required String secret,
     required SecretKind kind,
@@ -104,8 +130,18 @@ class MasterLock {
         .takeBytes();
   }
 
-  /// Расшифровывает энтропию. Неверный секрет — [WrongSecret].
+  /// Расшифровывает энтропию в отдельном изоляте. Неверный секрет —
+  /// [WrongSecret].
   static Future<Uint8List> open({
+    required Uint8List blob,
+    required String secret,
+    required List<int> masterPub,
+  }) {
+    final b = Uint8List.fromList(blob), pub = List<int>.of(masterPub);
+    return Isolate.run(() => _open(blob: b, secret: secret, masterPub: pub));
+  }
+
+  static Future<Uint8List> _open({
     required Uint8List blob,
     required String secret,
     required List<int> masterPub,
@@ -140,10 +176,10 @@ class MasterLock {
     }
   }
 
-  /// Только для замера в [KdfParams.choose].
-  static Future<void> deriveForProbe(KdfParams p) async {
+  /// Только для замера в [KdfParams.choose]; в отдельном изоляте.
+  static Future<void> deriveForProbe(KdfParams p) => Isolate.run(() async {
     await (await _derive('probe', List.filled(16, 0), p)).extractBytes();
-  }
+  });
 
   /// Какой секрет защищает блоб — чтобы показать PIN-клавиатуру или поле пароля.
   static SecretKind kindOf(Uint8List blob) =>

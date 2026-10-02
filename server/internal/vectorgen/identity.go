@@ -29,6 +29,7 @@ type keyVector struct {
 	ShortFingerprint string `json:"short_fingerprint"`
 	NextPub          string `json:"next_pub"`
 	NextKeyHash      string `json:"next_key_hash"`
+	AvatarColor8     int    `json:"avatar_color_of_8"`
 }
 
 type badMnemonic struct {
@@ -102,6 +103,11 @@ func writeIdentity(dir string) error {
 	// ZWJ (U+200D) внутри эмодзи-семьи разрешён: 9 букв + 5 кодовых точек.
 	emoji := minimal
 	emoji.Name = "Пятнистый👨\u200D👩\u200D👧"
+	// Локальный профиль после восстановления по фразе: seq 0, любой профиль с
+	// сервера его заменит.
+	restored := minimal
+	restored.Seq = 0
+	restored.Name = "Gnoll"
 	cert := identity.DeviceCert{DevicePub: pub(dev1), Name: "Компьютер · Linux", Platform: "linux", Created: created}
 	revoke := identity.Revoke{DevicePub: pub(dev2), Reason: "Потерян", At: created + 60_000}
 	list := identity.Devices{Seq: 2, Active: [][]byte{pub(dev1)}, Revoked: [][]byte{pub(dev2)}}
@@ -115,6 +121,7 @@ func writeIdentity(dir string) error {
 		{"profile", identity.TypeProfile, "main", profile, main.Master},
 		{"profile_minimal", identity.TypeProfile, "main", minimal, main.Master},
 		{"profile_emoji_zwj", identity.TypeProfile, "main", emoji, main.Master},
+		{"profile_restored", identity.TypeProfile, "main", restored, main.Master},
 		{"device_cert", identity.TypeDeviceCert, "main", cert, main.Master},
 		{"revoke", identity.TypeRevoke, "main", revoke, main.Master},
 		{"devices", identity.TypeDevices, "main", list, main.Master},
@@ -303,6 +310,7 @@ func keyVec(name string, id *identity.Identity) keyVector {
 		ShortFingerprint: identity.ShortFingerprint(id.MasterPub()),
 		NextPub:          hx(id.NextPub),
 		NextKeyHash:      hx(id.NextKeyHash[:]),
+		AvatarColor8:     identity.AvatarColorIndex(id.MasterPub(), 8),
 	}
 }
 

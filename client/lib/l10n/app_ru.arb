@@ -259,7 +259,6 @@
     }
   },
   "deviceNamePhoneUnknown": "Телефон",
-  "homeProfileRestored": "Профиль восстановлен",
   "homeFingerprint": "Отпечаток ключа",
   "homeDevice": "Это устройство",
   "homeNoServers": "Серверов пока нет: подключение появится в фазе 2.",
@@ -273,5 +272,17 @@
   },
   "onbRestoreEnterPhrase": "Введите 12 слов",
   "onbPinEnterTwice": "Введите PIN дважды",
-  "onbTextBidi": "Здесь есть невидимые символы направления текста — ими подделывают имена. Уберите их."
+  "onbTextBidi": "Здесь есть невидимые символы направления текста — ими подделывают имена. Уберите их.",
+  "onbRestoredProfileText": "Если вы уже заходили на серверы, имя и аватар подтянутся оттуда при подключении. Можно указать сейчас.",
+  "onbRestoreSaving": "Восстанавливаю…",
+  "onbSaving": "Сохраняю…",
+  "onbProfileSaveFailed": "Не получилось сохранить профиль: {reason}",
+  "@onbProfileSaveFailed": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "homeNoName": "Имя не указано"
 }

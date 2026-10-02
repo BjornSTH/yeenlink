@@ -7,7 +7,7 @@ import '../../core/identity/identity.dart';
 
 /// Шаги первого входа (docs/spec.md, «Карта экранов»; макет OnbSteps).
 /// Создание: профиль → фраза → PIN → подключение → готово.
-/// Восстановление: фраза → PIN → готово.
+/// Восстановление: фраза → PIN → «Как вас называть?» (необязательно) → готово.
 enum OnbStep { welcome, profile, seed, pin, join, restore, done }
 
 enum OnbMode { create, restore }
@@ -41,6 +41,10 @@ class OnboardingController extends ChangeNotifier {
   OnbMode _mode = OnbMode.create;
   OnbStep get step => _step;
   OnbMode get mode => _mode;
+
+  /// Шаг «Как вас называть?» после восстановления: имя необязательно, профиль
+  /// сохраняется с seq = 0 и уступает любому профилю с сервера.
+  bool get isRestoredProfile => _mode == OnbMode.restore && _step == OnbStep.profile;
 
   /// Номер шага создания с единицы или null, если полоса не показывается.
   int? get stepNumber {
@@ -174,8 +178,13 @@ class OnboardingController extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// Сохраняет ключи под PIN. [deviceName] — «Компьютер · Linux» и т. п.
-  Future<void> savePin({required String deviceName, required String platform}) async {
+  /// Сохраняет ключи под PIN. [deviceName] спрашивает у платформы имя
+  /// устройства («Компьютер · Linux» и т. п.) — уже внутри обработки ошибок,
+  /// а повторное нажатие во время сохранения ничего не делает.
+  Future<void> savePin({
+    required Future<String> Function() deviceName,
+    required String platform,
+  }) async {
     final id = _identity;
     if (!pinReady || id == null || saving) return;
     update((c) {
@@ -183,6 +192,7 @@ class OnboardingController extends ChangeNotifier {
       c.saveError = null;
     });
     try {
+      final device = await deviceName();
       _account = _mode == OnbMode.create
           ? await store.create(
               identity: id,
@@ -193,19 +203,65 @@ class OnboardingController extends ChangeNotifier {
                 bannerColor: bannerColor,
                 avatar: avatar,
               ),
-              deviceName: deviceName,
+              deviceName: device,
               platform: platform,
             )
-          : await store.restore(identity: id, pin: pin, deviceName: deviceName, platform: platform);
-      id.wipe();
-      _identity = null;
+          : await store.restore(identity: id, pin: pin, deviceName: device, platform: platform);
       pin = pinRepeat = phrase = '';
-      _step = _mode == OnbMode.create ? OnbStep.join : OnbStep.done;
+      if (_mode == OnbMode.create) {
+        _wipeIdentity();
+        _step = OnbStep.join;
+      } else {
+        // Главный ключ нужен ещё на шаге имени — подписать локальный профиль.
+        _step = OnbStep.profile;
+      }
     } on Object catch (e) {
       saveError = '$e';
     }
     saving = false;
     notifyListeners();
+  }
+
+  /// После восстановления: сохраняет имя и аватар (seq = 0) или, если имя не
+  /// указано, ничего не сохраняет — профиль придёт с сервера.
+  Future<void> finishRestoredProfile() async {
+    final id = _identity;
+    if (!isRestoredProfile || saving) return;
+    final err = draftError;
+    if (err != null && err != DraftError.nameEmpty) return;
+    if (err == DraftError.nameEmpty || id == null) {
+      _wipeIdentity();
+      _go(OnbStep.done);
+      return;
+    }
+    update((c) {
+      c.saving = true;
+      c.saveError = null;
+    });
+    try {
+      _account = await store.saveRestoredProfile(
+        identity: id,
+        draft: ProfileDraft(name: name, about: about, bannerColor: bannerColor, avatar: avatar),
+      );
+      _wipeIdentity();
+      _step = OnbStep.done;
+    } on Object catch (e) {
+      saveError = '$e';
+    }
+    saving = false;
+    notifyListeners();
+  }
+
+  /// «Пропустить пока» на шаге имени после восстановления.
+  void skipRestoredProfile() {
+    if (!isRestoredProfile || saving) return;
+    _wipeIdentity();
+    _go(OnbStep.done);
+  }
+
+  void _wipeIdentity() {
+    _identity?.wipe();
+    _identity = null;
   }
 
   void skipJoin() => _go(OnbStep.done);

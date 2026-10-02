@@ -151,7 +151,15 @@ class _AppRootState extends State<AppRoot> {
         return OnboardingScreen(
           controller: _onboarding,
           bridge: widget.services.bridge,
-          onOpenApp: () => setState(() => _account = _load()),
+          // Не `setState(() => _account = …)`: стрелка возвращает значение
+          // присваивания — Future, и в отладочной сборке setState падает на
+          // assert, перехода нет (баг фазы 1 на Android). Только тело в скобках.
+          onOpenApp: () {
+            final next = _load();
+            setState(() {
+              _account = next;
+            });
+          },
         );
       },
     );

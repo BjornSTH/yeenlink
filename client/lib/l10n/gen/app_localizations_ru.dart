@@ -488,9 +488,6 @@ class L10nRu extends L10n {
   String get deviceNamePhoneUnknown => 'Телефон';
 
   @override
-  String get homeProfileRestored => 'Профиль восстановлен';
-
-  @override
   String get homeFingerprint => 'Отпечаток ключа';
 
   @override
@@ -513,4 +510,22 @@ class L10nRu extends L10n {
   @override
   String get onbTextBidi =>
       'Здесь есть невидимые символы направления текста — ими подделывают имена. Уберите их.';
+
+  @override
+  String get onbRestoredProfileText =>
+      'Если вы уже заходили на серверы, имя и аватар подтянутся оттуда при подключении. Можно указать сейчас.';
+
+  @override
+  String get onbRestoreSaving => 'Восстанавливаю…';
+
+  @override
+  String get onbSaving => 'Сохраняю…';
+
+  @override
+  String onbProfileSaveFailed(String reason) {
+    return 'Не получилось сохранить профиль: $reason';
+  }
+
+  @override
+  String get homeNoName => 'Имя не указано';
 }

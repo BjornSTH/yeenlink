@@ -110,6 +110,7 @@ void main() {
       expect(shortFingerprint(id.masterPub), k['short_fingerprint'], reason: name);
       expect(_toHex(id.nextPub), k['next_pub'], reason: name);
       expect(_toHex(id.nextKeyHash), k['next_key_hash'], reason: name);
+      expect(avatarColorIndex(id.masterPub, 8), k['avatar_color_of_8'], reason: name);
       final again = await Identity.fromEntropy(id.entropy);
       expect(again.masterPub, id.masterPub);
     }

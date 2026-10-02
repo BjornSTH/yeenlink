@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:isolate';
 import 'dart:typed_data';
 
 import 'package:cryptography/cryptography.dart';
@@ -111,9 +112,42 @@ class AccountStore {
     required String platform,
   }) async {
     final now = _nowMs();
+    final signedProfile = await _signProfile(identity, draft, seq: 1, now: now);
+    final account = await _store(identity, pin, deviceName, platform, now);
+    return _saveProfile(account, signedProfile, draft.avatar);
+  }
+
+  /// Восстановление по фразе: новый ключ устройства и сертификат. Профиля нет —
+  /// его можно указать сразу ([saveRestoredProfile]) или он придёт с сервера
+  /// (фаза 2). Список устройств — тоже в фазе 2.
+  Future<LocalAccount> restore({
+    required Identity identity,
+    required String pin,
+    required String deviceName,
+    required String platform,
+  }) => _store(identity, pin, deviceName, platform, _nowMs());
+
+  /// Локальный профиль после восстановления: seq = 0, поэтому любой профиль
+  /// с сервера (seq ≥ 1) его заменит.
+  Future<LocalAccount> saveRestoredProfile({
+    required Identity identity,
+    required ProfileDraft draft,
+  }) async {
+    final account = await load();
+    if (account == null) throw StateError('профиля на устройстве нет');
+    final signed = await _signProfile(identity, draft, seq: 0, now: _nowMs());
+    return _saveProfile(account, signed, draft.avatar);
+  }
+
+  Future<Signed> _signProfile(
+    Identity identity,
+    ProfileDraft draft, {
+    required int seq,
+    required int now,
+  }) {
     final profile = Profile(
       master: identity.masterPub,
-      seq: 1,
+      seq: seq,
       name: normalizeText(draft.name),
       about: normalizeText(draft.about),
       avatar: draft.avatar?.ref,
@@ -121,31 +155,27 @@ class AccountStore {
       nextKeyHash: identity.nextKeyHash,
       updated: now,
     )..validate();
-    final signedProfile = await Signed.sign(
-      SignedType.profile,
-      profile.toMap(),
-      identity.masterSeed,
-    );
-    final account = await _store(identity, pin, deviceName, platform, now);
-    await _profileFile.writeAsBytes(signedProfile.encode(), flush: true);
-    if (draft.avatar != null) await _avatarFile.writeAsBytes(draft.avatar!.png, flush: true);
+    final map = profile.toMap();
+    final seed = Uint8List.fromList(identity.masterSeed);
+    // Ed25519 на чистом Dart — в отдельном изоляте, чтобы не стопорить интерфейс.
+    return Isolate.run(() => Signed.sign(SignedType.profile, map, seed));
+  }
+
+  Future<LocalAccount> _saveProfile(
+    LocalAccount account,
+    Signed profile,
+    AvatarImage? avatar,
+  ) async {
+    await _profileFile.writeAsBytes(profile.encode(), flush: true);
+    if (avatar != null) await _avatarFile.writeAsBytes(avatar.png, flush: true);
     return LocalAccount(
       masterPub: account.masterPub,
       devicePub: account.devicePub,
       deviceCert: account.deviceCert,
-      profile: signedProfile,
-      avatarPng: draft.avatar?.png,
+      profile: profile,
+      avatarPng: avatar?.png,
     );
   }
-
-  /// Восстановление по фразе: новый ключ устройства и сертификат. Профиль и
-  /// список устройств придут с сервера в фазе 2.
-  Future<LocalAccount> restore({
-    required Identity identity,
-    required String pin,
-    required String deviceName,
-    required String platform,
-  }) => _store(identity, pin, deviceName, platform, _nowMs());
 
   Future<LocalAccount> _store(
     Identity identity,
@@ -157,14 +187,15 @@ class AccountStore {
     await wipe();
     await dir.create(recursive: true);
     final deviceSeed = Uint8List.fromList(SecretKeyData.random(length: 32).bytes);
-    final devicePub = await publicKeyOf(deviceSeed);
-    final cert = DeviceCert(
-      devicePub: devicePub,
-      name: normalizeText(deviceName),
-      platform: platform,
-      created: now,
-    )..validate();
-    final signedCert = await Signed.sign(SignedType.deviceCert, cert.toMap(), identity.masterSeed);
+    final masterSeed = Uint8List.fromList(identity.masterSeed);
+    final name = normalizeText(deviceName);
+    // Ключ устройства и подпись сертификата — в отдельном изоляте.
+    final (devicePub, signedCert) = await Isolate.run(() async {
+      final pub = await publicKeyOf(deviceSeed);
+      final cert = DeviceCert(devicePub: pub, name: name, platform: platform, created: now)
+        ..validate();
+      return (pub, await Signed.sign(SignedType.deviceCert, cert.toMap(), masterSeed));
+    });
     final blob = await MasterLock.seal(
       entropy: identity.entropy,
       secret: pin,

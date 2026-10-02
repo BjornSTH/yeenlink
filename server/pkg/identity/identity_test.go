@@ -8,6 +8,7 @@ import (
 	"encoding/json"
 	"errors"
 	"os"
+	"strconv"
 	"strings"
 	"testing"
 
@@ -138,6 +139,7 @@ type keyVector struct {
 	ShortFingerprint              string `json:"short_fingerprint"`
 	NextPub                       string `json:"next_pub"`
 	NextKeyHash                   string `json:"next_key_hash"`
+	AvatarColor8                  int    `json:"avatar_color_of_8"`
 }
 
 type keysFile struct {
@@ -168,6 +170,7 @@ func TestIdentityKeys(t *testing.T) {
 			"short":         {identity.ShortFingerprint(id.MasterPub()), k.ShortFingerprint},
 			"next_pub":      {hex.EncodeToString(id.NextPub), k.NextPub},
 			"next_key_hash": {hex.EncodeToString(id.NextKeyHash[:]), k.NextKeyHash},
+			"avatar_color":  {strconv.Itoa(identity.AvatarColorIndex(id.MasterPub(), 8)), strconv.Itoa(k.AvatarColor8)},
 		}
 		for field, c := range checks {
 			if c[0] != c[1] {

@@ -3,6 +3,7 @@ package identity
 import (
 	"bytes"
 	"crypto/ed25519"
+	"crypto/sha256"
 	"strings"
 	"unicode"
 	"unicode/utf8"
@@ -24,6 +25,13 @@ const (
 // Platforms — допустимые платформы устройства.
 var Platforms = []string{"windows", "linux", "android", "macos"}
 
+// AvatarColorIndex — номер цвета аватара без картинки в палитре из n цветов:
+// первый байт SHA-256 главного ключа по модулю n. Одинаков на всех устройствах.
+func AvatarColorIndex(masterPub []byte, n int) int {
+	sum := sha256.Sum256(masterPub)
+	return int(sum[0]) % n
+}
+
 // BannerColors — допустимые имена цветов баннера (токены дизайн-системы).
 // Неизвестное имя при показе заменяется на первое.
 var BannerColors = []string{"banner-1", "banner-2", "banner-3", "banner-4", "banner-5"}
@@ -35,7 +43,9 @@ type BlobRef struct {
 	Size   uint64 `cbor:"size"`
 }
 
-// Profile — payload t = "profile", подписывает master.
+// Profile — payload t = "profile", подписывает master. Seq 0 — локальный
+// профиль после восстановления по фразе: любой профиль с сервера (seq ≥ 1)
+// его заменяет.
 type Profile struct {
 	V           uint64   `cbor:"v"`
 	Master      []byte   `cbor:"master"`
@@ -136,8 +146,6 @@ func (p *Profile) validate() error {
 	switch {
 	case p.V != ProfileVersion:
 		return fail(ErrBadPayload, "версия профиля %d", p.V)
-	case p.Seq == 0:
-		return fail(ErrBadPayload, "seq начинается с 1")
 	case p.Updated == 0:
 		return fail(ErrBadPayload, "нет updated")
 	case p.Banner != nil && p.BannerColor != "":

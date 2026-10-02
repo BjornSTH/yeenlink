@@ -217,8 +217,17 @@ void main() {
     await tester.tap(find.text('Дальше'));
     await settle(tester, () => h.controller.step == OnbStep.pin && h.controller.saveError == null);
 
+    // После PIN — необязательный шаг имени с пояснением, без «Назад».
+    expect(find.text('Как вас называть?'), findsOneWidget);
+    expect(find.textContaining('подтянутся оттуда при подключении'), findsOneWidget);
+    expect(find.text('Назад'), findsNothing);
+    expect(h.controller.identity, isNotNull, reason: 'ключ нужен, чтобы подписать профиль');
+    await tester.tap(find.text('Пропустить пока'));
+    await tester.pump();
+
     expect(find.text('Профиль готов'), findsOneWidget);
     expect(find.textContaining('подтянутся с сервера'), findsOneWidget);
+    expect(h.controller.identity, isNull, reason: 'главный ключ стёрт из памяти');
     final acc = await tester.runAsync(h.store.load);
     expect(acc!.profile, isNull);
     expect(DeviceCert.fromMap(acc.deviceCert.payloadMap()).name, 'Телефон · Pixel 8');
@@ -281,10 +290,24 @@ void main() {
           ..toPin()
           ..update((c) => c.pin = c.pinRepeat = '135790');
         await t.runAsync(
-          () => h.controller.savePin(deviceName: 'Компьютер · Linux', platform: 'linux'),
+          () =>
+              h.controller.savePin(deviceName: () async => 'Компьютер · Linux', platform: 'linux'),
         );
       },
       'restore': (t, h) async => h.controller.startRestore(),
+      'restored_profile': (t, h) async {
+        h.controller
+          ..startRestore()
+          ..update((c) => c.phrase = _phrase);
+        await t.runAsync(h.controller.checkPhrase);
+        h.controller.update((c) => c.pin = c.pinRepeat = '135790');
+        await t.runAsync(
+          () => h.controller.savePin(
+            deviceName: () async => 'Телефон · Pixel 8',
+            platform: 'android',
+          ),
+        );
+      },
       'done': (t, h) async {
         h.controller
           ..startCreate()
@@ -295,7 +318,8 @@ void main() {
           ..toPin()
           ..update((c) => c.pin = c.pinRepeat = '135790');
         await t.runAsync(
-          () => h.controller.savePin(deviceName: 'Компьютер · Linux', platform: 'linux'),
+          () =>
+              h.controller.savePin(deviceName: () async => 'Компьютер · Linux', platform: 'linux'),
         );
         h.controller.skipJoin();
       },

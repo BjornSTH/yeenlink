@@ -265,14 +265,15 @@ class _PanelBodyState extends State<_PanelBody> {
               runSpacing: YlSpace.s3,
               crossAxisAlignment: WrapCrossAlignment.center,
               children: [
-                YlAvatar.user(name: l10n.scNameKrivozub, status: YlStatus.online),
-                YlAvatar.user(name: l10n.scNameSavanna, status: YlStatus.idle),
-                YlAvatar.user(name: l10n.scNameKhokhotun, status: YlStatus.dnd),
-                YlAvatar.user(name: l10n.scNameSpotted, status: YlStatus.offline),
+                YlAvatar.user(name: l10n.scNameKrivozub, colorIndex: 7, status: YlStatus.online),
+                YlAvatar.user(name: l10n.scNameSavanna, colorIndex: 3, status: YlStatus.idle),
+                YlAvatar.user(name: l10n.scNameKhokhotun, colorIndex: 2, status: YlStatus.dnd),
+                YlAvatar.user(name: l10n.scNameSpotted, colorIndex: 4, status: YlStatus.offline),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: YlSpace.s2),
                   child: YlAvatar.user(
                     name: l10n.scNameSpotted,
+                    colorIndex: 4,
                     size: YlSize.avatarMd,
                     speaking: true,
                   ),

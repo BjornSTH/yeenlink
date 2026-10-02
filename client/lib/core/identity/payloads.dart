@@ -113,7 +113,8 @@ class BlobRef {
   }
 }
 
-/// Payload t = "profile", подписывает master.
+/// Payload t = "profile", подписывает master. Seq 0 — локальный профиль после
+/// восстановления по фразе: любой профиль с сервера (seq ≥ 1) его заменит.
 class Profile {
   const Profile({
     required this.master,
@@ -179,7 +180,6 @@ class Profile {
 
   void validate() {
     if (v != Limits.profileVersion) _bad('версия профиля $v');
-    if (seq == 0) _bad('seq начинается с 1');
     if (updated == 0) _bad('нет updated');
     if (banner != null && bannerColor != null) _bad('banner и banner_color вместе');
     _checkText('name', name, 1, Limits.nameMaxRunes);

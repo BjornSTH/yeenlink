@@ -1,3 +1,4 @@
+import 'dart:isolate';
 import 'dart:typed_data';
 
 import 'package:crypto/crypto.dart' as hash;
@@ -36,15 +37,21 @@ class Identity {
   final Uint8List nextPub;
   final Uint8List nextKeyHash;
 
-  /// Проверяет фразу и выводит ключи. Ввод нормализуется.
+  /// Проверяет фразу и выводит ключи. Ввод нормализуется. Проверка слов —
+  /// сразу ([PhraseException]); вывод ключей (PBKDF2, SLIP-0010, Ed25519) —
+  /// в отдельном изоляте, чтобы не останавливать интерфейс.
   static Future<Identity> fromMnemonic(String input) {
     final m = normalizeMnemonic(input);
-    return _derive(mnemonicToEntropy(m), m);
+    final entropy = mnemonicToEntropy(m);
+    return Isolate.run(() => _derive(entropy, m));
   }
 
-  /// Ключи из энтропии фразы (так она хранится под PIN).
-  static Future<Identity> fromEntropy(List<int> entropy) =>
-      _derive(Uint8List.fromList(entropy), entropyToMnemonic(entropy));
+  /// Ключи из энтропии фразы (так она хранится под PIN); в отдельном изоляте.
+  static Future<Identity> fromEntropy(List<int> entropy) {
+    final e = Uint8List.fromList(entropy);
+    final m = entropyToMnemonic(e);
+    return Isolate.run(() => _derive(e, m));
+  }
 
   static Future<Identity> _derive(Uint8List entropy, String mnemonic) async {
     final seed = await mnemonicToSeed(mnemonic);
@@ -92,3 +99,8 @@ String fingerprint(List<int> pub) {
 
 /// Первые две группы отпечатка, для карточек: A0D2·5F11.
 String shortFingerprint(List<int> pub) => fingerprint(pub).substring(0, 9);
+
+/// Номер цвета аватара без картинки в палитре из [n] цветов: первый байт
+/// SHA-256 главного ключа по модулю [n] — одинаков на всех устройствах
+/// (spec/identity.md). Та же функция в Go — identity.AvatarColorIndex.
+int avatarColorIndex(List<int> masterPub, int n) => hash.sha256.convert(masterPub).bytes[0] % n;

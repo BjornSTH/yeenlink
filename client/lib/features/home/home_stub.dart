@@ -14,7 +14,8 @@ class HomeStub extends StatelessWidget {
 
   final LocalAccount account;
 
-  /// Разобранный профиль; null — восстановлен по фразе и ещё не пришёл с сервера.
+  /// Разобранный профиль; null — восстановлен по фразе без имени, профиль
+  /// придёт с сервера (фаза 2).
   final Profile? profile;
 
   @override
@@ -22,7 +23,8 @@ class HomeStub extends StatelessWidget {
     final c = YlColors.of(context);
     final l = L10n.of(context);
     final avatar = account.avatarPng;
-    final name = profile?.name ?? l.homeProfileRestored;
+    final name = profile?.name;
+    final fp = fingerprint(account.masterPub);
     return YlSurface(
       child: SafeArea(
         child: Center(
@@ -41,20 +43,29 @@ class HomeStub extends StatelessWidget {
                     borderRadius: YlRadius.xl,
                   ),
                   alignment: Alignment.center,
-                  child: YlAvatar.user(
-                    name: name,
-                    size: YlSize.avatarLg,
-                    image: avatar == null ? null : MemoryImage(avatar),
+                  // Без имени — первые два символа отпечатка, через redact: в
+                  // режиме стримера отпечатка не видно, и букв тоже.
+                  child: ValueListenableBuilder<bool>(
+                    valueListenable: streamerMode,
+                    builder: (context, _, _) => YlAvatar.user(
+                      name: name,
+                      colorIndex: avatarColorIndex(account.masterPub, c.avatarPalette.length),
+                      fallbackInitials: redact(RedactKind.fingerprint, fp, l) == fp
+                          ? fp.substring(0, 2)
+                          : '',
+                      size: YlSize.avatarLg,
+                      image: avatar == null ? null : MemoryImage(avatar),
+                    ),
                   ),
                 ),
                 const SizedBox(height: YlSpace.s4),
-                Text(name, style: YlText.title.copyWith(color: c.ink)),
+                Text(name ?? l.homeNoName, style: YlText.title.copyWith(color: c.ink)),
                 const SizedBox(height: YlSpace.s5),
                 _Row(
                   label: l.homeFingerprint,
                   value: RedactedText(
                     RedactKind.fingerprint,
-                    fingerprint(account.masterPub),
+                    fp,
                     style: YlText.mono.copyWith(color: c.inkSoft),
                   ),
                 ),

@@ -25,14 +25,19 @@ extension YlStatusLabel on YlStatus {
 
 /// Аватар пользователя или сервера (docs/design/components/Avatar).
 ///
-/// Без картинки — две буквы (800, on-accent) на приглушённом тёплом фоне,
-/// который выбирается по имени и не меняется от запуска к запуску.
+/// Без картинки — две буквы (800, on-accent) на приглушённом тёплом фоне.
+/// Буквы — только из имени; если имени нет — [fallbackInitials] (для профиля —
+/// первые два символа отпечатка ключа). Фон — [colorIndex] в палитре
+/// avatar-1…N: для людей это avatarColorIndex(master_pub), одинаковый на всех
+/// устройствах (spec/identity.md).
 class YlAvatar extends StatelessWidget {
   /// Круглый аватар пользователя: точка статуса снизу справа, двойное кольцо,
   /// пока человек говорит в голосовом.
   const YlAvatar.user({
     super.key,
     required this.name,
+    required this.colorIndex,
+    this.fallbackInitials = '',
     this.size = YlSize.avatarMd,
     this.status,
     this.speaking = false,
@@ -52,9 +57,14 @@ class YlAvatar extends StatelessWidget {
   }) : server = true,
        status = null,
        speaking = false,
-       background = null;
+       background = null,
+       colorIndex = 0,
+       fallbackInitials = '';
 
-  final String name;
+  /// Имя; null или пусто — имени нет, буквы из [fallbackInitials].
+  final String? name;
+  final int colorIndex;
+  final String fallbackInitials;
   final double size;
   final YlStatus? status;
   final bool speaking;
@@ -67,8 +77,8 @@ class YlAvatar extends StatelessWidget {
   final Color? background;
 
   /// Две буквы: первые буквы двух слов или первые две буквы одного.
-  static String initials(String name) {
-    final words = name.trim().split(RegExp(r'\s+')).where((w) => w.isNotEmpty).toList();
+  static String initials(String? name) {
+    final words = (name ?? '').trim().split(RegExp(r'\s+')).where((w) => w.isNotEmpty).toList();
     if (words.isEmpty) return '';
     final runes = words.length > 1
         ? [words[0].runes.first, words[1].runes.first]
@@ -76,10 +86,11 @@ class YlAvatar extends StatelessWidget {
     return String.fromCharCodes(runes).toUpperCase();
   }
 
-  static Color _fill(YlColors c, String name) {
-    final palette = c.avatarPalette;
-    final hash = name.runes.fold<int>(0, (h, r) => (h * 31 + r) & 0x7fffffff);
-    return palette[hash % palette.length];
+  Color _fill(YlColors c) => c.avatarPalette[colorIndex % c.avatarPalette.length];
+
+  String get _letters {
+    final fromName = initials(name);
+    return fromName.isNotEmpty ? fromName : fallbackInitials.toUpperCase();
   }
 
   @override
@@ -95,7 +106,7 @@ class YlAvatar extends StatelessWidget {
       height: size,
       alignment: Alignment.center,
       decoration: shape.copyWith(
-        color: server ? c.hyenaBanner : _fill(c, name),
+        color: server ? c.hyenaBanner : _fill(c),
         image: image == null ? null : DecorationImage(image: image!, fit: BoxFit.cover),
         // Кольцо говорящего: зазор цветом фона, затем accent (Avatar/preview).
         boxShadow: speaking
@@ -108,7 +119,7 @@ class YlAvatar extends StatelessWidget {
       child: image != null
           ? null
           : Text(
-              initials(name),
+              _letters,
               // Размер букв — треть стороны, как в превью (40 → 13, 44 → 14).
               style: YlText.label.copyWith(
                 fontSize: (size * 0.32).roundToDouble(),
@@ -144,7 +155,7 @@ class YlAvatar extends StatelessWidget {
     }
 
     return Semantics(
-      label: st == null ? name : '$name, ${st.label(L10n.of(context))}',
+      label: st == null ? name : [?name, st.label(L10n.of(context))].join(', '),
       image: true,
       child: ExcludeSemantics(child: face),
     );

@@ -968,12 +968,6 @@ abstract class L10n {
   /// **'Телефон'**
   String get deviceNamePhoneUnknown;
 
-  /// No description provided for @homeProfileRestored.
-  ///
-  /// In ru, this message translates to:
-  /// **'Профиль восстановлен'**
-  String get homeProfileRestored;
-
   /// No description provided for @homeFingerprint.
   ///
   /// In ru, this message translates to:
@@ -1015,6 +1009,36 @@ abstract class L10n {
   /// In ru, this message translates to:
   /// **'Здесь есть невидимые символы направления текста — ими подделывают имена. Уберите их.'**
   String get onbTextBidi;
+
+  /// No description provided for @onbRestoredProfileText.
+  ///
+  /// In ru, this message translates to:
+  /// **'Если вы уже заходили на серверы, имя и аватар подтянутся оттуда при подключении. Можно указать сейчас.'**
+  String get onbRestoredProfileText;
+
+  /// No description provided for @onbRestoreSaving.
+  ///
+  /// In ru, this message translates to:
+  /// **'Восстанавливаю…'**
+  String get onbRestoreSaving;
+
+  /// No description provided for @onbSaving.
+  ///
+  /// In ru, this message translates to:
+  /// **'Сохраняю…'**
+  String get onbSaving;
+
+  /// No description provided for @onbProfileSaveFailed.
+  ///
+  /// In ru, this message translates to:
+  /// **'Не получилось сохранить профиль: {reason}'**
+  String onbProfileSaveFailed(String reason);
+
+  /// No description provided for @homeNoName.
+  ///
+  /// In ru, this message translates to:
+  /// **'Имя не указано'**
+  String get homeNoName;
 }
 
 class _L10nDelegate extends LocalizationsDelegate<L10n> {

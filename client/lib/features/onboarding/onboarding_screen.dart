@@ -178,8 +178,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     if (err == DraftError.nameTooLong) nameError = l.onbNameTooLong(Limits.nameMaxRunes);
     if (err == DraftError.nameControl) nameError = l.onbNameControl;
     if (err == DraftError.nameBidi) nameError = l.onbTextBidi;
+    final restored = c.isRestoredProfile;
     return [
-      _Heading(l.onbProfileTitle, l.onbProfileText),
+      _Heading(l.onbProfileTitle, restored ? l.onbRestoredProfileText : l.onbProfileText),
       Row(
         children: [
           _AvatarPicker(
@@ -220,13 +221,32 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         },
         onChanged: (v) => c.update((c) => c.about = v),
       ),
-      _BackNext(
-        back: l.onbBack,
-        onBack: c.back,
-        // Без имени кнопка неактивна и говорит, чего не хватает.
-        next: err == DraftError.nameEmpty ? l.onbNameEmpty : l.onbNext,
-        onNext: err == null ? c.toSeed : null,
-      ),
+      if (c.saveError != null) _Note(l.onbProfileSaveFailed(c.saveError!), danger: true),
+      if (restored) ...[
+        // Ключи уже сохранены — назад некуда; имя необязательно.
+        YlButton(
+          label: c.saving
+              ? l.onbSaving
+              : err == DraftError.nameEmpty
+              ? l.onbNameEmpty
+              : l.onbNext,
+          expand: true,
+          onPressed: err == null && !c.saving ? c.finishRestoredProfile : null,
+        ),
+        YlButton(
+          label: l.onbJoinSkip,
+          kind: YlButtonKind.quiet,
+          expand: true,
+          onPressed: c.saving ? null : c.skipRestoredProfile,
+        ),
+      ] else
+        _BackNext(
+          back: l.onbBack,
+          onBack: c.back,
+          // Без имени кнопка неактивна и говорит, чего не хватает.
+          next: err == DraftError.nameEmpty ? l.onbNameEmpty : l.onbNext,
+          onNext: err == null ? c.toSeed : null,
+        ),
     ];
   }
 
@@ -302,14 +322,16 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 
   List<Widget> _pinStep(L10n l) {
-    Future<void> save() async {
-      final os = widget.bridge.platform;
-      final model = await widget.bridge.phoneModel();
-      final device = os == 'android'
-          ? (model == null || model.isEmpty ? l.deviceNamePhoneUnknown : l.deviceNamePhone(model))
-          : l.deviceNameComputer(_osName[os] ?? os);
-      await c.savePin(deviceName: device, platform: os);
-    }
+    final restoring = c.mode == OnbMode.restore;
+    Future<void> save() => c.savePin(
+      platform: widget.bridge.platform,
+      deviceName: () async {
+        final os = widget.bridge.platform;
+        if (os != 'android') return l.deviceNameComputer(_osName[os] ?? os);
+        final model = await widget.bridge.phoneModel();
+        return model == null || model.isEmpty ? l.deviceNamePhoneUnknown : l.deviceNamePhone(model);
+      },
+    );
 
     return [
       _Heading(l.onbPinTitle, l.onbPinText),
@@ -340,7 +362,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         back: l.onbBack,
         onBack: c.saving ? null : c.back,
         next: c.saving
-            ? l.onbPinSaving
+            ? (restoring ? l.onbRestoreSaving : l.onbPinSaving)
             : c.pinReady || c.pinMismatch
             ? l.onbNext
             : l.onbPinEnterTwice,

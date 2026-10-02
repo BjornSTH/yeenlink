@@ -38,7 +38,8 @@
       "fingerprint": "8C0F·0146·E958·843F",
       "short_fingerprint": "8C0F·0146",
       "next_pub": "179b374f8aeee9e93f8a2a8956f5006371bc33876bf3811ae5346cef67d65def",
-      "next_key_hash": "56615fc0b82420cc5d4721ea22b490aa09fbf5563344ed8995564be439cbcbdc"
+      "next_key_hash": "56615fc0b82420cc5d4721ea22b490aa09fbf5563344ed8995564be439cbcbdc",
+      "avatar_color_of_8": 4
     },
     {
       "name": "main",
@@ -50,7 +51,8 @@
       "fingerprint": "2DEC·9955·D7E0·675A",
       "short_fingerprint": "2DEC·9955",
       "next_pub": "3b7385b51dd3339b69ece6fedfed913d9f7eabbebaeae1775caa389dd383ac58",
-      "next_key_hash": "e44de17709a3f89533c284b40aca7d796acca74d41bff7dc5ac99e7f37b6c597"
+      "next_key_hash": "e44de17709a3f89533c284b40aca7d796acca74d41bff7dc5ac99e7f37b6c597",
+      "avatar_color_of_8": 5
     }
   ],
   "path": "m/22860'/0'/i'"
