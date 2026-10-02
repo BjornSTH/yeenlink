@@ -1,7 +1,11 @@
-// Команда vectorgen пишет общие тестовые векторы кодека в
-// testdata/vectors/codec: для каждого вектора <имя>.cbor и <имя>.json.
-// Векторы проверяются тестами и в Go (pkg/codec), и в Dart
-// (client/test/core/codec). Запуск: make vectors.
+// Команда vectorgen пишет общие тестовые векторы в testdata/vectors:
+//
+//   - codec/ — кадры: для каждого вектора <имя>.cbor и <имя>.json;
+//   - identity/ — фраза → ключи → подписанные конверты (keys.json, envelopes.json).
+//
+// Векторы проверяются тестами и в Go, и в Dart. Официальные векторы BIP39 и
+// SLIP-0010 (testdata/vectors/bip39, slip10) скопированы из источников и здесь
+// не генерируются. Запуск: make vectors.
 package main
 
 import (
@@ -35,21 +39,38 @@ type manifest struct {
 }
 
 func main() {
-	out := flag.String("out", "../testdata/vectors/codec", "куда писать векторы")
+	root := flag.String("root", "../testdata/vectors", "папка с векторами")
 	flag.Parse()
 
-	if err := os.MkdirAll(*out, 0o750); err != nil {
+	codecDir := filepath.Join(*root, "codec")
+	if err := resetDir(codecDir); err != nil {
 		log.Fatal(err)
 	}
-	old, _ := filepath.Glob(filepath.Join(*out, "*"))
-	for _, p := range old {
-		_ = os.Remove(p)
-	}
 	for _, v := range vectors() {
-		if err := write(*out, v); err != nil {
+		if err := write(codecDir, v); err != nil {
 			log.Fatalf("%s: %v", v.name, err)
 		}
 	}
+	identityDir := filepath.Join(*root, "identity")
+	if err := resetDir(identityDir); err != nil {
+		log.Fatal(err)
+	}
+	if err := writeIdentity(identityDir); err != nil {
+		log.Fatalf("identity: %v", err)
+	}
+}
+
+func resetDir(dir string) error {
+	if err := os.MkdirAll(dir, 0o750); err != nil {
+		return err
+	}
+	old, _ := filepath.Glob(filepath.Join(dir, "*"))
+	for _, p := range old {
+		if err := os.Remove(p); err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 func write(dir string, v vector) error {

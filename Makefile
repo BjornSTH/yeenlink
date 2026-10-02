@@ -65,9 +65,9 @@ gen-tokens:
 gen-l10n:
 	cd client && $(FLUTTER_RUN) flutter gen-l10n
 
-# Общие тестовые векторы кодека: testdata/vectors/codec.
+# Общие тестовые векторы: testdata/vectors/codec и identity (bip39, slip10 — официальные, не генерируются).
 vectors:
-	cd server && go run ./internal/vectorgen -out ../testdata/vectors/codec
+	cd server && go run ./internal/vectorgen -root ../testdata/vectors
 
 # Сгенерированные файлы должны совпадать с тем, что в репозитории.
 check-gen: gen

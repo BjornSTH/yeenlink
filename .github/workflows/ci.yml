@@ -40,7 +40,7 @@ jobs:
 
       - name: Векторы совпадают с генератором
         run: |
-          go run ./internal/vectorgen -out ../testdata/vectors/codec
+          go run ./internal/vectorgen -root ../testdata/vectors
           git add -N ../testdata/vectors
           git diff --exit-code --stat -- ../testdata/vectors
 

@@ -1,0 +1,57 @@
+{
+  "bad_mnemonic": [
+    {
+      "mnemonic": "abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon",
+      "error": "word_count"
+    },
+    {
+      "mnemonic": "abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon",
+      "error": "checksum"
+    },
+    {
+      "mnemonic": "abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon hyena",
+      "error": "unknown_word",
+      "index": 11
+    }
+  ],
+  "description": "Фраза → ключи (spec/identity.md). master_seed — закрытый ключ узла m/22860'/0'/0', next_pub — узла m/22860'/0'/1'.",
+  "devices": [
+    {
+      "name": "device1",
+      "seed": "25cca28499d5920168dbc052e4fb6e0285d8042ee3aad59822c3ed10610be9f7",
+      "pub": "66e81ae469273c41a0e63d12ac954460e71760f75e69aae881a0e71ab0965704"
+    },
+    {
+      "name": "device2",
+      "seed": "9d4fea121c0545ae6fded262ae67916fb42485349ce5f3a66d127d1cb7735496",
+      "pub": "25be49c747f7912c9f59f052edcacf58cf7f2ae8e388dc54e0cfcbdbc4d69a47"
+    }
+  ],
+  "keys": [
+    {
+      "name": "zero",
+      "entropy": "00000000000000000000000000000000",
+      "mnemonic": "abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon about",
+      "seed": "5eb00bbddcf069084889a8ab9155568165f5c453ccb85e70811aaed6f6da5fc19a5ac40b389cd370d086206dec8aa6c43daea6690f20ad3d8d48b2d2ce9e38e4",
+      "master_seed": "646c9f4cbf7d3b5008332cedc6a903205b77091ea123a387527af56f1a4a95db",
+      "master_pub": "ab6b52c1925aa5a893a2226fe7a9b7e3a0def9088b2871155ac5822e0bb7e19d",
+      "fingerprint": "8C0F·0146·E958·843F",
+      "short_fingerprint": "8C0F·0146",
+      "next_pub": "179b374f8aeee9e93f8a2a8956f5006371bc33876bf3811ae5346cef67d65def",
+      "next_key_hash": "56615fc0b82420cc5d4721ea22b490aa09fbf5563344ed8995564be439cbcbdc"
+    },
+    {
+      "name": "main",
+      "entropy": "f4906edeb6d1b7bf2e897b58b521da05",
+      "mnemonic": "virus lock response horror bread test riot control flavor poverty isolate arch",
+      "seed": "b8678e3872eb6a6cdfda9bb215f10ae1dfeef18548b234a0f5d7b44af2102b77ce310da0acabafc90d1a3324556c89846f732330e7c0db190edff63871d54404",
+      "master_seed": "101cfaccd8ba5a1eeee612a567ac477ec92f40eb0740e2b8eeb982021cddd643",
+      "master_pub": "0549d5731f7bae78ff3efe80965b5f5ba9a7b77d40ddae858e462f3b00eda2a6",
+      "fingerprint": "2DEC·9955·D7E0·675A",
+      "short_fingerprint": "2DEC·9955",
+      "next_pub": "3b7385b51dd3339b69ece6fedfed913d9f7eabbebaeae1775caa389dd383ac58",
+      "next_key_hash": "e44de17709a3f89533c284b40aca7d796acca74d41bff7dc5ac99e7f37b6c597"
+    }
+  ],
+  "path": "m/22860'/0'/i'"
+}
