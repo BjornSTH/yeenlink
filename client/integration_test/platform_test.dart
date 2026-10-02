@@ -44,7 +44,7 @@ void main() {
     expect(here.encode(), fromGo.encode());
   });
 
-  testWidgets('системное хранилище: запись, чтение, профиль под PIN', (tester) async {
+  testWidgets('системное хранилище: создание и восстановление профиля под PIN', (tester) async {
     final vault = SecureVault();
     const key = 'yl.integration-test';
     await vault.write(key, Uint8List.fromList([1, 2, 3]));
@@ -64,6 +64,20 @@ void main() {
 
     final store = AccountStore(vault: vault, dir: dir, kdfParams: params);
     try {
+      // Создание: подписанный профиль и сертификат устройства, ключ под PIN.
+      final created = await store.create(
+        identity: await Identity.fromMnemonic(refMnemonic),
+        pin: '246802',
+        draft: const ProfileDraft(name: 'Пятнистый', bannerColor: 'banner-2'),
+        deviceName: 'Тест',
+        platform: _platform(),
+      );
+      final loaded = await store.load();
+      expect((await openProfile(loaded!.profile!)).name, 'Пятнистый');
+      expect(loaded.devicePub, created.devicePub);
+      expect((await store.unlock('246802')).mnemonic, refMnemonic);
+
+      // Восстановление по фразе поверх: новый ключ устройства, новый PIN.
       final id = await Identity.fromMnemonic(refMnemonic);
       await store.restore(identity: id, pin: '135790', deviceName: 'Тест', platform: _platform());
       sw.reset();
