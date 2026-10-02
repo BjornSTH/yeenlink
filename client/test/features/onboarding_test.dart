@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:yeenlink/app/app.dart';
 import 'package:yeenlink/core/account/account_store.dart';
 import 'package:yeenlink/core/account/pin_guard.dart';
 import 'package:yeenlink/core/account/platform_bridge.dart';
@@ -33,8 +34,10 @@ class FakeBridge extends PlatformBridge {
   @override
   Future<void> copySensitive(String text) async => copied.add(text);
 
+  var clears = 0;
+
   @override
-  Future<void> clearSensitiveClipboard() async => copied.clear();
+  Future<void> clearSensitiveClipboard() async => clears++;
 
   @override
   Future<bool> saveText(String fileName, String text) async {
@@ -224,6 +227,28 @@ void main() {
       findsNothing,
       reason: 'сброс — в настройках, с подтверждением',
     );
+  });
+
+  testWidgets('буфер с фразой: уход в фон не очищает, закрытие — очищает', (tester) async {
+    setSurface(tester, const Size(390, 844));
+    final h = Harness(dir);
+    final services = AppServices(store: h.store, bridge: h.bridge, pickImage: () async => null);
+    await tester.pumpWidget(testApp(AppRoot(services: services)));
+    await settle(tester, () => find.text('Добро пожаловать в YeenLink').evaluate().isEmpty);
+
+    for (final s in [
+      AppLifecycleState.inactive,
+      AppLifecycleState.hidden,
+      AppLifecycleState.paused,
+    ]) {
+      tester.binding.handleAppLifecycleStateChanged(s);
+      await tester.pump();
+    }
+    expect(h.bridge.clears, 0, reason: 'фразу копируют в менеджер паролей — фон её не стирает');
+
+    tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.detached);
+    await tester.pump();
+    expect(h.bridge.clears, 1);
   });
 
   group('golden: шаги онбординга', () {

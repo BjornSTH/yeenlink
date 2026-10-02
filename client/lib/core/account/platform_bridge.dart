@@ -37,8 +37,9 @@ class PlatformBridge {
 
   /// Копирует текст; на Android 13+ помечает его как чувствительный, чтобы
   /// система не показывала превью. Буфер очищается через [clipboardTtl] или
-  /// раньше — когда приложение уходит в фон или закрывается
-  /// ([clearSensitiveClipboard]), если там всё ещё этот текст.
+  /// раньше, при закрытии приложения ([clearSensitiveClipboard]), если там всё
+  /// ещё этот текст. Уход в фон буфер не трогает — фразу копируют, чтобы
+  /// вставить в менеджер паролей.
   Future<void> copySensitive(String text) async {
     if (isAndroid) {
       await _channel.invokeMethod<void>('copySensitive', {'text': text});
@@ -50,9 +51,9 @@ class PlatformBridge {
     _ttl = Timer(clipboardTtl, clearSensitiveClipboard);
   }
 
-  /// Очищает буфер, если там всё ещё скопированная фраза. На Android 10+ в фоне
-  /// буфер прочитать нельзя (вернётся пусто) — тогда очищаем без сравнения:
-  /// приложение было в фокусе до ухода, после нас никто ничего не копировал.
+  /// Очищает буфер, если там всё ещё скопированная фраза. Если буфер прочитать
+  /// нельзя (Android 10+ без фокуса — вернётся пусто), очищаем без сравнения:
+  /// лишняя очистка безопаснее фразы, оставшейся в буфере.
   Future<void> clearSensitiveClipboard() async {
     final text = _sensitive;
     if (text == null) return;

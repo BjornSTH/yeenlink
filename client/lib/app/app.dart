@@ -98,10 +98,9 @@ class _AppRootState extends State<AppRoot> {
   );
   late Future<(LocalAccount, Profile?)?> _account = _load();
 
-  // Фраза в буфере обмена не переживает уход приложения в фон и закрытие.
+  // Фраза в буфере обмена не переживает закрытие приложения. При уходе в фон
+  // буфер не трогаем: фразу копируют, чтобы вставить в менеджер паролей.
   late final AppLifecycleListener _lifecycle = AppLifecycleListener(
-    onHide: _clearClipboard,
-    onPause: _clearClipboard,
     onDetach: _clearClipboard,
     onExitRequested: () async {
       await widget.services.bridge.clearSensitiveClipboard();
