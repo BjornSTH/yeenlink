@@ -38,11 +38,22 @@ Future<void> waitFor(
   }
 }
 
+/// Нажимает кнопку, сначала прокрутив к ней: на маленьком экране эмулятора
+/// длинный шаг не помещается целиком.
+Future<void> tapText(WidgetTester tester, String text) async {
+  final f = find.text(text);
+  await tester.ensureVisible(f);
+  await tester.pump();
+  await tester.tap(f);
+  await tester.pump();
+}
+
 Future<void> enter(WidgetTester tester, String label, String text) async {
   final field = find.descendant(
     of: find.ancestor(of: find.text(label), matching: find.byType(Column)).first,
     matching: find.byType(EditableText),
   );
+  await tester.ensureVisible(field.first);
   await tester.enterText(field.first, text);
   await tester.pump();
 }
@@ -67,25 +78,24 @@ void main() {
     await waitFor(tester, find.text('У меня уже есть профиль'));
     _log('приветствие');
 
-    await tester.tap(find.text('У меня уже есть профиль'));
-    await tester.pump();
+    await tapText(tester, 'У меня уже есть профиль');
     await enter(tester, '12 слов через пробел', refMnemonic);
-    await tester.tap(find.text('Восстановить'));
+    await tapText(tester, 'Восстановить');
     _log('нажато «Восстановить»');
     await waitFor(tester, find.text('Придумайте PIN-код'));
     _log('шаг PIN');
 
     await enter(tester, 'PIN-код', '135790');
     await enter(tester, 'Повторите PIN-код', '135790');
-    await tester.tap(find.text('Дальше'));
+    await tapText(tester, 'Дальше');
     _log('нажато «Дальше» на PIN');
     await waitFor(tester, find.text('Как вас называть?'));
     _log('шаг имени после восстановления');
-    await tester.tap(find.text('Пропустить пока'));
+    await tapText(tester, 'Пропустить пока');
     await waitFor(tester, find.text('Профиль готов'));
     _log('экран «Готово»');
 
-    await tester.tap(find.text('Открыть YeenLink'));
+    await tapText(tester, 'Открыть YeenLink');
     await waitFor(tester, find.text(refFingerprint));
     expect(find.text(refFingerprint.substring(0, 2)), findsOneWidget, reason: 'буквы аватара');
     _log('главное окно, отпечаток ${fingerprint(await _masterPub(store))}');
