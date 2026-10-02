@@ -3,6 +3,13 @@ name: Платформы
 # Тяжёлые проверки на настоящих платформах: Windows, Linux с системным
 # хранилищем (gnome-keyring), Android-эмулятор. Обычный CI (ci.yml) идёт на
 # каждый push только на Ubuntu.
+#
+# Сборки для ручной проверки выгружаются артефактами прогона (страница прогона
+# → Artifacts): APK (debug), Linux bundle (tar.gz, release), Windows (zip,
+# release — отладочной сборке MSVC нужны отладочные библиотеки Visual Studio,
+# на обычном компьютере она не запустится). Хранилище — системное (YL_VAULT по
+# умолчанию). Сборки выгружаются до интеграционных тестов, поэтому есть и при
+# их падении.
 on:
   pull_request:
     branches: [main]
@@ -34,6 +41,23 @@ jobs:
           flutter-version: ${{ steps.flutter.outputs.version }}
           cache: true
       - run: flutter pub get
+      - name: Сборка (release) для ручной проверки
+        shell: pwsh
+        run: |
+          flutter build windows --release
+          $bundle = "build/windows/x64/runner/Release"
+          # Библиотеки VC++ — чтобы сборка запускалась без отдельной установки.
+          foreach ($dll in "msvcp140.dll", "vcruntime140.dll", "vcruntime140_1.dll") {
+            Copy-Item "$env:WINDIR/System32/$dll" $bundle
+          }
+          Compress-Archive -Path "$bundle/*" -DestinationPath yeenlink-windows-x64.zip
+      - name: Выгрузка сборки Windows
+        uses: actions/upload-artifact@v4
+        with:
+          name: yeenlink-windows-x64
+          path: client/yeenlink-windows-x64.zip
+          retention-days: 14
+          if-no-files-found: error
       - name: Модульные тесты (golden на Windows пропускаются)
         run: flutter test
       - name: Интеграционный тест (Диспетчер учётных данных, подписи)
@@ -62,6 +86,17 @@ jobs:
           flutter-version: ${{ steps.flutter.outputs.version }}
           cache: true
       - run: flutter pub get
+      - name: Сборка (release) для ручной проверки
+        run: |
+          flutter build linux --release
+          tar -czf yeenlink-linux-x64.tar.gz -C build/linux/x64/release/bundle .
+      - name: Выгрузка сборки Linux
+        uses: actions/upload-artifact@v4
+        with:
+          name: yeenlink-linux-x64
+          path: client/yeenlink-linux-x64.tar.gz
+          retention-days: 14
+          if-no-files-found: error
       - name: Интеграционный тест (libsecret через gnome-keyring)
         run: |
           dbus-run-session -- bash -c '
@@ -95,6 +130,16 @@ jobs:
           cache: true
       - run: flutter pub get
         working-directory: client
+      - name: Сборка APK (debug) для ручной проверки
+        working-directory: client
+        run: flutter build apk --debug
+      - name: Выгрузка APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: yeenlink-android-debug
+          path: client/build/app/outputs/flutter-apk/app-debug.apk
+          retention-days: 14
+          if-no-files-found: error
       - name: Интеграционный тест на эмуляторе (Keystore, подписи, замер KDF)
         uses: reactivecircus/android-emulator-runner@v2
         with:
