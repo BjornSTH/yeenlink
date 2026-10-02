@@ -1,18 +1,35 @@
 {
   "@@locale": "ru",
-
   "appTitle": "YeenLink",
   "appSkeleton": "Каркас клиента. Компоненты — в витрине: flutter run -t lib/main_showcase.dart",
-
   "redactedHidden": "скрыто",
-  "@redactedHidden": { "description": "Заглушка режима стримера для адресов, IP, портов, отпечатков, handle и приглашений. Длина фиксированная." },
+  "@redactedHidden": {
+    "description": "Заглушка режима стримера для адресов, IP, портов, отпечатков, handle и приглашений. Длина фиксированная."
+  },
   "redactedServerName": "Сервер скрыт",
-  "@redactedServerName": { "description": "Заглушка режима стримера вместо названия сервера." },
-
+  "@redactedServerName": {
+    "description": "Заглушка режима стримера вместо названия сервера."
+  },
   "segmentUnavailable": "{label} · нет",
-  "@segmentUnavailable": { "description": "Недоступный вариант в сегментах.", "placeholders": { "label": { "type": "String" } } },
+  "@segmentUnavailable": {
+    "description": "Недоступный вариант в сегментах.",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
   "reactionCount": "{reaction} · {count}",
-  "@reactionCount": { "placeholders": { "reaction": { "type": "String" }, "count": { "type": "int" } } },
+  "@reactionCount": {
+    "placeholders": {
+      "reaction": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "badgeLive": "ЭФИР",
   "badgeBot": "БОТ",
   "badgeCountOverflow": "99+",
@@ -21,7 +38,6 @@
   "statusDnd": "Не беспокоить",
   "statusOffline": "Не в сети",
   "bannerRetry": "Повторить сейчас",
-
   "scTitle": "Витрина компонентов",
   "scThemeDark": "Тёмная матовая",
   "scThemeLight": "Светлая матовая",
@@ -34,14 +50,12 @@
   "scSectionBadge": "Бейдж",
   "scSectionBanner": "Полоса состояния",
   "scSectionChannelRow": "Строка канала",
-
   "scButtonJoin": "Присоединиться",
   "scButtonHaveProfile": "У меня уже есть профиль",
   "scButtonBack": "Назад",
   "scButtonLeave": "Покинуть",
   "scButtonDisabled": "Выберите, что показать",
   "scButtonManage": "Управлять",
-
   "scToggleNoise": "Шумоподавление",
   "scToggleNoiseHint": "Убирает фон: клавиатуру, вентилятор, улицу.",
   "scTogglePtt": "Режим рации",
@@ -50,37 +64,214 @@
   "scToggleLockedReason": "Это меняет только Владелец сервера.",
   "scToggleStreamer": "Режим стримера",
   "scToggleStreamerHint": "Прячет адреса и названия серверов на этой витрине.",
-
   "scSegStreamNote": "Сервер разрешает стрим до 720p.",
   "scSegAll": "Все",
   "scSegPending": "Ожидают",
   "scSegBans": "Баны",
-
   "scInputName": "Отображаемое имя",
   "scInputNameValue": "Пятнистый",
   "scInputInvite": "Приглашение",
   "scInputInviteHint": "yl://… или IP-адрес",
   "scInputAbout": "О себе (необязательно)",
-
   "scNameKrivozub": "Кривозуб",
   "scNameSavanna": "Саванна",
   "scNameKhokhotun": "Хохотун",
   "scNameSpotted": "Пятнистый",
   "scServerName": "Ночной привал",
-
   "scRoleMaster": "Мастер",
   "scRolePlayer": "Игрок",
   "scRoleGuest": "Гость",
   "scRoleBot": "Бот",
   "scReactionDice": "к20",
-
   "scBannerReconnecting": "Связь с {server} потеряна. Пробую запасной адрес {n} из {total}…",
-  "@scBannerReconnecting": { "placeholders": { "server": { "type": "String" }, "n": { "type": "int" }, "total": { "type": "int" } } },
+  "@scBannerReconnecting": {
+    "placeholders": {
+      "server": {
+        "type": "String"
+      },
+      "n": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
   "scBannerFailover": "Подключено через запасной адрес. Основной проверяю раз в минуту.",
   "scBannerOffline": "Сервер недоступен по всем трём адресам. Сообщения уйдут, когда связь вернётся.",
-
   "scChannelGeneral": "общий",
   "scChannelNews": "анонсы",
   "scChannelScreens": "скриншоты",
-  "scChannelTavern": "Таверна"
+  "scChannelTavern": "Таверна",
+  "onbAsideTitle": "Свои серверы.\nСвой профиль.",
+  "onbFeatureVpsTitle": "Сервер на дешёвом VPS",
+  "onbFeatureVpsText": "Ставится одной командой, работает даже на самом простом тарифе.",
+  "onbFeatureProfileTitle": "Профиль всегда с вами",
+  "onbFeatureProfileText": "Имя, аватар и стена переезжают с вами между серверами.",
+  "onbFeatureKeyTitle": "Ключ вместо пароля",
+  "onbFeatureKeyText": "Никто, кроме вас, не войдёт в ваш профиль — даже админ сервера.",
+  "onbAsideFooter": "Открытый код · self-hosted",
+  "onbStep": "Шаг {step} из {total}",
+  "@onbStep": {
+    "placeholders": {
+      "step": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "onbBack": "Назад",
+  "onbNext": "Дальше",
+  "onbWelcomeTitle": "Добро пожаловать в YeenLink",
+  "onbWelcomeText": "Ваш профиль хранится у вас, а не на чужом сервере. Создайте его один раз и заходите с ним на любой сервер.",
+  "onbWelcomeCreate": "Создать профиль",
+  "onbWelcomeRestore": "У меня уже есть профиль",
+  "onbWelcomeNote": "Без почты и номера телефона. Займёт около минуты.",
+  "onbProfileTitle": "Как вас называть?",
+  "onbProfileText": "Имя и аватар увидят на серверах, куда вы зайдёте. Поменять можно в любой момент.",
+  "onbAvatarPick": "Выбрать аватар",
+  "onbAvatarChange": "Сменить аватар",
+  "onbAvatarError": "Не получилось открыть картинку. Подойдёт PNG, JPEG или WebP.",
+  "onbBannerColor": "Цвет баннера",
+  "onbBannerColorN": "Цвет баннера {n}",
+  "@onbBannerColorN": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "onbName": "Имя",
+  "onbNameHint": "Например, Пятнистый",
+  "onbNameTooLong": "Имя длиннее {max} символов.",
+  "@onbNameTooLong": {
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "onbNameControl": "В имени есть невидимые служебные символы — уберите их.",
+  "onbAbout": "О себе (необязательно)",
+  "onbAboutHint": "Пара слов о себе",
+  "onbAboutTooLong": "Слишком длинно: до {max} символов.",
+  "@onbAboutTooLong": {
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "onbNameEmpty": "Введите имя",
+  "onbSeedTitle": "Секретная фраза",
+  "onbSeedText": "Эти 12 слов и есть ваш профиль. Только по ним можно вернуть доступ, если устройство потеряется. Мы их не храним и подсказать не сможем.",
+  "onbSeedWarning": "Запишите на бумаге. Не отправляйте в чаты, не фотографируйте и никому не показывайте.",
+  "onbSeedCopy": "Скопировать",
+  "onbSeedCopied": "Скопировано. Через минуту буфер обмена очистится.",
+  "onbSeedSave": "Сохранить в файл",
+  "onbSeedSaveWarning": "Не сохраняйте файл в папки, которые синхронизируются с облаком (Google Диск, OneDrive, Яндекс Диск), и в общие папки.",
+  "onbSeedSaveChoose": "Выбрать, куда сохранить",
+  "onbSeedSaved": "Файл сохранён.",
+  "onbSeedSaveFailed": "Не получилось сохранить файл. Запишите фразу на бумаге.",
+  "onbSeedConfirm": "Я записал фразу в надёжном месте",
+  "onbSeedFileName": "yeenlink-recovery.txt",
+  "onbSeedFileText": "YeenLink — секретная фраза\n\n{words}\n\nЭти 12 слов и есть ваш профиль. По ним можно войти в него с любого устройства.\nНе храните файл в папках, которые синхронизируются с облаком, и никому его не показывайте.\n",
+  "@onbSeedFileText": {
+    "placeholders": {
+      "words": {
+        "type": "String"
+      }
+    }
+  },
+  "onbPinTitle": "Придумайте PIN-код",
+  "onbPinText": "6 цифр. PIN нужен, чтобы показать секретную фразу и привязать или отвязать устройство. Без него ключ на этом устройстве не расшифровать.",
+  "onbPin": "PIN-код",
+  "onbPinRepeat": "Повторите PIN-код",
+  "onbPinMismatch": "PIN-коды не совпадают.",
+  "onbPinSaving": "Сохраняю ключ…",
+  "onbPinSaveFailed": "Не получилось сохранить ключ в хранилище системы: {reason}",
+  "@onbPinSaveFailed": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "onbJoinTitle": "Подключитесь к серверу",
+  "onbJoinText": "Вставьте приглашение, которое вам прислали, или найдите открытый сервер в каталоге.",
+  "onbJoinInvite": "Приглашение",
+  "onbJoinInviteHint": "yl://nightcamp.ru/… или IP-адрес",
+  "onbJoinConnect": "Подключиться",
+  "onbJoinOr": "или",
+  "onbJoinCatalog": "Открыть каталог серверов",
+  "onbJoinSkip": "Пропустить пока",
+  "onbJoinNotReady": "Подключение к серверам появится в фазе 2. Пока нажмите «Пропустить пока».",
+  "onbCatalogNotReady": "Каталог серверов появится в фазе 8.",
+  "onbRestoreTitle": "Восстановить профиль",
+  "onbRestoreText": "Войдите по секретной фразе или перенесите профиль с другого устройства.",
+  "onbRestoreTabPhrase": "Секретная фраза",
+  "onbRestoreTabQr": "QR с другого устройства",
+  "onbRestorePhrase": "12 слов через пробел",
+  "onbRestorePhraseHint": "maple orbit canyon …",
+  "onbRestoreAction": "Восстановить",
+  "onbRestoreChecking": "Проверяю фразу…",
+  "onbRestoreWordCount": "Нужно 12 слов — сейчас {count}.",
+  "@onbRestoreWordCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "onbRestoreUnknownWord": "Слово {n} «{word}» не из списка. Проверьте написание.",
+  "@onbRestoreUnknownWord": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      },
+      "word": {
+        "type": "String"
+      }
+    }
+  },
+  "onbRestoreChecksum": "Все слова из списка, но фраза не сходится. Проверьте порядок слов и опечатки.",
+  "onbRestoreQrStub": "Перенос с другого устройства появится в фазе 7. Пока войдите по секретной фразе.",
+  "onbDoneTitle": "Профиль готов",
+  "onbDoneText": "Ключ сохранён на этом устройстве. Секретная фраза — ваша страховка, держите её в надёжном месте.",
+  "onbDoneRestoredText": "Профиль восстановлен на этом устройстве. Имя и аватар подтянутся с сервера, когда вы к нему подключитесь.",
+  "onbDoneOpen": "Открыть YeenLink",
+  "onbDoneRestart": "Начать заново",
+  "deviceNameComputer": "Компьютер · {os}",
+  "@deviceNameComputer": {
+    "placeholders": {
+      "os": {
+        "type": "String"
+      }
+    }
+  },
+  "deviceNamePhone": "Телефон · {model}",
+  "@deviceNamePhone": {
+    "placeholders": {
+      "model": {
+        "type": "String"
+      }
+    }
+  },
+  "deviceNamePhoneUnknown": "Телефон",
+  "homeProfileRestored": "Профиль восстановлен",
+  "homeFingerprint": "Отпечаток ключа",
+  "homeDevice": "Это устройство",
+  "homeNoServers": "Серверов пока нет: подключение появится в фазе 2.",
+  "homeLoadFailed": "Не получилось прочитать профиль на этом устройстве: {reason}",
+  "@homeLoadFailed": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "onbRestoreEnterPhrase": "Введите 12 слов",
+  "onbPinEnterTwice": "Введите PIN дважды"
 }

@@ -487,6 +487,534 @@ abstract class L10n {
   /// In ru, this message translates to:
   /// **'Таверна'**
   String get scChannelTavern;
+
+  /// No description provided for @onbAsideTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Свои серверы.\nСвой профиль.'**
+  String get onbAsideTitle;
+
+  /// No description provided for @onbFeatureVpsTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Сервер на дешёвом VPS'**
+  String get onbFeatureVpsTitle;
+
+  /// No description provided for @onbFeatureVpsText.
+  ///
+  /// In ru, this message translates to:
+  /// **'Ставится одной командой, работает даже на самом простом тарифе.'**
+  String get onbFeatureVpsText;
+
+  /// No description provided for @onbFeatureProfileTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Профиль всегда с вами'**
+  String get onbFeatureProfileTitle;
+
+  /// No description provided for @onbFeatureProfileText.
+  ///
+  /// In ru, this message translates to:
+  /// **'Имя, аватар и стена переезжают с вами между серверами.'**
+  String get onbFeatureProfileText;
+
+  /// No description provided for @onbFeatureKeyTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Ключ вместо пароля'**
+  String get onbFeatureKeyTitle;
+
+  /// No description provided for @onbFeatureKeyText.
+  ///
+  /// In ru, this message translates to:
+  /// **'Никто, кроме вас, не войдёт в ваш профиль — даже админ сервера.'**
+  String get onbFeatureKeyText;
+
+  /// No description provided for @onbAsideFooter.
+  ///
+  /// In ru, this message translates to:
+  /// **'Открытый код · self-hosted'**
+  String get onbAsideFooter;
+
+  /// No description provided for @onbStep.
+  ///
+  /// In ru, this message translates to:
+  /// **'Шаг {step} из {total}'**
+  String onbStep(int step, int total);
+
+  /// No description provided for @onbBack.
+  ///
+  /// In ru, this message translates to:
+  /// **'Назад'**
+  String get onbBack;
+
+  /// No description provided for @onbNext.
+  ///
+  /// In ru, this message translates to:
+  /// **'Дальше'**
+  String get onbNext;
+
+  /// No description provided for @onbWelcomeTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Добро пожаловать в YeenLink'**
+  String get onbWelcomeTitle;
+
+  /// No description provided for @onbWelcomeText.
+  ///
+  /// In ru, this message translates to:
+  /// **'Ваш профиль хранится у вас, а не на чужом сервере. Создайте его один раз и заходите с ним на любой сервер.'**
+  String get onbWelcomeText;
+
+  /// No description provided for @onbWelcomeCreate.
+  ///
+  /// In ru, this message translates to:
+  /// **'Создать профиль'**
+  String get onbWelcomeCreate;
+
+  /// No description provided for @onbWelcomeRestore.
+  ///
+  /// In ru, this message translates to:
+  /// **'У меня уже есть профиль'**
+  String get onbWelcomeRestore;
+
+  /// No description provided for @onbWelcomeNote.
+  ///
+  /// In ru, this message translates to:
+  /// **'Без почты и номера телефона. Займёт около минуты.'**
+  String get onbWelcomeNote;
+
+  /// No description provided for @onbProfileTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Как вас называть?'**
+  String get onbProfileTitle;
+
+  /// No description provided for @onbProfileText.
+  ///
+  /// In ru, this message translates to:
+  /// **'Имя и аватар увидят на серверах, куда вы зайдёте. Поменять можно в любой момент.'**
+  String get onbProfileText;
+
+  /// No description provided for @onbAvatarPick.
+  ///
+  /// In ru, this message translates to:
+  /// **'Выбрать аватар'**
+  String get onbAvatarPick;
+
+  /// No description provided for @onbAvatarChange.
+  ///
+  /// In ru, this message translates to:
+  /// **'Сменить аватар'**
+  String get onbAvatarChange;
+
+  /// No description provided for @onbAvatarError.
+  ///
+  /// In ru, this message translates to:
+  /// **'Не получилось открыть картинку. Подойдёт PNG, JPEG или WebP.'**
+  String get onbAvatarError;
+
+  /// No description provided for @onbBannerColor.
+  ///
+  /// In ru, this message translates to:
+  /// **'Цвет баннера'**
+  String get onbBannerColor;
+
+  /// No description provided for @onbBannerColorN.
+  ///
+  /// In ru, this message translates to:
+  /// **'Цвет баннера {n}'**
+  String onbBannerColorN(int n);
+
+  /// No description provided for @onbName.
+  ///
+  /// In ru, this message translates to:
+  /// **'Имя'**
+  String get onbName;
+
+  /// No description provided for @onbNameHint.
+  ///
+  /// In ru, this message translates to:
+  /// **'Например, Пятнистый'**
+  String get onbNameHint;
+
+  /// No description provided for @onbNameTooLong.
+  ///
+  /// In ru, this message translates to:
+  /// **'Имя длиннее {max} символов.'**
+  String onbNameTooLong(int max);
+
+  /// No description provided for @onbNameControl.
+  ///
+  /// In ru, this message translates to:
+  /// **'В имени есть невидимые служебные символы — уберите их.'**
+  String get onbNameControl;
+
+  /// No description provided for @onbAbout.
+  ///
+  /// In ru, this message translates to:
+  /// **'О себе (необязательно)'**
+  String get onbAbout;
+
+  /// No description provided for @onbAboutHint.
+  ///
+  /// In ru, this message translates to:
+  /// **'Пара слов о себе'**
+  String get onbAboutHint;
+
+  /// No description provided for @onbAboutTooLong.
+  ///
+  /// In ru, this message translates to:
+  /// **'Слишком длинно: до {max} символов.'**
+  String onbAboutTooLong(int max);
+
+  /// No description provided for @onbNameEmpty.
+  ///
+  /// In ru, this message translates to:
+  /// **'Введите имя'**
+  String get onbNameEmpty;
+
+  /// No description provided for @onbSeedTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Секретная фраза'**
+  String get onbSeedTitle;
+
+  /// No description provided for @onbSeedText.
+  ///
+  /// In ru, this message translates to:
+  /// **'Эти 12 слов и есть ваш профиль. Только по ним можно вернуть доступ, если устройство потеряется. Мы их не храним и подсказать не сможем.'**
+  String get onbSeedText;
+
+  /// No description provided for @onbSeedWarning.
+  ///
+  /// In ru, this message translates to:
+  /// **'Запишите на бумаге. Не отправляйте в чаты, не фотографируйте и никому не показывайте.'**
+  String get onbSeedWarning;
+
+  /// No description provided for @onbSeedCopy.
+  ///
+  /// In ru, this message translates to:
+  /// **'Скопировать'**
+  String get onbSeedCopy;
+
+  /// No description provided for @onbSeedCopied.
+  ///
+  /// In ru, this message translates to:
+  /// **'Скопировано. Через минуту буфер обмена очистится.'**
+  String get onbSeedCopied;
+
+  /// No description provided for @onbSeedSave.
+  ///
+  /// In ru, this message translates to:
+  /// **'Сохранить в файл'**
+  String get onbSeedSave;
+
+  /// No description provided for @onbSeedSaveWarning.
+  ///
+  /// In ru, this message translates to:
+  /// **'Не сохраняйте файл в папки, которые синхронизируются с облаком (Google Диск, OneDrive, Яндекс Диск), и в общие папки.'**
+  String get onbSeedSaveWarning;
+
+  /// No description provided for @onbSeedSaveChoose.
+  ///
+  /// In ru, this message translates to:
+  /// **'Выбрать, куда сохранить'**
+  String get onbSeedSaveChoose;
+
+  /// No description provided for @onbSeedSaved.
+  ///
+  /// In ru, this message translates to:
+  /// **'Файл сохранён.'**
+  String get onbSeedSaved;
+
+  /// No description provided for @onbSeedSaveFailed.
+  ///
+  /// In ru, this message translates to:
+  /// **'Не получилось сохранить файл. Запишите фразу на бумаге.'**
+  String get onbSeedSaveFailed;
+
+  /// No description provided for @onbSeedConfirm.
+  ///
+  /// In ru, this message translates to:
+  /// **'Я записал фразу в надёжном месте'**
+  String get onbSeedConfirm;
+
+  /// No description provided for @onbSeedFileName.
+  ///
+  /// In ru, this message translates to:
+  /// **'yeenlink-recovery.txt'**
+  String get onbSeedFileName;
+
+  /// No description provided for @onbSeedFileText.
+  ///
+  /// In ru, this message translates to:
+  /// **'YeenLink — секретная фраза\n\n{words}\n\nЭти 12 слов и есть ваш профиль. По ним можно войти в него с любого устройства.\nНе храните файл в папках, которые синхронизируются с облаком, и никому его не показывайте.\n'**
+  String onbSeedFileText(String words);
+
+  /// No description provided for @onbPinTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Придумайте PIN-код'**
+  String get onbPinTitle;
+
+  /// No description provided for @onbPinText.
+  ///
+  /// In ru, this message translates to:
+  /// **'6 цифр. PIN нужен, чтобы показать секретную фразу и привязать или отвязать устройство. Без него ключ на этом устройстве не расшифровать.'**
+  String get onbPinText;
+
+  /// No description provided for @onbPin.
+  ///
+  /// In ru, this message translates to:
+  /// **'PIN-код'**
+  String get onbPin;
+
+  /// No description provided for @onbPinRepeat.
+  ///
+  /// In ru, this message translates to:
+  /// **'Повторите PIN-код'**
+  String get onbPinRepeat;
+
+  /// No description provided for @onbPinMismatch.
+  ///
+  /// In ru, this message translates to:
+  /// **'PIN-коды не совпадают.'**
+  String get onbPinMismatch;
+
+  /// No description provided for @onbPinSaving.
+  ///
+  /// In ru, this message translates to:
+  /// **'Сохраняю ключ…'**
+  String get onbPinSaving;
+
+  /// No description provided for @onbPinSaveFailed.
+  ///
+  /// In ru, this message translates to:
+  /// **'Не получилось сохранить ключ в хранилище системы: {reason}'**
+  String onbPinSaveFailed(String reason);
+
+  /// No description provided for @onbJoinTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Подключитесь к серверу'**
+  String get onbJoinTitle;
+
+  /// No description provided for @onbJoinText.
+  ///
+  /// In ru, this message translates to:
+  /// **'Вставьте приглашение, которое вам прислали, или найдите открытый сервер в каталоге.'**
+  String get onbJoinText;
+
+  /// No description provided for @onbJoinInvite.
+  ///
+  /// In ru, this message translates to:
+  /// **'Приглашение'**
+  String get onbJoinInvite;
+
+  /// No description provided for @onbJoinInviteHint.
+  ///
+  /// In ru, this message translates to:
+  /// **'yl://nightcamp.ru/… или IP-адрес'**
+  String get onbJoinInviteHint;
+
+  /// No description provided for @onbJoinConnect.
+  ///
+  /// In ru, this message translates to:
+  /// **'Подключиться'**
+  String get onbJoinConnect;
+
+  /// No description provided for @onbJoinOr.
+  ///
+  /// In ru, this message translates to:
+  /// **'или'**
+  String get onbJoinOr;
+
+  /// No description provided for @onbJoinCatalog.
+  ///
+  /// In ru, this message translates to:
+  /// **'Открыть каталог серверов'**
+  String get onbJoinCatalog;
+
+  /// No description provided for @onbJoinSkip.
+  ///
+  /// In ru, this message translates to:
+  /// **'Пропустить пока'**
+  String get onbJoinSkip;
+
+  /// No description provided for @onbJoinNotReady.
+  ///
+  /// In ru, this message translates to:
+  /// **'Подключение к серверам появится в фазе 2. Пока нажмите «Пропустить пока».'**
+  String get onbJoinNotReady;
+
+  /// No description provided for @onbCatalogNotReady.
+  ///
+  /// In ru, this message translates to:
+  /// **'Каталог серверов появится в фазе 8.'**
+  String get onbCatalogNotReady;
+
+  /// No description provided for @onbRestoreTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Восстановить профиль'**
+  String get onbRestoreTitle;
+
+  /// No description provided for @onbRestoreText.
+  ///
+  /// In ru, this message translates to:
+  /// **'Войдите по секретной фразе или перенесите профиль с другого устройства.'**
+  String get onbRestoreText;
+
+  /// No description provided for @onbRestoreTabPhrase.
+  ///
+  /// In ru, this message translates to:
+  /// **'Секретная фраза'**
+  String get onbRestoreTabPhrase;
+
+  /// No description provided for @onbRestoreTabQr.
+  ///
+  /// In ru, this message translates to:
+  /// **'QR с другого устройства'**
+  String get onbRestoreTabQr;
+
+  /// No description provided for @onbRestorePhrase.
+  ///
+  /// In ru, this message translates to:
+  /// **'12 слов через пробел'**
+  String get onbRestorePhrase;
+
+  /// No description provided for @onbRestorePhraseHint.
+  ///
+  /// In ru, this message translates to:
+  /// **'maple orbit canyon …'**
+  String get onbRestorePhraseHint;
+
+  /// No description provided for @onbRestoreAction.
+  ///
+  /// In ru, this message translates to:
+  /// **'Восстановить'**
+  String get onbRestoreAction;
+
+  /// No description provided for @onbRestoreChecking.
+  ///
+  /// In ru, this message translates to:
+  /// **'Проверяю фразу…'**
+  String get onbRestoreChecking;
+
+  /// No description provided for @onbRestoreWordCount.
+  ///
+  /// In ru, this message translates to:
+  /// **'Нужно 12 слов — сейчас {count}.'**
+  String onbRestoreWordCount(int count);
+
+  /// No description provided for @onbRestoreUnknownWord.
+  ///
+  /// In ru, this message translates to:
+  /// **'Слово {n} «{word}» не из списка. Проверьте написание.'**
+  String onbRestoreUnknownWord(int n, String word);
+
+  /// No description provided for @onbRestoreChecksum.
+  ///
+  /// In ru, this message translates to:
+  /// **'Все слова из списка, но фраза не сходится. Проверьте порядок слов и опечатки.'**
+  String get onbRestoreChecksum;
+
+  /// No description provided for @onbRestoreQrStub.
+  ///
+  /// In ru, this message translates to:
+  /// **'Перенос с другого устройства появится в фазе 7. Пока войдите по секретной фразе.'**
+  String get onbRestoreQrStub;
+
+  /// No description provided for @onbDoneTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Профиль готов'**
+  String get onbDoneTitle;
+
+  /// No description provided for @onbDoneText.
+  ///
+  /// In ru, this message translates to:
+  /// **'Ключ сохранён на этом устройстве. Секретная фраза — ваша страховка, держите её в надёжном месте.'**
+  String get onbDoneText;
+
+  /// No description provided for @onbDoneRestoredText.
+  ///
+  /// In ru, this message translates to:
+  /// **'Профиль восстановлен на этом устройстве. Имя и аватар подтянутся с сервера, когда вы к нему подключитесь.'**
+  String get onbDoneRestoredText;
+
+  /// No description provided for @onbDoneOpen.
+  ///
+  /// In ru, this message translates to:
+  /// **'Открыть YeenLink'**
+  String get onbDoneOpen;
+
+  /// No description provided for @onbDoneRestart.
+  ///
+  /// In ru, this message translates to:
+  /// **'Начать заново'**
+  String get onbDoneRestart;
+
+  /// No description provided for @deviceNameComputer.
+  ///
+  /// In ru, this message translates to:
+  /// **'Компьютер · {os}'**
+  String deviceNameComputer(String os);
+
+  /// No description provided for @deviceNamePhone.
+  ///
+  /// In ru, this message translates to:
+  /// **'Телефон · {model}'**
+  String deviceNamePhone(String model);
+
+  /// No description provided for @deviceNamePhoneUnknown.
+  ///
+  /// In ru, this message translates to:
+  /// **'Телефон'**
+  String get deviceNamePhoneUnknown;
+
+  /// No description provided for @homeProfileRestored.
+  ///
+  /// In ru, this message translates to:
+  /// **'Профиль восстановлен'**
+  String get homeProfileRestored;
+
+  /// No description provided for @homeFingerprint.
+  ///
+  /// In ru, this message translates to:
+  /// **'Отпечаток ключа'**
+  String get homeFingerprint;
+
+  /// No description provided for @homeDevice.
+  ///
+  /// In ru, this message translates to:
+  /// **'Это устройство'**
+  String get homeDevice;
+
+  /// No description provided for @homeNoServers.
+  ///
+  /// In ru, this message translates to:
+  /// **'Серверов пока нет: подключение появится в фазе 2.'**
+  String get homeNoServers;
+
+  /// No description provided for @homeLoadFailed.
+  ///
+  /// In ru, this message translates to:
+  /// **'Не получилось прочитать профиль на этом устройстве: {reason}'**
+  String homeLoadFailed(String reason);
+
+  /// No description provided for @onbRestoreEnterPhrase.
+  ///
+  /// In ru, this message translates to:
+  /// **'Введите 12 слов'**
+  String get onbRestoreEnterPhrase;
+
+  /// No description provided for @onbPinEnterTwice.
+  ///
+  /// In ru, this message translates to:
+  /// **'Введите PIN дважды'**
+  String get onbPinEnterTwice;
 }
 
 class _L10nDelegate extends LocalizationsDelegate<L10n> {

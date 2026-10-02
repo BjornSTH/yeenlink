@@ -19,7 +19,14 @@ bool _numbersChecked(String p) => p != _generated && !p.startsWith(_illustration
 const _wrappers = 'lib/ui/widgets/';
 
 /// Код интерфейса: здесь строки должны идти через L10n.
-const _uiRoots = ['lib/ui/', 'lib/showcase/', 'lib/main.dart', 'lib/main_showcase.dart'];
+const _uiRoots = [
+  'lib/ui/',
+  'lib/features/',
+  'lib/app/',
+  'lib/showcase/',
+  'lib/main.dart',
+  'lib/main_showcase.dart',
+];
 
 const _materialWidgets = [
   'AppBar',
