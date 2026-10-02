@@ -11,6 +11,8 @@ import (
 	"strings"
 	"testing"
 
+	"golang.org/x/text/unicode/norm"
+
 	"yeenlink/server/pkg/codec"
 	"yeenlink/server/pkg/identity"
 )
@@ -296,5 +298,26 @@ func TestTypesArePrefixFree(t *testing.T) {
 func TestNormalizeText(t *testing.T) {
 	if got := identity.NormalizeText("  Йож \n"); got != "Йож" {
 		t.Fatalf("%q", got)
+	}
+}
+
+// Версия Unicode в нормализации NFC записана в spec/identity.md: если таблицы
+// x/text сменятся (например, с Go 1.27), обновите спецификацию.
+func TestUnicodeVersionDocumented(t *testing.T) {
+	if norm.Version != "15.0.0" {
+		t.Fatalf("x/text/unicode/norm теперь Unicode %s — обновите spec/identity.md", norm.Version)
+	}
+}
+
+func TestBidiControls(t *testing.T) {
+	for _, r := range []rune{0x202A, 0x202E, 0x2066, 0x2069, 0x200E, 0x200F} {
+		if !identity.IsBidiControl(r) {
+			t.Errorf("U+%04X должен быть запрещён", r)
+		}
+	}
+	for _, r := range []rune{0x200D, 0x2029, 0x2065, 0x206A, 'a'} {
+		if identity.IsBidiControl(r) {
+			t.Errorf("U+%04X не должен быть запрещён", r)
+		}
 	}
 }

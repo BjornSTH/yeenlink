@@ -79,8 +79,17 @@ func NormalizeText(s string) string {
 	return strings.TrimSpace(norm.NFC.String(s))
 }
 
+// IsBidiControl — символы управления направлением текста: U+202A–202E,
+// U+2066–2069, U+200E, U+200F. Ими подделывают имена (имя, записанное задом
+// наперёд после U+202E, читается как чужое), поэтому
+// они запрещены во всех текстовых полях. ZWJ (U+200D) разрешён — он нужен эмодзи.
+func IsBidiControl(r rune) bool {
+	return (r >= 0x202A && r <= 0x202E) || (r >= 0x2066 && r <= 0x2069) || r == 0x200E || r == 0x200F
+}
+
 // checkText: уже нормализован, длина в кодовых точках, без управляющих
-// символов (в многострочном поле разрешён только перевод строки).
+// символов (в многострочном поле разрешён только перевод строки) и без
+// символов направления текста.
 func checkText(field, s string, minRunes, maxRunes int, multiline bool) error {
 	if !utf8.ValidString(s) || s != NormalizeText(s) {
 		return fail(ErrBadPayload, "%s не нормализовано (NFC, без пробелов по краям)", field)
@@ -92,6 +101,9 @@ func checkText(field, s string, minRunes, maxRunes int, multiline bool) error {
 	for _, r := range s {
 		if unicode.IsControl(r) && (!multiline || r != '\n') {
 			return fail(ErrBadPayload, "%s: управляющий символ U+%04X", field, r)
+		}
+		if IsBidiControl(r) {
+			return fail(ErrBadPayload, "%s: символ направления текста U+%04X", field, r)
 		}
 	}
 	return nil

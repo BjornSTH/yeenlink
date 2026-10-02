@@ -950,12 +950,6 @@ abstract class L10n {
   /// **'Открыть YeenLink'**
   String get onbDoneOpen;
 
-  /// No description provided for @onbDoneRestart.
-  ///
-  /// In ru, this message translates to:
-  /// **'Начать заново'**
-  String get onbDoneRestart;
-
   /// No description provided for @deviceNameComputer.
   ///
   /// In ru, this message translates to:
@@ -1015,6 +1009,12 @@ abstract class L10n {
   /// In ru, this message translates to:
   /// **'Введите PIN дважды'**
   String get onbPinEnterTwice;
+
+  /// No description provided for @onbTextBidi.
+  ///
+  /// In ru, this message translates to:
+  /// **'Здесь есть невидимые символы направления текста — ими подделывают имена. Уберите их.'**
+  String get onbTextBidi;
 }
 
 class _L10nDelegate extends LocalizationsDelegate<L10n> {

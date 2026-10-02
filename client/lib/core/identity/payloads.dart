@@ -38,6 +38,12 @@ bool _isSpace(int r) =>
 // Как unicode.IsControl в Go: C0, DEL и C1.
 bool _isControl(int r) => r < 0x20 || (r >= 0x7F && r <= 0x9F);
 
+/// Символы управления направлением текста: U+202A–202E, U+2066–2069, U+200E,
+/// U+200F — ими подделывают имена. Запрещены во всех текстовых полях, как в Go.
+/// ZWJ (U+200D) разрешён — он нужен эмодзи.
+bool isBidiControl(int r) =>
+    (r >= 0x202A && r <= 0x202E) || (r >= 0x2066 && r <= 0x2069) || r == 0x200E || r == 0x200F;
+
 /// Канонический вид текстового поля: NFC и без пробелов по краям.
 String normalizeText(String s) {
   final runes = unorm.nfc(s).runes.toList();
@@ -59,9 +65,9 @@ void _checkText(String field, String s, int min, int max, {bool multiline = fals
   final n = s.runes.length;
   if (n < min || n > max) _bad('$field: $n символов, нужно $min–$max');
   for (final r in s.runes) {
-    if (_isControl(r) && !(multiline && r == 0x0A)) {
-      _bad('$field: управляющий символ U+${r.toRadixString(16).padLeft(4, '0').toUpperCase()}');
-    }
+    final code = r.toRadixString(16).padLeft(4, '0').toUpperCase();
+    if (_isControl(r) && !(multiline && r == 0x0A)) _bad('$field: управляющий символ U+$code');
+    if (isBidiControl(r)) _bad('$field: символ направления текста U+$code');
   }
 }
 

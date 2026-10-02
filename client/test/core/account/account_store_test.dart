@@ -104,7 +104,7 @@ void main() {
     expect((await store.load())!.profile, isNull);
   });
 
-  test('«Начать заново» стирает всё', () async {
+  test('wipe стирает всё (сброс профиля из настроек, фаза 7)', () async {
     await store.restore(
       identity: await Identity.fromMnemonic(_phrase),
       pin: '333333',

@@ -475,9 +475,6 @@ class L10nRu extends L10n {
   String get onbDoneOpen => 'Открыть YeenLink';
 
   @override
-  String get onbDoneRestart => 'Начать заново';
-
-  @override
   String deviceNameComputer(String os) {
     return 'Компьютер · $os';
   }
@@ -512,4 +509,8 @@ class L10nRu extends L10n {
 
   @override
   String get onbPinEnterTwice => 'Введите PIN дважды';
+
+  @override
+  String get onbTextBidi =>
+      'Здесь есть невидимые символы направления текста — ими подделывают имена. Уберите их.';
 }

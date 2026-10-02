@@ -13,10 +13,6 @@ import '../../ui/widgets/pressable.dart';
 import '../../ui/widgets/widgets.dart';
 import 'onboarding_controller.dart';
 
-/// Ширина колонки шага (OnbSteps, 440). Токена нет — запрошен
-/// onboarding-content-w; до него — это значение из макета.
-const double _contentWidth = 440;
-
 /// Первый вход (docs/mockups/src/03-onboarding, phase-1.pdf).
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({
@@ -89,9 +85,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     return YlSurface(
       child: LayoutBuilder(
         builder: (context, box) {
-          final wide = box.maxWidth >= YlSize.onboardingAsideW + _contentWidth + 4 * YlSpace.s8;
+          final wide =
+              box.maxWidth >= YlSize.onboardingAsideW + YlSize.onboardingContentW + 4 * YlSpace.s8;
           final content = ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: _contentWidth),
+            constraints: const BoxConstraints(maxWidth: YlSize.onboardingContentW),
             child: KeyedSubtree(key: ValueKey(c.step), child: _stepView(context)),
           );
           if (wide) {
@@ -180,6 +177,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     String? nameError;
     if (err == DraftError.nameTooLong) nameError = l.onbNameTooLong(Limits.nameMaxRunes);
     if (err == DraftError.nameControl) nameError = l.onbNameControl;
+    if (err == DraftError.nameBidi) nameError = l.onbTextBidi;
     return [
       _Heading(l.onbProfileTitle, l.onbProfileText),
       Row(
@@ -215,7 +213,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         placeholder: l.onbAboutHint,
         controller: _about,
         lines: 3,
-        error: err == DraftError.aboutTooLong ? l.onbAboutTooLong(Limits.aboutMaxRunes) : null,
+        error: switch (err) {
+          DraftError.aboutTooLong => l.onbAboutTooLong(Limits.aboutMaxRunes),
+          DraftError.aboutBidi => l.onbTextBidi,
+          _ => null,
+        },
         onChanged: (v) => c.update((c) => c.about = v),
       ),
       _BackNext(
@@ -424,25 +426,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   List<Widget> _done(L10n l) => [
     const Align(alignment: Alignment.centerLeft, child: _SuccessMark()),
     _Heading(l.onbDoneTitle, c.mode == OnbMode.create ? l.onbDoneText : l.onbDoneRestoredText),
-    Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        YlButton(label: l.onbDoneOpen, expand: true, onPressed: widget.onOpenApp),
-        const SizedBox(height: YlSpace.s3),
-        YlButton(
-          label: l.onbDoneRestart,
-          kind: YlButtonKind.quiet,
-          expand: true,
-          onPressed: () async {
-            await c.restart();
-            setState(() {
-              _seedNotice = _joinNotice = null;
-              _saveWarning = false;
-            });
-          },
-        ),
-      ],
-    ),
+    YlButton(label: l.onbDoneOpen, expand: true, onPressed: widget.onOpenApp),
   ];
 
   static const _osName = {'windows': 'Windows', 'linux': 'Linux', 'macos': 'macOS'};

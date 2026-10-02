@@ -99,6 +99,9 @@ func writeIdentity(dir string) error {
 		V: 1, Master: mpub, Seq: 1, Name: "Кривозуб", About: "",
 		Wall: true, NextKeyHash: main.NextKeyHash[:], Updated: updated,
 	}
+	// ZWJ (U+200D) внутри эмодзи-семьи разрешён: 9 букв + 5 кодовых точек.
+	emoji := minimal
+	emoji.Name = "Пятнистый👨\u200D👩\u200D👧"
 	cert := identity.DeviceCert{DevicePub: pub(dev1), Name: "Компьютер · Linux", Platform: "linux", Created: created}
 	revoke := identity.Revoke{DevicePub: pub(dev2), Reason: "Потерян", At: created + 60_000}
 	list := identity.Devices{Seq: 2, Active: [][]byte{pub(dev1)}, Revoked: [][]byte{pub(dev2)}}
@@ -111,6 +114,7 @@ func writeIdentity(dir string) error {
 	items := []item{
 		{"profile", identity.TypeProfile, "main", profile, main.Master},
 		{"profile_minimal", identity.TypeProfile, "main", minimal, main.Master},
+		{"profile_emoji_zwj", identity.TypeProfile, "main", emoji, main.Master},
 		{"device_cert", identity.TypeDeviceCert, "main", cert, main.Master},
 		{"revoke", identity.TypeRevoke, "main", revoke, main.Master},
 		{"devices", identity.TypeDevices, "main", list, main.Master},
@@ -234,6 +238,12 @@ func badEnvelopes(profile *identity.Signed, main *identity.Identity, dev ed25519
 			signProfile(func(q *identity.Profile) { q.Name = "И\u0306ож" }, main.Master), identity.ErrBadPayload, ""),
 		add("name_control", "Управляющий символ U+0007 в имени", "profile",
 			signProfile(func(q *identity.Profile) { q.Name = "Пят\u0007нистый" }, main.Master), identity.ErrBadPayload, ""),
+		add("name_bidi_rlo", "Символ направления текста U+202E в имени", "profile",
+			signProfile(func(q *identity.Profile) { q.Name = "\u202Eйытсинтяп" }, main.Master), identity.ErrBadPayload, ""),
+		add("name_bidi_lrm", "Метка направления U+200E в имени", "profile",
+			signProfile(func(q *identity.Profile) { q.Name = "Пятнистый\u200E" }, main.Master), identity.ErrBadPayload, ""),
+		add("about_bidi_isolate", "Изолятор направления U+2067 в «о себе»", "profile",
+			signProfile(func(q *identity.Profile) { q.About = "Ночью \u2067tset\u2069" }, main.Master), identity.ErrBadPayload, ""),
 		add("name_too_long", "Имя из 33 символов", "profile",
 			signProfile(func(q *identity.Profile) { q.Name = strings.Repeat("Ж", identity.NameMaxRunes+1) }, main.Master), identity.ErrBadPayload, ""),
 		add("name_spaces", "Пробелы по краям имени", "profile",

@@ -15,7 +15,7 @@ enum OnbMode { create, restore }
 enum RestoreTab { phrase, qr }
 
 /// Почему имя или «о себе» не подходят.
-enum DraftError { nameEmpty, nameTooLong, nameControl, aboutTooLong }
+enum DraftError { nameEmpty, nameTooLong, nameControl, nameBidi, aboutTooLong, aboutBidi }
 
 /// Состояние первого входа. Виджеты только показывают его и зовут методы.
 class OnboardingController extends ChangeNotifier {
@@ -64,7 +64,10 @@ class OnboardingController extends ChangeNotifier {
     if (n.isEmpty) return DraftError.nameEmpty;
     if (n.runes.length > Limits.nameMaxRunes) return DraftError.nameTooLong;
     if (n.runes.any((r) => r < 0x20 || (r >= 0x7F && r <= 0x9F))) return DraftError.nameControl;
-    if (normalizeText(about).runes.length > Limits.aboutMaxRunes) return DraftError.aboutTooLong;
+    if (n.runes.any(isBidiControl)) return DraftError.nameBidi;
+    final a = normalizeText(about);
+    if (a.runes.length > Limits.aboutMaxRunes) return DraftError.aboutTooLong;
+    if (a.runes.any(isBidiControl)) return DraftError.aboutBidi;
     return null;
   }
 
@@ -206,22 +209,6 @@ class OnboardingController extends ChangeNotifier {
   }
 
   void skipJoin() => _go(OnbStep.done);
-
-  /// «Начать заново»: стирает созданное на устройстве и возвращает к началу.
-  Future<void> restart() async {
-    await store.wipe();
-    _identity?.wipe();
-    _identity = null;
-    _account = null;
-    name = about = pin = pinRepeat = phrase = '';
-    bannerIndex = 0;
-    avatar = null;
-    seedConfirmed = false;
-    phraseError = null;
-    restoreTab = RestoreTab.phrase;
-    _mode = OnbMode.create;
-    _go(OnbStep.welcome);
-  }
 
   @override
   void dispose() {

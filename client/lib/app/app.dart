@@ -1,8 +1,10 @@
 import 'dart:io';
+import 'dart:ui' show AppExitResponse;
 
 import 'package:file_selector/file_selector.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -35,7 +37,7 @@ class AppServices {
         : SecureVault();
     return AppServices(
       store: AccountStore(vault: vault, dir: Directory('${support.path}/identity')),
-      bridge: const PlatformBridge(),
+      bridge: PlatformBridge(),
       pickImage: _pickImage,
     );
   }
@@ -96,6 +98,25 @@ class _AppRootState extends State<AppRoot> {
   );
   late Future<(LocalAccount, Profile?)?> _account = _load();
 
+  // Фраза в буфере обмена не переживает уход приложения в фон и закрытие.
+  late final AppLifecycleListener _lifecycle = AppLifecycleListener(
+    onHide: _clearClipboard,
+    onPause: _clearClipboard,
+    onDetach: _clearClipboard,
+    onExitRequested: () async {
+      await widget.services.bridge.clearSensitiveClipboard();
+      return AppExitResponse.exit;
+    },
+  );
+
+  void _clearClipboard() => widget.services.bridge.clearSensitiveClipboard();
+
+  @override
+  void initState() {
+    super.initState();
+    _lifecycle;
+  }
+
   Future<(LocalAccount, Profile?)?> _load() async {
     final acc = await widget.services.store.load();
     if (acc == null) return null;
@@ -105,6 +126,7 @@ class _AppRootState extends State<AppRoot> {
 
   @override
   void dispose() {
+    _lifecycle.dispose();
     _onboarding.dispose();
     super.dispose();
   }

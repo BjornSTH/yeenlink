@@ -182,6 +182,15 @@ void main() {
     }
   });
 
+  test('символы направления текста запрещены, ZWJ разрешён', () {
+    for (final r in [0x202A, 0x202E, 0x2066, 0x2069, 0x200E, 0x200F]) {
+      expect(isBidiControl(r), isTrue, reason: r.toRadixString(16));
+    }
+    for (final r in [0x200D, 0x2029, 0x2065, 0x206A, 0x61]) {
+      expect(isBidiControl(r), isFalse, reason: r.toRadixString(16));
+    }
+  });
+
   test('нормализация текста как в Go: NFC, Unicode-пробелы, но не U+FEFF', () {
     expect(normalizeText('  Йож \n'), 'Йож');
     expect(normalizeText('　Имя '), 'Имя');

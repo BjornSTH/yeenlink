@@ -242,7 +242,6 @@
   "onbDoneText": "Ключ сохранён на этом устройстве. Секретная фраза — ваша страховка, держите её в надёжном месте.",
   "onbDoneRestoredText": "Профиль восстановлен на этом устройстве. Имя и аватар подтянутся с сервера, когда вы к нему подключитесь.",
   "onbDoneOpen": "Открыть YeenLink",
-  "onbDoneRestart": "Начать заново",
   "deviceNameComputer": "Компьютер · {os}",
   "@deviceNameComputer": {
     "placeholders": {
@@ -273,5 +272,6 @@
     }
   },
   "onbRestoreEnterPhrase": "Введите 12 слов",
-  "onbPinEnterTwice": "Введите PIN дважды"
+  "onbPinEnterTwice": "Введите PIN дважды",
+  "onbTextBidi": "Здесь есть невидимые символы направления текста — ими подделывают имена. Уберите их."
 }

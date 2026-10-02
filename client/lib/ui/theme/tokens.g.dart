@@ -901,6 +901,9 @@ abstract final class YlSize {
 
   /// Плитка логотипа на телефоне; скругление 11.
   static const double logoSm = 36;
+
+  /// Ширина колонки шагов онбординга на ПК; на телефоне — вся ширина за вычетом полей.
+  static const double onboardingContentW = 440;
 }
 
 /// Прозрачность состояний.

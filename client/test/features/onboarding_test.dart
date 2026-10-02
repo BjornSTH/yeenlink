@@ -34,6 +34,9 @@ class FakeBridge extends PlatformBridge {
   Future<void> copySensitive(String text) async => copied.add(text);
 
   @override
+  Future<void> clearSensitiveClipboard() async => copied.clear();
+
+  @override
   Future<bool> saveText(String fileName, String text) async {
     saved[fileName] = text;
     return true;
@@ -216,11 +219,11 @@ void main() {
     final acc = await tester.runAsync(h.store.load);
     expect(acc!.profile, isNull);
     expect(DeviceCert.fromMap(acc.deviceCert.payloadMap()).name, 'Телефон · Pixel 8');
-
-    await tester.tap(find.text('Начать заново'));
-    await settle(tester, () => h.controller.step != OnbStep.welcome);
-    expect(find.text('Добро пожаловать в YeenLink'), findsOneWidget);
-    expect(await tester.runAsync(h.store.load), isNull);
+    expect(
+      find.text('Начать заново'),
+      findsNothing,
+      reason: 'сброс — в настройках, с подтверждением',
+    );
   });
 
   group('golden: шаги онбординга', () {
@@ -303,7 +306,17 @@ void main() {
     expect(h.controller.draftError, DraftError.nameTooLong);
     h.controller.update((c) => c.name = 'Пят\u0007нистый');
     expect(h.controller.draftError, DraftError.nameControl);
-    h.controller.update((c) => c.name = 'Пятнистый');
+    h.controller.update((c) => c.name = '\u202Eйытсинтяп');
+    expect(h.controller.draftError, DraftError.nameBidi);
+    h.controller.update((c) => c.name = 'Пятнистый👨\u200D👩\u200D👧');
+    expect(h.controller.draftError, isNull, reason: 'ZWJ в эмодзи разрешён');
+    h.controller.update((c) => c.about = 'ночью \u2067tset\u2069');
+    expect(h.controller.draftError, DraftError.aboutBidi);
+    h.controller.update(
+      (c) => c
+        ..name = 'Пятнистый'
+        ..about = '',
+    );
     expect(h.controller.draftError, isNull);
     expect(h.controller.avatar, isNull);
     expect(Uint8List(0), isEmpty);
