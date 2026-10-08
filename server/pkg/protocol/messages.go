@@ -29,19 +29,30 @@ type Session struct {
 	ResumeMs uint64 `cbor:"resume_ms"`
 }
 
+// Маски прав в кадрах — int64 в дополнительном коде: те же 64 бита, что uint64
+// из docs/spec.md, но бит 63 (OWNER) даёт отрицательное число. Профиль CBOR
+// разрешает только целые в пределах int64 (Dart), а 1<<63 туда не влезает.
+// Перевод — PermsToWire / PermsFromWire.
+
+// PermsToWire — маска uint64 в int64 для кадра.
+func PermsToWire(m uint64) int64 { return int64(m) } // #nosec G115 -- побитово, намеренно
+
+// PermsFromWire — маска из кадра в uint64.
+func PermsFromWire(m int64) uint64 { return uint64(m) } // #nosec G115 -- побитово, намеренно
+
 // Role — роль (в фазе 2 только встроенные «все» и «Владелец»).
 type Role struct {
 	ID       uint64 `cbor:"id"`
 	Name     string `cbor:"name"`
 	Position uint64 `cbor:"position"`
-	Perms    uint64 `cbor:"perms"`
+	Perms    int64  `cbor:"perms"`             // см. PermsToWire
 	Builtin  string `cbor:"builtin,omitempty"` // everyone | owner
 }
 
 // Perms — готовые права: серверные биты и маски по каналам (каналы — фаза 3).
 type Perms struct {
-	Server   uint64            `cbor:"server"`
-	Channels map[string]uint64 `cbor:"channels"`
+	Server   int64            `cbor:"server"`   // см. PermsToWire
+	Channels map[string]int64 `cbor:"channels"` // см. PermsToWire
 }
 
 // Ready — ответ на auth без resume.
