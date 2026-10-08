@@ -1,0 +1,13 @@
+# Кодогенерация drift — только для базы (lib/core/db), остальное не трогаем.
+targets:
+  $default:
+    builders:
+      drift_dev:
+        generate_for:
+          - lib/core/db/**
+      drift_dev:preparing_builder:
+        generate_for:
+          - lib/core/db/**
+      source_gen:combining_builder:
+        generate_for:
+          - lib/core/db/**

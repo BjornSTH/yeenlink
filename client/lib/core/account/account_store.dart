@@ -18,6 +18,7 @@ class LocalAccount {
     required this.deviceCert,
     this.profile,
     this.avatarPng,
+    this.devices,
   });
 
   final Uint8List masterPub;
@@ -28,6 +29,25 @@ class LocalAccount {
   /// не придёт с сервера (фаза 2).
   final Signed? profile;
   final Uint8List? avatarPng;
+
+  /// Последний известный список устройств (`t = "devices"`). Новый профиль
+  /// подписывает его сразу; после восстановления его нет, пока устройство
+  /// не добавят в список с сервера (spec/auth.md, «Профиль и устройства»).
+  final Signed? devices;
+
+  LocalAccount copyWith({
+    Signed? profile,
+    Uint8List? avatarPng,
+    bool dropAvatar = false,
+    Signed? devices,
+  }) => LocalAccount(
+    masterPub: masterPub,
+    devicePub: devicePub,
+    deviceCert: deviceCert,
+    profile: profile ?? this.profile,
+    avatarPng: dropAvatar ? null : (avatarPng ?? this.avatarPng),
+    devices: devices ?? this.devices,
+  );
 }
 
 /// Что человек ввёл на шаге «Как вас называть?».
@@ -76,6 +96,7 @@ class AccountStore {
   File get _profileFile => File('${dir.path}/profile.signed');
   File get _certFile => File('${dir.path}/device_cert.signed');
   File get _avatarFile => File('${dir.path}/avatar.png');
+  File get _devicesFile => File('${dir.path}/devices.signed');
 
   /// Профиль на этом устройстве или null, если его ещё нет.
   Future<LocalAccount?> load() async {
@@ -93,13 +114,26 @@ class AccountStore {
       profile = Signed.decode(await _profileFile.readAsBytes());
       await openProfile(profile);
     }
+    Signed? devices;
+    if (_devicesFile.existsSync()) {
+      devices = Signed.decode(await _devicesFile.readAsBytes());
+      await openDevices(devices, cert.k);
+    }
     return LocalAccount(
       masterPub: cert.k,
       devicePub: devicePub,
       deviceCert: cert,
       profile: profile,
       avatarPng: _avatarFile.existsSync() ? await _avatarFile.readAsBytes() : null,
+      devices: devices,
     );
+  }
+
+  /// Seed ключа устройства — для входа на серверы.
+  Future<Uint8List> deviceSeed() async {
+    final seed = await vault.read(deviceKey);
+    if (seed == null) throw StateError('профиля на устройстве нет');
+    return seed;
   }
 
   /// Новый профиль: ключ устройства, блоб под PIN, подписанные профиль и
@@ -114,12 +148,47 @@ class AccountStore {
     final now = _nowMs();
     final signedProfile = await _signProfile(identity, draft, seq: 1, now: now);
     final account = await _store(identity, pin, deviceName, platform, now);
-    return _saveProfile(account, signedProfile, draft.avatar);
+    // Первое устройство профиля: список подписывается сразу, пока главный
+    // ключ в памяти, — PIN при первом входе на сервер не понадобится.
+    final devices = await signDevices(
+      identity,
+      Devices(seq: 1, active: [account.devicePub], revoked: const []),
+    );
+    return _saveProfile(await saveDevices(account, devices), signedProfile, draft.avatar);
+  }
+
+  /// Подписывает список устройств главным ключом (в отдельном изоляте).
+  Future<Signed> signDevices(Identity identity, Devices devices) {
+    devices.validate();
+    final map = devices.toMap();
+    final seed = Uint8List.fromList(identity.masterSeed);
+    return Isolate.run(() => Signed.sign(SignedType.devices, map, seed));
+  }
+
+  /// Сохраняет список устройств — свой или более новый с сервера.
+  Future<LocalAccount> saveDevices(LocalAccount account, Signed devices) async {
+    await openDevices(devices, account.masterPub);
+    await _devicesFile.writeAsBytes(devices.encode(), flush: true);
+    return account.copyWith(devices: devices);
+  }
+
+  /// Профиль с сервера новее локального: заменяет его. Картинка аватара
+  /// остаётся, только если её хеш совпал; иначе картинка придёт с сервера
+  /// вместе с вложениями (фаза 3), а пока — инициалы.
+  Future<LocalAccount> adoptProfile(LocalAccount account, Signed profile) async {
+    final p = await openProfile(profile);
+    if (!_same(p.master, account.masterPub)) throw StateError('профиль другого человека');
+    await _profileFile.writeAsBytes(profile.encode(), flush: true);
+    final old = account.profile == null ? null : await openProfile(account.profile!);
+    final keep =
+        p.avatar != null && old?.avatar != null && _same(p.avatar!.sha256, old!.avatar!.sha256);
+    if (!keep && _avatarFile.existsSync()) await _avatarFile.delete();
+    return account.copyWith(profile: profile, dropAvatar: !keep);
   }
 
   /// Восстановление по фразе: новый ключ устройства и сертификат. Профиля нет —
   /// его можно указать сразу ([saveRestoredProfile]) или он придёт с сервера
-  /// (фаза 2). Список устройств — тоже в фазе 2.
+  /// (фаза 2). Список устройств подписывается при первом входе на сервер.
   Future<LocalAccount> restore({
     required Identity identity,
     required String pin,
@@ -168,13 +237,7 @@ class AccountStore {
   ) async {
     await _profileFile.writeAsBytes(profile.encode(), flush: true);
     if (avatar != null) await _avatarFile.writeAsBytes(avatar.png, flush: true);
-    return LocalAccount(
-      masterPub: account.masterPub,
-      devicePub: account.devicePub,
-      deviceCert: account.deviceCert,
-      profile: profile,
-      avatarPng: avatar?.png,
-    );
+    return account.copyWith(profile: profile, avatarPng: avatar?.png, dropAvatar: avatar == null);
   }
 
   Future<LocalAccount> _store(
@@ -236,7 +299,7 @@ class AccountStore {
     for (final k in [masterKey, deviceKey, PinGuard.key]) {
       await vault.delete(k);
     }
-    for (final f in [_profileFile, _certFile, _avatarFile]) {
+    for (final f in [_profileFile, _certFile, _avatarFile, _devicesFile]) {
       if (f.existsSync()) await f.delete();
     }
   }
