@@ -43,6 +43,7 @@ const (
 	ErrBadToken         = "bad_token"
 	ErrStale            = "stale" // профиль или список устройств с не бо́льшим seq
 	ErrBadPayload       = "bad_payload"
+	ErrReplaced         = "replaced" // сессию продолжили в другом соединении
 )
 
 // Сроки.

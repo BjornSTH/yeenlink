@@ -27,6 +27,7 @@ abstract final class Op {
 
 abstract final class ErrCode {
   static const proto = 'proto';
+  static const badFrame = 'bad_frame';
   static const badCert = 'bad_cert';
   static const deviceRevoked = 'device_revoked';
   static const badSig = 'bad_sig';
@@ -35,6 +36,9 @@ abstract final class ErrCode {
   static const rateLimited = 'rate_limited';
   static const badToken = 'bad_token';
   static const stale = 'stale';
+  static const badPayload = 'bad_payload';
+  static const unknownOp = 'unknown_op';
+  static const replaced = 'replaced';
 }
 
 const int challengeTtlMs = 30000;

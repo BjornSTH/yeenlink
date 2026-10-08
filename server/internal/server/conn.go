@@ -332,7 +332,7 @@ func (c *conn) tryResume(id *uint64) bool {
 	last := s.nextEvent
 	s.mu.Unlock()
 	if old != nil && old != c {
-		old.closeWith("replaced", "сессия продолжена в другом соединении")
+		old.closeWith(protocol.ErrReplaced, "сессия продолжена в другом соединении")
 	}
 	c.reply(id, protocol.OpResumed, protocol.Resumed{
 		Session: protocol.Session{ID: sess.id, ResumeMs: protocol.ResumeWindowMs}, Events: events, LastEvent: last,

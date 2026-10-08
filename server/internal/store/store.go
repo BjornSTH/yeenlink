@@ -21,6 +21,9 @@ import (
 //go:embed migrations/*.sql
 var migrations embed.FS
 
+// migrationFS — откуда берутся миграции (тест подставляет свои).
+var migrationFS fs.FS = migrations
+
 // Store — база сервера.
 type Store struct {
 	DB   *sql.DB
@@ -69,7 +72,7 @@ type migration struct {
 }
 
 func loadMigrations() ([]migration, error) {
-	entries, err := fs.ReadDir(migrations, "migrations")
+	entries, err := fs.ReadDir(migrationFS, "migrations")
 	if err != nil {
 		return nil, err
 	}
@@ -80,7 +83,7 @@ func loadMigrations() ([]migration, error) {
 		if !ok || err != nil {
 			return nil, fmt.Errorf("store: имя миграции %q — нужно NNNN_описание.sql", e.Name())
 		}
-		b, err := migrations.ReadFile("migrations/" + e.Name())
+		b, err := fs.ReadFile(migrationFS, "migrations/"+e.Name())
 		if err != nil {
 			return nil, err
 		}
@@ -149,8 +152,17 @@ func (s *Store) snapshot(ctx context.Context, version int) error {
 	if _, err := os.Stat(dst); err == nil {
 		return nil // снимок этой версии уже есть
 	}
-	_, err := s.DB.ExecContext(ctx, "VACUUM INTO ?", dst)
-	return err
+	// VACUUM INTO пишет и в пустой файл — создаём его сами, чтобы права были 0600.
+	f, err := os.OpenFile(dst, os.O_WRONLY|os.O_CREATE|os.O_EXCL, 0o600)
+	if err != nil {
+		return err
+	}
+	_ = f.Close()
+	if _, err := s.DB.ExecContext(ctx, "VACUUM INTO ?", dst); err != nil {
+		_ = os.Remove(dst)
+		return err
+	}
+	return nil
 }
 
 // ErrStale — запись с не бо́льшим seq, чем уже сохранённая.
