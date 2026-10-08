@@ -45,6 +45,35 @@ jobs:
           git add -N ../testdata/vectors
           git diff --exit-code --stat -- ../testdata/vectors
 
+  vps-smoke:
+    name: Сервер на чистом Debian 12 (systemd)
+    runs-on: ubuntu-latest
+    needs: server
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-go@v6
+        with:
+          go-version-file: server/go.mod
+          cache-dependency-path: server/go.sum
+
+      - name: sudo ylsrv init → служба → вход → admin.claim → передача роли
+        run: tools/vps-smoke.sh
+
+      - name: Сборка ylsrv (linux amd64, arm64)
+        working-directory: server
+        run: |
+          for arch in amd64 arm64; do
+            CGO_ENABLED=0 GOOS=linux GOARCH=$arch go build -trimpath \
+              -ldflags "-s -w -X main.version=${GITHUB_SHA::7}" -o ../dist/ylsrv-linux-$arch ./cmd/ylsrv
+          done
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ylsrv-linux
+          path: dist/
+          retention-days: 14
+
   client:
     name: Клиент (Flutter)
     runs-on: ubuntu-latest

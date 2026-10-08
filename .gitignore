@@ -12,3 +12,4 @@
 
 # Отличия golden-снимков (flutter test пишет их при падении)
 /client/test/**/failures/
+/dist/

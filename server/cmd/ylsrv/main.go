@@ -24,6 +24,7 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"path/filepath"
 	"runtime/debug"
 	"strconv"
 	"strings"
@@ -167,6 +168,9 @@ func cmdAdminToken(args []string) error {
 	if err != nil {
 		return err
 	}
+	if err := chownLikeDir(c.AdminTokenPath()); err != nil {
+		return err
+	}
 	printToken(os.Stdout, token, c.AdminTokenPath())
 	fmt.Println("Прежний ключ больше не действует. Кто введёт этот, станет Владельцем вместо нынешнего.")
 	return nil
@@ -200,7 +204,7 @@ func printPorts(w io.Writer, ports []firstrun.Port) {
 type initFlags struct {
 	path, name, host, listen, mode, email, dataDir, certFile, keyFile, proxyCert string
 	httpPort                                                                     int
-	nonInteractive                                                               bool
+	nonInteractive, systemd                                                      bool
 }
 
 func cmdInit(args []string) error {
@@ -218,7 +222,12 @@ func cmdInit(args []string) error {
 	fs.StringVar(&f.keyFile, "key-file", "", "tls=file: ключ")
 	fs.StringVar(&f.proxyCert, "proxy-cert", "", "tls=proxy: сертификат, который отдаёт прокси")
 	fs.BoolVar(&f.nonInteractive, "non-interactive", false, "ничего не спрашивать")
+	fs.BoolVar(&f.systemd, "systemd", true, "под root на Linux с systemd: пользователь yeenlink, "+installBin+", служба ylsrv")
 	_ = fs.Parse(args)
+	var err error
+	if f.path, err = filepath.Abs(f.path); err != nil {
+		return err
+	}
 
 	if _, err := os.Stat(f.path); err == nil {
 		return fmt.Errorf("%s уже есть — сервер настроен. Новый ключ администратора: ylsrv admin-token", f.path)
@@ -248,6 +257,9 @@ func cmdInit(args []string) error {
 	}
 	if f.dataDir != "" {
 		c.DataDir = f.dataDir
+	}
+	if c.DataDir, err = filepath.Abs(c.DataDir); err != nil {
+		return err
 	}
 	mode := f.mode
 	if mode == "" {
@@ -329,6 +341,15 @@ func cmdInit(args []string) error {
 		fmt.Printf("\nСертификат TLS (SHA-256): %s\n", fingerprint)
 	}
 	printToken(os.Stdout, token, c.AdminTokenPath())
-	fmt.Println("\nЗапуск: systemctl enable --now ylsrv   (или вручную: ylsrv run)")
+
+	if f.systemd && canInstallService() {
+		if err := installService(f.path, c.DataDir); err != nil {
+			return fmt.Errorf("установка службы: %w", err)
+		}
+		fmt.Printf("\nУстановлено: %s, служба ylsrv (пользователь %s).\n", installBin, serviceUser)
+		fmt.Println("Запуск: systemctl enable --now ylsrv")
+		return nil
+	}
+	fmt.Println("\nЗапуск: ylsrv run --config " + f.path)
 	return nil
 }

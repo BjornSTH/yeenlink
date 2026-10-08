@@ -3,6 +3,30 @@
 Детали к разделам `docs/spec.md` «Порты», «Хранение», «Владелец и ключ
 администратора» и фазе 2. Код: `server/cmd/ylsrv`, `server/internal/*`.
 
+## Установка
+
+```
+scp ylsrv root@vps:   # статический бинарник linux-amd64 или linux-arm64
+ssh root@vps
+./ylsrv init          # вопросы: название, домен или IP; печатает отпечаток и ключ администратора
+systemctl enable --now ylsrv
+```
+
+`ylsrv init` под root на Linux с systemd (отключается `--systemd=false`):
+
+- заводит системного пользователя `yeenlink` (без входа, домашний каталог — `data_dir`);
+- копирует себя в `/usr/local/bin/ylsrv`;
+- отдаёт `data_dir` пользователю `yeenlink`, конфиг — `root:yeenlink 0640`
+  (служба читает, но не меняет);
+- ставит `/etc/systemd/system/ylsrv.service` (шаблон —
+  `server/cmd/ylsrv/ylsrv.service`): `User=yeenlink`,
+  `CAP_NET_BIND_SERVICE` для порта 443, `ProtectSystem=strict` с записью только
+  в `data_dir`, `MemoryMax=200M`.
+
+`sudo ylsrv admin-token` отдаёт файл ключа владельцу `data_dir`. Проверка всего
+пути на чистом Debian 12 — `tools/vps-smoke.sh` (`make vps-smoke`, в CI —
+задача `vps-smoke`).
+
 ## Команды
 
 | Команда | Что делает |
@@ -22,7 +46,8 @@
 ### `ylsrv init`
 
 Флаги: `--name`, `--host`, `--listen`, `--tls`, `--email`, `--http-port`,
-`--data-dir`, `--cert-file`, `--key-file`, `--proxy-cert`, `--non-interactive`.
+`--data-dir`, `--cert-file`, `--key-file`, `--proxy-cert`, `--non-interactive`,
+`--systemd`.
 В терминале без `--non-interactive` недостающее спрашивается; иначе берутся
 флаги и значения по умолчанию. Конфиг уже есть — отказ (чтобы не перезаписать
 ключи).

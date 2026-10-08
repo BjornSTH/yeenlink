@@ -17,7 +17,7 @@ GOLANGCI := $(or $(shell command -v golangci-lint 2>/dev/null),$(shell go env GO
 GENERATED := client/lib/ui/theme/tokens.g.dart client/lib/l10n/gen testdata/vectors
 
 .PHONY: all ci test test-server test-client lint lint-server lint-client \
-        gen gen-tokens gen-l10n vectors check-gen goldens showcase build-server fmt
+        gen gen-tokens gen-l10n vectors check-gen goldens showcase build-server vps-smoke fmt
 
 all: ci
 
@@ -81,5 +81,10 @@ check-gen: gen
 showcase:
 	cd client && flutter run -d linux -t lib/main_showcase.dart
 
+# Статические бинарники (без cgo) в server/bin/.
 build-server:
-	cd server && go build -o bin/ ./cmd/...
+	cd server && CGO_ENABLED=0 go build -trimpath -o bin/ ./cmd/...
+
+# Установка на «чистый VPS»: Debian 12 с systemd в Docker (tools/vps-smoke.sh).
+vps-smoke:
+	tools/vps-smoke.sh
