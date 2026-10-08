@@ -89,10 +89,10 @@ void main() {
 
     // Отпечаток совпал — без сверки сразу вход; сервер без владельца — окно ключа.
     await waitFor(find.text('Стать владельцем сервера'));
-    expect(find.textContaining('У «Логово» пока нет владельца'), findsOneWidget);
+    expect(find.textContaining('У сервера «Логово» пока нет владельца'), findsOneWidget);
     await tester.enterText(find.byType(EditableText), srv.readToken());
     await tap('Стать владельцем');
-    await waitFor(find.textContaining('Готово. Теперь вы Владелец «Логово»'));
+    await waitFor(find.textContaining('Готово. Теперь вы Владелец сервера «Логово»'));
     await tap('Перейти к серверу');
     await waitFor(find.text('ВЛАДЕЛЕЦ — 1'));
     expect(find.text('У сервера пока нет владельца'), findsNothing);

@@ -1307,7 +1307,7 @@ abstract class L10n {
   /// No description provided for @claimBody.
   ///
   /// In ru, this message translates to:
-  /// **'У «{server}» пока нет владельца. Если сервер установили вы, введите ключ администратора: сервер показал его один раз при первом запуске — в консоли и в файле на сервере.'**
+  /// **'У сервера «{server}» пока нет владельца. Если сервер установили вы, введите ключ администратора: сервер показал его один раз при первом запуске — в консоли и в файле на сервере.'**
   String claimBody(String server);
 
   /// No description provided for @claimLostKey.
@@ -1349,7 +1349,7 @@ abstract class L10n {
   /// No description provided for @claimDone.
   ///
   /// In ru, this message translates to:
-  /// **'Готово. Теперь вы Владелец «{server}». Ключ администратора сгорел — для следующей передачи выпустите новый.'**
+  /// **'Готово. Теперь вы Владелец сервера «{server}». Ключ администратора сгорел — для следующей передачи выпустите новый.'**
   String claimDone(String server);
 
   /// No description provided for @claimDoneButton.

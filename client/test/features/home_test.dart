@@ -217,8 +217,7 @@ void main() {
     expect(find.text('У сервера пока нет владельца'), findsOneWidget);
     await tap(tester, 'Ввести ключ администратора');
     expect(find.text('Стать владельцем сервера'), findsOneWidget);
-    expect(find.textContaining('У «Ночного привала»'), findsNothing, reason: 'название — как есть');
-    expect(find.textContaining('У «Ночной привал» пока нет владельца'), findsOneWidget);
+    expect(find.textContaining('У сервера «Ночной привал» пока нет владельца'), findsOneWidget);
 
     await tester.enterText(find.byType(EditableText), 'не ключ');
     await tap(tester, 'Стать владельцем');
