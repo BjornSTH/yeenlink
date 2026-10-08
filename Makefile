@@ -67,8 +67,9 @@ gen-l10n:
 	cd client && $(FLUTTER_RUN) flutter gen-l10n
 
 # Таблицы drift (lib/core/db/app_db.g.dart).
+# build_runner пишет с шириной 80 — приводим к ширине проекта (100).
 gen-db:
-	cd client && $(FLUTTER_RUN) dart run build_runner build
+	cd client && $(FLUTTER_RUN) sh -c 'dart run build_runner build && dart format --page-width 100 lib/core/db/app_db.g.dart >/dev/null' 
 
 # Общие тестовые векторы: testdata/vectors/codec и identity (bip39, slip10 — официальные, не генерируются).
 vectors:

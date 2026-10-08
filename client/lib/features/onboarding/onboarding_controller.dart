@@ -2,6 +2,7 @@ import 'package:cryptography/cryptography.dart';
 import 'package:flutter/foundation.dart';
 
 import '../../core/account/account_store.dart';
+import '../../core/account/account_sync.dart';
 import '../../core/account/avatar.dart';
 import '../../core/identity/identity.dart';
 
@@ -22,10 +23,15 @@ class OnboardingController extends ChangeNotifier {
   OnboardingController({
     required this.store,
     required this.pickImage,
+    this.masterCache,
     Future<Identity> Function()? newIdentity,
   }) : _newIdentity = newIdentity ?? _randomIdentity;
 
   final AccountStore store;
+
+  /// После восстановления главный ключ остаётся здесь до первого входа на
+  /// сервер: подписать список устройств без PIN (spec/auth.md).
+  final MasterKeyCache? masterCache;
 
   /// Выбор картинки для аватара; null — отменили.
   final Future<Uint8List?> Function() pickImage;
@@ -230,7 +236,7 @@ class OnboardingController extends ChangeNotifier {
     final err = draftError;
     if (err != null && err != DraftError.nameEmpty) return;
     if (err == DraftError.nameEmpty || id == null) {
-      _wipeIdentity();
+      _handOverIdentity();
       _go(OnbStep.done);
       return;
     }
@@ -243,7 +249,7 @@ class OnboardingController extends ChangeNotifier {
         identity: id,
         draft: ProfileDraft(name: name, about: about, bannerColor: bannerColor, avatar: avatar),
       );
-      _wipeIdentity();
+      _handOverIdentity();
       _step = OnbStep.done;
     } on Object catch (e) {
       saveError = '$e';
@@ -255,13 +261,22 @@ class OnboardingController extends ChangeNotifier {
   /// «Пропустить пока» на шаге имени после восстановления.
   void skipRestoredProfile() {
     if (!isRestoredProfile || saving) return;
-    _wipeIdentity();
+    _handOverIdentity();
     _go(OnbStep.done);
   }
 
   void _wipeIdentity() {
     _identity?.wipe();
     _identity = null;
+  }
+
+  /// Конец восстановления: ключ — в [masterCache] (если есть), иначе затираем.
+  void _handOverIdentity() {
+    final id = _identity;
+    _identity = null;
+    if (id == null) return;
+    final cache = masterCache;
+    cache == null ? id.wipe() : cache.keep(id);
   }
 
   void skipJoin() => _go(OnbStep.done);

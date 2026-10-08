@@ -148,6 +148,12 @@ class ServersController extends ChangeNotifier {
   @visibleForTesting
   void debugAdd(ServerRow row, ServerConnection conn) {
     _servers.add((row, conn));
+    debugLoaded();
+  }
+
+  /// Для тестов: список «прочитан», даже пустой.
+  @visibleForTesting
+  void debugLoaded() {
     _loaded = true;
     notifyListeners();
   }

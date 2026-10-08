@@ -7,21 +7,19 @@ import '../../l10n/gen/app_localizations.dart';
 import '../../ui/theme/yl_theme.dart';
 import '../../ui/widgets/widgets.dart';
 
-/// Каркас главного окна до фазы 2: показывает, что профиль есть на этом
-/// устройстве. Идентификаторы — только через redact.
-class HomeStub extends StatelessWidget {
-  const HomeStub({super.key, required this.account, required this.profile});
+/// Вкладка «Профиль» на телефоне: имя, баннер, отпечаток и это устройство.
+/// Идентификаторы — только через redact. Полная страничка — в фазе 8.
+class ProfileView extends StatelessWidget {
+  const ProfileView({super.key, required this.account});
 
   final LocalAccount account;
-
-  /// Разобранный профиль; null — восстановлен по фразе без имени, профиль
-  /// придёт с сервера (фаза 2).
-  final Profile? profile;
 
   @override
   Widget build(BuildContext context) {
     final c = YlColors.of(context);
     final l = L10n.of(context);
+    // Профиль уже проверен при загрузке; null — восстановлен без имени.
+    final profile = account.profile == null ? null : Profile.fromMap(account.profile!.payloadMap());
     final avatar = account.avatarPng;
     final name = profile?.name;
     final fp = fingerprint(account.masterPub);
@@ -79,12 +77,6 @@ class HomeStub extends StatelessWidget {
                 _Row(
                   label: l.homeDevice,
                   value: Text(_deviceName(account), style: YlText.body.copyWith(color: c.inkSoft)),
-                ),
-                const SizedBox(height: YlSpace.s6),
-                Text(
-                  l.homeNoServers,
-                  textAlign: TextAlign.center,
-                  style: YlText.caption.copyWith(color: c.subtle),
                 ),
               ],
             ),

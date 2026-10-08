@@ -1,12 +1,14 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:drift/native.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:yeenlink/app/app.dart';
 import 'package:yeenlink/core/account/account_store.dart';
 import 'package:yeenlink/core/account/pin_guard.dart';
 import 'package:yeenlink/core/account/platform_bridge.dart';
+import 'package:yeenlink/core/db/app_db.dart';
 import 'package:yeenlink/core/identity/identity.dart';
 import 'package:yeenlink/core/vault/key_vault.dart';
 import 'package:yeenlink/core/vault/master_lock.dart';
@@ -241,7 +243,12 @@ void main() {
   testWidgets('буфер с фразой: уход в фон не очищает, закрытие — очищает', (tester) async {
     setSurface(tester, const Size(390, 844));
     final h = Harness(dir);
-    final services = AppServices(store: h.store, bridge: h.bridge, pickImage: () async => null);
+    final services = AppServices(
+      store: h.store,
+      bridge: h.bridge,
+      pickImage: () async => null,
+      openDb: () => AppDb(NativeDatabase.memory()),
+    );
     await tester.pumpWidget(testApp(AppRoot(services: services)));
     await settle(tester, () => find.text('Добро пожаловать в YeenLink').evaluate().isEmpty);
 

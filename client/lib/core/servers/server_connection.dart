@@ -214,8 +214,14 @@ class ServerConnection extends ChangeNotifier {
     }
   }
 
+  /// Для тестов интерфейса: ответы на запросы без сервера.
+  @visibleForTesting
+  Future<Object?> Function(String op, Object? data)? debugCall;
+
   /// Запрос к серверу; без связи — [LinkException].
   Future<Object?> call(String op, Object? data) {
+    final fake = debugCall;
+    if (fake != null) return fake(op, data);
     final link = _link;
     if (link == null || !link.isOpen) {
       return Future.error(LinkException(_error ?? LinkError.closed));

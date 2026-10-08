@@ -323,6 +323,7 @@ class ServerLink {
     }
     _pending.clear();
     unawaited(_events.close());
+    _ws.pingInterval = null;
     unawaited(_ws.close());
   }
 

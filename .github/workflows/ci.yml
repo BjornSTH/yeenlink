@@ -100,6 +100,7 @@ jobs:
           dart run tool/gen_tokens.dart
           flutter gen-l10n
           dart run build_runner build
+          dart format --page-width 100 lib/core/db/app_db.g.dart
           git add -N lib/ui/theme/tokens.g.dart lib/l10n/gen lib/core/db/app_db.g.dart
           git diff --exit-code --stat -- lib/ui/theme/tokens.g.dart lib/l10n/gen lib/core/db/app_db.g.dart
 
