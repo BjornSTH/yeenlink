@@ -83,6 +83,44 @@ type Devices struct {
 	Revoked [][]byte `cbor:"revoked"`
 }
 
+// ServerInfo — payload t = "server_info", подписывает ключ сервера. Отдаётся
+// по GET /.well-known/yeenlink (spec/auth.md).
+type ServerInfo struct {
+	V         uint64 `cbor:"v"`
+	ServerPub []byte `cbor:"server_pub"`
+	Name      string `cbor:"name"`
+	Version   string `cbor:"version"`
+}
+
+// ServerNameMaxRunes — длина названия сервера в кодовых точках.
+const ServerNameMaxRunes = 64
+
+func (s *ServerInfo) validate() error {
+	if s.V != 1 {
+		return fail(ErrBadPayload, "версия server_info %d", s.V)
+	}
+	if err := checkKey("server_pub", s.ServerPub); err != nil {
+		return err
+	}
+	if err := checkText("name", s.Name, 1, ServerNameMaxRunes, false); err != nil {
+		return err
+	}
+	return checkText("version", s.Version, 1, 64, false)
+}
+
+// OpenServerInfo проверяет server_info: подпись и то, что подписал ключ из
+// самого payload.
+func OpenServerInfo(s *Signed) (*ServerInfo, error) {
+	var si ServerInfo
+	if err := open(s, TypeServerInfo, &si); err != nil {
+		return nil, err
+	}
+	if !bytes.Equal(s.K, si.ServerPub) {
+		return nil, fail(ErrSignerMismatch, "server_info подписан не ключом сервера")
+	}
+	return &si, nil
+}
+
 // NormalizeText — канонический вид текстового поля: NFC и без пробелов по
 // краям. Подписывается и проверяется именно он.
 func NormalizeText(s string) string {

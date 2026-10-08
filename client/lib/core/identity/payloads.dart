@@ -320,3 +320,48 @@ Future<Devices> openDevices(Signed s, List<int> master) async {
   _signer(s, master, SignedType.devices);
   return d;
 }
+
+/// Payload t = "server_info", подписывает ключ сервера; отдаётся по
+/// GET /.well-known/yeenlink (spec/auth.md).
+class ServerInfo {
+  const ServerInfo({
+    required this.serverPub,
+    required this.name,
+    required this.version,
+    this.v = 1,
+  });
+
+  factory ServerInfo.fromMap(Map<String, Object?> m) => ServerInfo(
+    v: _uint('v', m['v']),
+    serverPub: _key('server_pub', m['server_pub']),
+    name: _text('name', m['name']),
+    version: _text('version', m['version']),
+  );
+
+  static const nameMaxRunes = 64;
+
+  final int v;
+  final Uint8List serverPub;
+  final String name;
+  final String version;
+
+  Map<String, Object?> toMap() => {
+    'v': v,
+    'server_pub': serverPub,
+    'name': name,
+    'version': version,
+  };
+
+  void validate() {
+    if (v != 1) _bad('версия server_info $v');
+    _checkText('name', name, 1, nameMaxRunes);
+    _checkText('version', version, 1, 64);
+  }
+}
+
+/// Проверяет server_info: подпись и то, что подписал ключ из самого payload.
+Future<ServerInfo> openServerInfo(Signed s) async {
+  final si = ServerInfo.fromMap(await _open(s, SignedType.serverInfo))..validate();
+  _signer(s, si.serverPub, SignedType.serverInfo);
+  return si;
+}

@@ -321,3 +321,11 @@ func devVec(name string, k ed25519.PrivateKey) deviceVector {
 func pub(k ed25519.PrivateKey) []byte { return []byte(k.Public().(ed25519.PublicKey)) }
 
 func hx(b []byte) string { return hex.EncodeToString(b) }
+
+func unhexMust(s string) []byte {
+	b, err := hex.DecodeString(s)
+	if err != nil {
+		panic(err)
+	}
+	return b
+}

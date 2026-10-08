@@ -1,7 +1,8 @@
 // Команда vectorgen пишет общие тестовые векторы в testdata/vectors:
 //
 //   - codec/ — кадры: для каждого вектора <имя>.cbor и <имя>.json;
-//   - identity/ — фраза → ключи → подписанные конверты (keys.json, envelopes.json).
+//   - identity/ — фраза → ключи → подписанные конверты (keys.json, envelopes.json);
+//   - auth/ — вход на сервер: подписи, кадры, случаи проверки (auth.json).
 //
 // Векторы проверяются тестами и в Go, и в Dart. Официальные векторы BIP39 и
 // SLIP-0010 (testdata/vectors/bip39, slip10) скопированы из источников и здесь
@@ -57,6 +58,13 @@ func main() {
 	}
 	if err := writeIdentity(identityDir); err != nil {
 		log.Fatalf("identity: %v", err)
+	}
+	authDir := filepath.Join(*root, "auth")
+	if err := resetDir(authDir); err != nil {
+		log.Fatal(err)
+	}
+	if err := writeAuth(authDir); err != nil {
+		log.Fatalf("auth: %v", err)
 	}
 }
 
