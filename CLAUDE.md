@@ -11,13 +11,17 @@ Self-hosted мессенджер с текстом, голосом и стрим
 - `project.yaml` — открытые решения (домен, лицензия, id приложения, путь Go-модуля). `null` — не решено: не выдумывай значение, спроси.
 - `tools/` — запуск Flutter в Docker (`flutter-docker.sh`), если локального SDK нет.
 
-### Устройство кода (фаза 0)
+### Устройство кода
 
 - `server/pkg/codec` — CBOR (fxamacker/cbor) + отладочный JSON, `Frame`. `server/cmd/yl-decode` — CBOR из логов в JSON. `server/cmd/ylsrv` — пока каркас. `server/internal/vectorgen` — генератор векторов.
 - `client/lib/core/codec` — тот же профиль на Dart (`cbor` + строгая проверка `strict.dart`). `client/lib/core/redact.dart` — `redact()` и `RedactedText`.
 - `client/lib/ui/theme/tokens.g.dart` — **генерируется**, руками не править. `yl_theme.dart` — `ylTheme(Brightness)`.
 - `client/lib/ui/widgets/` — 9 базовых виджетов `Yl*` и `YlSurface`; Material разрешён только здесь. `client/lib/showcase/` — витрина.
 - `client/lib/l10n/app_ru.arb` — все строки интерфейса; `lib/l10n/gen/` генерируется.
+- Личность (фаза 1, детали — `spec/identity.md`): `server/pkg/identity` и `client/lib/core/identity` — BIP39, SLIP-0010 (`m/22860'/0'/i'`), отпечатки, конверт `Signed`, payload с проверкой полей. `client/lib/core/vault` — `KeyVault` (системное / в памяти / файл для отладки) и блоб главного ключа под PIN. `client/lib/core/account` — `AccountStore` (создание, восстановление, разблокировка), `PinGuard`, аватар, мост к платформе (Android — `MainActivity.kt`, канал `yeenlink/platform`).
+- `client/lib/features/onboarding/` — первый вход: контроллер без виджетов и экран. `client/lib/app/app.dart` — запуск: онбординг или главное окно.
+- `client/lib/ui/icons/` — иконки как пути SVG из макетов. `client/lib/ui/illustrations/` — декоративные иллюстрации: там координаты и размеры числами разрешены (check_rules их не проверяет), цвета — всё равно только из токенов.
+- `client/integration_test/` — проверка на настоящей платформе: подписи Go ↔ Dart, системное хранилище, замер KDF.
 
 ### Токены дизайн-системы
 
@@ -56,4 +60,7 @@ Self-hosted мессенджер с текстом, голосом и стрим
 - `make fmt` — `gofmt` и `dart format`.
 - `make showcase` — витрина компонентов в окне (нужен локальный Flutter): `flutter run -d linux -t lib/main_showcase.dart`.
 - Сервер: `cd server && go run ./cmd/ylsrv [--codec=json]`; `go run ./cmd/yl-decode [--in auto|raw|hex|base64] [файл]`.
-- Flutter без локального SDK: `cd client && ../tools/flutter-docker.sh flutter <команда>`.
+- Flutter без локального SDK: `cd client && ../tools/flutter-docker.sh flutter <команда>` (там же собирается APK: `flutter build apk --debug`).
+- Интеграционный тест на платформе: `cd client && flutter test integration_test -d linux|windows|<android>`. В CI — `.github/workflows/platforms.yml`: на PR в `main` и вручную (Windows, Linux с gnome-keyring, эмулятор Android); на каждый push — только `ci.yml` на Ubuntu.
+- Отладка без системного хранилища (Docker, Linux без secret service): `flutter run --dart-define=YL_VAULT=file` — ключи в незашифрованном файле, только debug.
+- Замер Argon2id: `flutter test --run-skipped -t bench test/core/vault`.

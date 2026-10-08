@@ -2,6 +2,7 @@ name: CI
 
 on:
   push:
+    branches: [main]
   pull_request:
 
 permissions:
@@ -40,7 +41,7 @@ jobs:
 
       - name: Векторы совпадают с генератором
         run: |
-          go run ./internal/vectorgen -out ../testdata/vectors/codec
+          go run ./internal/vectorgen -root ../testdata/vectors
           git add -N ../testdata/vectors
           git diff --exit-code --stat -- ../testdata/vectors
 
@@ -76,7 +77,7 @@ jobs:
         run: flutter analyze --fatal-infos
 
       - name: Форматирование
-        run: dart format --page-width 100 --output=none --set-exit-if-changed lib/ui lib/core lib/showcase lib/main.dart lib/main_showcase.dart test tool
+        run: dart format --page-width 100 --output=none --set-exit-if-changed lib/ui lib/core lib/showcase lib/main.dart lib/main_showcase.dart lib/features lib/app test tool integration_test
 
       - name: Правила CLAUDE.md (токены, обёртки, локализация)
         run: dart run tool/check_rules.dart

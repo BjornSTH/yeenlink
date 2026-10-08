@@ -47,12 +47,12 @@ lint-server:
 lint-client:
 	cd client && $(FLUTTER_RUN) sh -c '\
 		flutter analyze --fatal-infos && \
-		dart format --page-width 100 --output=none --set-exit-if-changed lib/ui lib/core lib/showcase lib/main.dart lib/main_showcase.dart test tool && \
+		dart format --page-width 100 --output=none --set-exit-if-changed lib/ui lib/core lib/showcase lib/main.dart lib/main_showcase.dart lib/features lib/app test tool integration_test && \
 		dart run tool/check_rules.dart'
 
 fmt:
 	cd server && gofmt -w .
-	cd client && $(FLUTTER_RUN) dart format --page-width 100 lib/ui lib/core lib/showcase lib/main.dart lib/main_showcase.dart test tool
+	cd client && $(FLUTTER_RUN) dart format --page-width 100 lib/ui lib/core lib/showcase lib/main.dart lib/main_showcase.dart lib/features lib/app test tool integration_test
 
 # --- генерация ---------------------------------------------------------------
 
@@ -65,9 +65,9 @@ gen-tokens:
 gen-l10n:
 	cd client && $(FLUTTER_RUN) flutter gen-l10n
 
-# Общие тестовые векторы кодека: testdata/vectors/codec.
+# Общие тестовые векторы: testdata/vectors/codec и identity (bip39, slip10 — официальные, не генерируются).
 vectors:
-	cd server && go run ./internal/vectorgen -out ../testdata/vectors/codec
+	cd server && go run ./internal/vectorgen -root ../testdata/vectors
 
 # Сгенерированные файлы должны совпадать с тем, что в репозитории.
 check-gen: gen

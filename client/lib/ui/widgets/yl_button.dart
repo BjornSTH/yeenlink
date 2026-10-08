@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 
+import '../icons/yl_icon.dart';
 import '../theme/yl_theme.dart';
 import 'pressable.dart';
 
@@ -38,9 +39,13 @@ class YlButton extends StatelessWidget {
     this.kind = YlButtonKind.primary,
     this.size = YlButtonSize.lg,
     this.expand = false,
+    this.icon,
   });
 
   final String label;
+
+  /// Иконка слева от текста (icon-sm).
+  final YlIconData? icon;
   final VoidCallback? onPressed;
   final YlButtonKind kind;
   final YlButtonSize size;
@@ -87,6 +92,10 @@ class YlButton extends StatelessWidget {
             mainAxisSize: expand ? MainAxisSize.max : MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              if (icon != null) ...[
+                YlIcon(icon!, color: fg, size: YlSize.iconSm),
+                const SizedBox(width: YlSpace.s2),
+              ],
               Flexible(
                 child: Text(
                   label,

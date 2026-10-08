@@ -10,11 +10,23 @@ import 'dart:io';
 
 const _generated = 'lib/ui/theme/tokens.g.dart';
 
+/// Декоративные иллюстрации: координаты и размеры из макета, числами.
+const _illustrations = 'lib/ui/illustrations/';
+
+bool _numbersChecked(String p) => p != _generated && !p.startsWith(_illustrations);
+
 /// Где живут обёртки: здесь Material разрешён.
 const _wrappers = 'lib/ui/widgets/';
 
 /// Код интерфейса: здесь строки должны идти через L10n.
-const _uiRoots = ['lib/ui/', 'lib/showcase/', 'lib/main.dart', 'lib/main_showcase.dart'];
+const _uiRoots = [
+  'lib/ui/',
+  'lib/features/',
+  'lib/app/',
+  'lib/showcase/',
+  'lib/main.dart',
+  'lib/main_showcase.dart',
+];
 
 const _materialWidgets = [
   'AppBar',
@@ -61,7 +73,7 @@ final _rules = <({String name, RegExp re, bool Function(String path) applies})>[
   (
     name: 'размер шрифта числом (используйте YlText)',
     re: RegExp(r'fontSize:\s*\d'),
-    applies: (p) => p != _generated,
+    applies: _numbersChecked,
   ),
   (
     name: 'семейство шрифта строкой (используйте YlText.sansFamily / monoFamily)',
@@ -71,7 +83,18 @@ final _rules = <({String name, RegExp re, bool Function(String path) applies})>[
   (
     name: 'отступ числом (используйте YlSpace / YlSize)',
     re: RegExp(r'EdgeInsets\.(all|symmetric|only|fromLTRB)\([^)]*\b[1-9]\d*(\.\d+)?\b'),
-    applies: (p) => p != _generated,
+    applies: _numbersChecked,
+  ),
+  (
+    name: 'размер или радиус числом (используйте YlSize / YlSpace / YlRadius)',
+    re: RegExp(
+      // Не ловит множитель к токену (2 * YlSize.x) и height: 1 — межстрочный
+      // множитель в TextStyle, а не размер.
+      r'\b(width|height|size|dimension|left|top|right|bottom|spreadRadius|blurRadius)\s*:\s*'
+      r'(?!1\s*[,)])-?[1-9]\d*(\.\d+)?(?!\s*\*)\b'
+      r'|Radius\.(circular|elliptical)\(\s*[1-9]',
+    ),
+    applies: _numbersChecked,
   ),
   (
     name: 'Material-виджет напрямую (используйте обёртку Yl*)',
