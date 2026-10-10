@@ -21,6 +21,10 @@ class ServerAddress {
 
   Uri get baseUri => Uri(scheme: 'https', host: host, port: port);
 
+  /// Адрес WebSocket. Порт — всегда явно: для https Dart выбрасывает 443 как
+  /// порт по умолчанию, а для wss порта по умолчанию не знает и подставил бы 0.
+  Uri get wsUri => Uri(scheme: 'wss', host: host, port: port, path: '/ws');
+
   @override
   String toString() => fingerprint == null ? authority : '$authority#$fingerprint';
 

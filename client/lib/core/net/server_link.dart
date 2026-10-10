@@ -187,7 +187,7 @@ class ServerLink {
     final WebSocket ws;
     try {
       ws = await WebSocket.connect(
-        addr.baseUri.replace(scheme: 'wss', path: '/ws').toString(),
+        addr.wsUri.toString(),
         customClient: client.http,
       ).timeout(linkTimeout);
     } on Exception catch (e) {

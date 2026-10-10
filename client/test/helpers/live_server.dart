@@ -36,7 +36,9 @@ class LiveServer {
 
   static Future<LiveServer> start(String bin, {String name = 'Тест'}) async {
     final dir = await Directory.systemTemp.createTemp('ylsrv-');
-    final probe = await ServerSocket.bind(InternetAddress.loopbackIPv4, 0);
+    // YL_LIVE_PORT=443 — проверить стандартный порт (нужны права на порт < 1024).
+    final fixed = int.tryParse(Platform.environment['YL_LIVE_PORT'] ?? '');
+    final probe = await ServerSocket.bind(InternetAddress.loopbackIPv4, fixed ?? 0);
     final port = probe.port;
     await probe.close();
     final cfg = '${dir.path}/ylsrv.toml';

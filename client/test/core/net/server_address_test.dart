@@ -47,6 +47,15 @@ void main() {
     });
   });
 
+  test('адрес WebSocket с явным портом, и 443 тоже', () {
+    for (final port in [443, 8443]) {
+      final ws = ServerAddress('195.93.252.151', port).wsUri;
+      expect(ws.port, port);
+      expect(ws.toString(), 'wss://195.93.252.151:$port/ws');
+    }
+    expect(const ServerAddress('2001:db8::1', 443).wsUri.toString(), 'wss://[2001:db8::1]:443/ws');
+  });
+
   test('authority и строка', () {
     expect(const ServerAddress('chat.example.org', 443).authority, 'chat.example.org');
     expect(const ServerAddress('2001:db8::1', 8443).authority, '[2001:db8::1]:8443');
