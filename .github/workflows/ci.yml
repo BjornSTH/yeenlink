@@ -125,6 +125,11 @@ jobs:
       - name: Тесты (кодек на векторах, вход в живой ylsrv, виджеты, golden-снимки)
         run: flutter test
 
+      - name: Вход через интерфейс на стандартном порту 443
+        run: |
+          sudo sysctl -w net.ipv4.ip_unprivileged_port_start=0
+          YL_LIVE_PORT=443 flutter test test/features/live_ui_test.dart
+
       - name: Отличия golden-снимков
         if: failure()
         uses: actions/upload-artifact@v4
