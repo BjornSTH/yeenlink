@@ -45,6 +45,35 @@ jobs:
           git add -N ../testdata/vectors
           git diff --exit-code --stat -- ../testdata/vectors
 
+  vps-smoke:
+    name: Сервер на чистом Debian 12 (systemd)
+    runs-on: ubuntu-latest
+    needs: server
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-go@v6
+        with:
+          go-version-file: server/go.mod
+          cache-dependency-path: server/go.sum
+
+      - name: sudo ylsrv init → служба → вход → admin.claim → передача роли
+        run: tools/vps-smoke.sh
+
+      - name: Сборка ylsrv (linux amd64, arm64)
+        working-directory: server
+        run: |
+          for arch in amd64 arm64; do
+            CGO_ENABLED=0 GOOS=linux GOARCH=$arch go build -trimpath \
+              -ldflags "-s -w -X main.version=${GITHUB_SHA::7}" -o ../dist/ylsrv-linux-$arch ./cmd/ylsrv
+          done
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ylsrv-linux
+          path: dist/
+          retention-days: 14
+
   client:
     name: Клиент (Flutter)
     runs-on: ubuntu-latest
@@ -66,12 +95,14 @@ jobs:
 
       - run: flutter pub get
 
-      - name: Токены и локализация совпадают с генераторами
+      - name: Токены, локализация и таблицы drift совпадают с генераторами
         run: |
           dart run tool/gen_tokens.dart
           flutter gen-l10n
-          git add -N lib/ui/theme/tokens.g.dart lib/l10n/gen
-          git diff --exit-code --stat -- lib/ui/theme/tokens.g.dart lib/l10n/gen
+          dart run build_runner build
+          dart format --page-width 100 lib/core/db/app_db.g.dart
+          git add -N lib/ui/theme/tokens.g.dart lib/l10n/gen lib/core/db/app_db.g.dart
+          git diff --exit-code --stat -- lib/ui/theme/tokens.g.dart lib/l10n/gen lib/core/db/app_db.g.dart
 
       - name: flutter analyze
         run: flutter analyze --fatal-infos
@@ -82,8 +113,22 @@ jobs:
       - name: Правила CLAUDE.md (токены, обёртки, локализация)
         run: dart run tool/check_rules.dart
 
-      - name: Тесты (кодек на векторах, виджеты, golden-снимки витрины)
+      - uses: actions/setup-go@v6
+        with:
+          go-version-file: server/go.mod
+          cache-dependency-path: server/go.sum
+
+      - name: ylsrv для живого теста клиента
+        working-directory: server
+        run: CGO_ENABLED=0 go build -trimpath -o bin/ ./cmd/ylsrv
+
+      - name: Тесты (кодек на векторах, вход в живой ylsrv, виджеты, golden-снимки)
         run: flutter test
+
+      - name: Вход через интерфейс на стандартном порту 443
+        run: |
+          sudo sysctl -w net.ipv4.ip_unprivileged_port_start=0
+          YL_LIVE_PORT=443 flutter test test/features/live_ui_test.dart
 
       - name: Отличия golden-снимков
         if: failure()

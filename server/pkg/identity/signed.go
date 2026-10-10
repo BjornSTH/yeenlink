@@ -19,10 +19,11 @@ const (
 	TypeDevices    = "devices"
 	TypeAddresses  = "addresses"
 	TypeInvite     = "invite"
+	TypeServerInfo = "server_info"
 )
 
 // Types — все известные типы.
-var Types = []string{TypeProfile, TypePost, TypeDeviceCert, TypeRevoke, TypeDevices, TypeAddresses, TypeInvite}
+var Types = []string{TypeProfile, TypePost, TypeDeviceCert, TypeRevoke, TypeDevices, TypeAddresses, TypeInvite, TypeServerInfo}
 
 const signPrefix = "yl-v1"
 

@@ -14,10 +14,10 @@ endif
 GOLANGCI := $(or $(shell command -v golangci-lint 2>/dev/null),$(shell go env GOPATH)/bin/golangci-lint)
 
 # Сгенерированное, что лежит в репозитории и сверяется в CI.
-GENERATED := client/lib/ui/theme/tokens.g.dart client/lib/l10n/gen testdata/vectors
+GENERATED := client/lib/ui/theme/tokens.g.dart client/lib/l10n/gen client/lib/core/db/app_db.g.dart testdata/vectors
 
 .PHONY: all ci test test-server test-client lint lint-server lint-client \
-        gen gen-tokens gen-l10n vectors check-gen goldens showcase build-server fmt
+        gen gen-tokens gen-l10n gen-db vectors check-gen goldens showcase build-server vps-smoke fmt
 
 all: ci
 
@@ -30,7 +30,8 @@ test: test-server test-client
 test-server:
 	cd server && go test -race ./...
 
-test-client:
+# Живой тест клиента против ylsrv (tag live) берёт server/bin/ylsrv.
+test-client: build-server
 	cd client && $(FLUTTER_RUN) flutter test
 
 # Обновить golden-снимки витрины (только на Linux; см. client/dart_test.yaml).
@@ -56,7 +57,7 @@ fmt:
 
 # --- генерация ---------------------------------------------------------------
 
-gen: gen-tokens gen-l10n vectors
+gen: gen-tokens gen-l10n gen-db vectors
 
 # YlColors, YlShadows, YlText, YlSpace, YlRadius, YlSize, YlOpacity из docs/design/tokens.json.
 gen-tokens:
@@ -64,6 +65,11 @@ gen-tokens:
 
 gen-l10n:
 	cd client && $(FLUTTER_RUN) flutter gen-l10n
+
+# Таблицы drift (lib/core/db/app_db.g.dart).
+# build_runner пишет с шириной 80 — приводим к ширине проекта (100).
+gen-db:
+	cd client && $(FLUTTER_RUN) sh -c 'dart run build_runner build && dart format --page-width 100 lib/core/db/app_db.g.dart >/dev/null' 
 
 # Общие тестовые векторы: testdata/vectors/codec и identity (bip39, slip10 — официальные, не генерируются).
 vectors:
@@ -81,5 +87,10 @@ check-gen: gen
 showcase:
 	cd client && flutter run -d linux -t lib/main_showcase.dart
 
+# Статические бинарники (без cgo) в server/bin/.
 build-server:
-	cd server && go build -o bin/ ./cmd/...
+	cd server && CGO_ENABLED=0 go build -trimpath -o bin/ ./cmd/...
+
+# Установка на «чистый VPS»: Debian 12 с systemd в Docker (tools/vps-smoke.sh).
+vps-smoke:
+	tools/vps-smoke.sh

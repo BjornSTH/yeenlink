@@ -980,12 +980,6 @@ abstract class L10n {
   /// **'Это устройство'**
   String get homeDevice;
 
-  /// No description provided for @homeNoServers.
-  ///
-  /// In ru, this message translates to:
-  /// **'Серверов пока нет: подключение появится в фазе 2.'**
-  String get homeNoServers;
-
   /// No description provided for @homeLoadFailed.
   ///
   /// In ru, this message translates to:
@@ -1039,6 +1033,546 @@ abstract class L10n {
   /// In ru, this message translates to:
   /// **'Имя не указано'**
   String get homeNoName;
+
+  /// No description provided for @commonOk.
+  ///
+  /// In ru, this message translates to:
+  /// **'Понятно'**
+  String get commonOk;
+
+  /// No description provided for @commonClose.
+  ///
+  /// In ru, this message translates to:
+  /// **'Закрыть'**
+  String get commonClose;
+
+  /// No description provided for @commonBack.
+  ///
+  /// In ru, this message translates to:
+  /// **'Назад'**
+  String get commonBack;
+
+  /// No description provided for @emptyTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Здесь пока тихо'**
+  String get emptyTitle;
+
+  /// No description provided for @emptyBodyPc.
+  ///
+  /// In ru, this message translates to:
+  /// **'У вас ещё нет ни одного сервера. Выберите, с чего начать — профиль уже готов и поедет с вами куда угодно.'**
+  String get emptyBodyPc;
+
+  /// No description provided for @emptyBodyPhone.
+  ///
+  /// In ru, this message translates to:
+  /// **'Серверов пока нет. Начните с одного из вариантов.'**
+  String get emptyBodyPhone;
+
+  /// No description provided for @emptyInviteTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Вставить приглашение'**
+  String get emptyInviteTitle;
+
+  /// No description provided for @emptyInviteBody.
+  ///
+  /// In ru, this message translates to:
+  /// **'Если вам прислали ссылку или QR-код.'**
+  String get emptyInviteBody;
+
+  /// No description provided for @emptyCatalogTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Найти в каталоге'**
+  String get emptyCatalogTitle;
+
+  /// No description provided for @emptyCatalogBody.
+  ///
+  /// In ru, this message translates to:
+  /// **'Открытые сообщества по интересам.'**
+  String get emptyCatalogBody;
+
+  /// No description provided for @emptyOwnTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Поднять свой сервер'**
+  String get emptyOwnTitle;
+
+  /// No description provided for @emptyOwnBodyPc.
+  ///
+  /// In ru, this message translates to:
+  /// **'Один бинарник, хватит VPS за 200 ₽. Инструкция — в документации.'**
+  String get emptyOwnBodyPc;
+
+  /// No description provided for @emptyOwnBodyPhone.
+  ///
+  /// In ru, this message translates to:
+  /// **'Один бинарник, хватит VPS за 200 ₽.'**
+  String get emptyOwnBodyPhone;
+
+  /// No description provided for @catalogSoonTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Каталог серверов'**
+  String get catalogSoonTitle;
+
+  /// No description provided for @catalogSoonBody.
+  ///
+  /// In ru, this message translates to:
+  /// **'Каталог пока не работает — он появится в следующих версиях. Подключиться можно по адресу сервера.'**
+  String get catalogSoonBody;
+
+  /// No description provided for @ownTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Свой сервер'**
+  String get ownTitle;
+
+  /// No description provided for @ownBody.
+  ///
+  /// In ru, this message translates to:
+  /// **'Сервер YeenLink — один файл ylsrv. Скопируйте его на VPS с Linux и выполните:'**
+  String get ownBody;
+
+  /// No description provided for @ownAfter.
+  ///
+  /// In ru, this message translates to:
+  /// **'ylsrv init покажет ключ сервера и ключ администратора. Добавьте сервер по адресу, сверьте ключ и станьте владельцем.'**
+  String get ownAfter;
+
+  /// No description provided for @ownAdd.
+  ///
+  /// In ru, this message translates to:
+  /// **'Добавить сервер'**
+  String get ownAdd;
+
+  /// No description provided for @addTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Добавить сервер'**
+  String get addTitle;
+
+  /// No description provided for @addBody.
+  ///
+  /// In ru, this message translates to:
+  /// **'Введите адрес сервера: домен или IP, если нужно — с портом. Вход по приглашению появится позже.'**
+  String get addBody;
+
+  /// No description provided for @addLabel.
+  ///
+  /// In ru, this message translates to:
+  /// **'Адрес сервера'**
+  String get addLabel;
+
+  /// No description provided for @addPlaceholder.
+  ///
+  /// In ru, this message translates to:
+  /// **'chat.example.org или 203.0.113.7:8443'**
+  String get addPlaceholder;
+
+  /// No description provided for @addCheck.
+  ///
+  /// In ru, this message translates to:
+  /// **'Продолжить'**
+  String get addCheck;
+
+  /// No description provided for @addChecking.
+  ///
+  /// In ru, this message translates to:
+  /// **'Проверяю адрес…'**
+  String get addChecking;
+
+  /// No description provided for @addConfirmBody.
+  ///
+  /// In ru, this message translates to:
+  /// **'Сервер «{server}». Сверьте его ключ с тем, что показал ylsrv init на сервере:'**
+  String addConfirmBody(String server);
+
+  /// No description provided for @addKeyLabel.
+  ///
+  /// In ru, this message translates to:
+  /// **'Ключ сервера'**
+  String get addKeyLabel;
+
+  /// No description provided for @addConfirmHint.
+  ///
+  /// In ru, this message translates to:
+  /// **'Совпадает — подключайтесь. Не совпадает — не подключайтесь: это может быть чужой сервер, который выдаёт себя за ваш.'**
+  String get addConfirmHint;
+
+  /// No description provided for @addConnect.
+  ///
+  /// In ru, this message translates to:
+  /// **'Подключиться'**
+  String get addConnect;
+
+  /// No description provided for @addConnecting.
+  ///
+  /// In ru, this message translates to:
+  /// **'Подключаюсь…'**
+  String get addConnecting;
+
+  /// No description provided for @addErrEmpty.
+  ///
+  /// In ru, this message translates to:
+  /// **'Введите адрес.'**
+  String get addErrEmpty;
+
+  /// No description provided for @addErrAddress.
+  ///
+  /// In ru, this message translates to:
+  /// **'Не похоже на адрес сервера. Пример: chat.example.org:8443'**
+  String get addErrAddress;
+
+  /// No description provided for @addErrScheme.
+  ///
+  /// In ru, this message translates to:
+  /// **'Адрес пишется без схемы или с https://.'**
+  String get addErrScheme;
+
+  /// No description provided for @addErrFingerprint.
+  ///
+  /// In ru, this message translates to:
+  /// **'После # нужен отпечаток из четырёх групп, например A0D2·5F11·0C3E·99AB.'**
+  String get addErrFingerprint;
+
+  /// No description provided for @linkUnreachable.
+  ///
+  /// In ru, this message translates to:
+  /// **'Сервер не отвечает по этому адресу. Проверьте адрес и порт.'**
+  String get linkUnreachable;
+
+  /// No description provided for @linkNotYeenLink.
+  ///
+  /// In ru, this message translates to:
+  /// **'По этому адресу не сервер YeenLink.'**
+  String get linkNotYeenLink;
+
+  /// No description provided for @linkWrongServer.
+  ///
+  /// In ru, this message translates to:
+  /// **'Это не тот сервер: его ключ не совпадает с ожидаемым. Не подключайтесь.'**
+  String get linkWrongServer;
+
+  /// No description provided for @linkCertNotSigned.
+  ///
+  /// In ru, this message translates to:
+  /// **'Сертификат сервера не подписан его ключом — соединение могли подменить. Не подключайтесь через эту сеть.'**
+  String get linkCertNotSigned;
+
+  /// No description provided for @linkDeviceRevoked.
+  ///
+  /// In ru, this message translates to:
+  /// **'Это устройство отвязано от вашего профиля.'**
+  String get linkDeviceRevoked;
+
+  /// No description provided for @linkProto.
+  ///
+  /// In ru, this message translates to:
+  /// **'Сервер говорит на другой версии протокола. Обновите приложение или сервер.'**
+  String get linkProto;
+
+  /// No description provided for @linkRejected.
+  ///
+  /// In ru, this message translates to:
+  /// **'Сервер не пустил это устройство.'**
+  String get linkRejected;
+
+  /// No description provided for @linkClosed.
+  ///
+  /// In ru, this message translates to:
+  /// **'Связь с сервером оборвалась.'**
+  String get linkClosed;
+
+  /// No description provided for @linkReplaced.
+  ///
+  /// In ru, this message translates to:
+  /// **'Вы подключились к этому серверу в другом окне.'**
+  String get linkReplaced;
+
+  /// No description provided for @claimTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Стать владельцем сервера'**
+  String get claimTitle;
+
+  /// No description provided for @claimTitlePhone.
+  ///
+  /// In ru, this message translates to:
+  /// **'Ключ администратора'**
+  String get claimTitlePhone;
+
+  /// No description provided for @claimBody.
+  ///
+  /// In ru, this message translates to:
+  /// **'У сервера «{server}» пока нет владельца. Если сервер установили вы, введите ключ администратора: сервер показал его один раз при первом запуске — в консоли и в файле на сервере.'**
+  String claimBody(String server);
+
+  /// No description provided for @claimLostKey.
+  ///
+  /// In ru, this message translates to:
+  /// **'Потеряли ключ? Выпустите новый на сервере:'**
+  String get claimLostKey;
+
+  /// No description provided for @claimConsoleProof.
+  ///
+  /// In ru, this message translates to:
+  /// **'Доступ к консоли сервера и есть доказательство, что он ваш.'**
+  String get claimConsoleProof;
+
+  /// No description provided for @claimLabel.
+  ///
+  /// In ru, this message translates to:
+  /// **'Ключ администратора'**
+  String get claimLabel;
+
+  /// {fingerprint} рисуется моноширинным — не переносите его в начало или конец без нужды.
+  ///
+  /// In ru, this message translates to:
+  /// **'Роль Владельца привяжется к вашему ключу {fingerprint}. Ключ администратора одноразовый и сгорит сразу после использования.'**
+  String claimNote(String fingerprint);
+
+  /// No description provided for @claimButton.
+  ///
+  /// In ru, this message translates to:
+  /// **'Стать владельцем'**
+  String get claimButton;
+
+  /// No description provided for @claimChecking.
+  ///
+  /// In ru, this message translates to:
+  /// **'Проверяю ключ…'**
+  String get claimChecking;
+
+  /// No description provided for @claimDone.
+  ///
+  /// In ru, this message translates to:
+  /// **'Готово. Теперь вы Владелец сервера «{server}». Ключ администратора сгорел — для следующей передачи выпустите новый.'**
+  String claimDone(String server);
+
+  /// No description provided for @claimDoneButton.
+  ///
+  /// In ru, this message translates to:
+  /// **'Перейти к серверу'**
+  String get claimDoneButton;
+
+  /// No description provided for @claimErrFormat.
+  ///
+  /// In ru, this message translates to:
+  /// **'Ключ начинается с ylat_, в нём 48 символов. Скопируйте его целиком.'**
+  String get claimErrFormat;
+
+  /// No description provided for @claimErrBadToken.
+  ///
+  /// In ru, this message translates to:
+  /// **'Ключ не подошёл. Возможно, им уже воспользовались — выпустите новый: ylsrv admin-token.'**
+  String get claimErrBadToken;
+
+  /// No description provided for @claimErrRate.
+  ///
+  /// In ru, this message translates to:
+  /// **'Слишком много попыток. Повторите через минуту.'**
+  String get claimErrRate;
+
+  /// No description provided for @claimErrOffline.
+  ///
+  /// In ru, this message translates to:
+  /// **'Нет связи с сервером. Повторите, когда она вернётся.'**
+  String get claimErrOffline;
+
+  /// No description provided for @railHome.
+  ///
+  /// In ru, this message translates to:
+  /// **'YeenLink'**
+  String get railHome;
+
+  /// No description provided for @railAdd.
+  ///
+  /// In ru, this message translates to:
+  /// **'Добавить сервер'**
+  String get railAdd;
+
+  /// No description provided for @railCatalog.
+  ///
+  /// In ru, this message translates to:
+  /// **'Каталог серверов'**
+  String get railCatalog;
+
+  /// No description provided for @srvNoOwnerTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'У сервера пока нет владельца'**
+  String get srvNoOwnerTitle;
+
+  /// No description provided for @srvNoOwnerBody.
+  ///
+  /// In ru, this message translates to:
+  /// **'Если сервер установили вы, станьте владельцем по ключу администратора.'**
+  String get srvNoOwnerBody;
+
+  /// No description provided for @srvNoOwnerAction.
+  ///
+  /// In ru, this message translates to:
+  /// **'Ввести ключ администратора'**
+  String get srvNoOwnerAction;
+
+  /// No description provided for @srvNoChannelsTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Каналов пока нет'**
+  String get srvNoChannelsTitle;
+
+  /// No description provided for @srvNoChannelsBody.
+  ///
+  /// In ru, this message translates to:
+  /// **'Когда на сервере появятся каналы, они будут здесь.'**
+  String get srvNoChannelsBody;
+
+  /// No description provided for @srvConnectingTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Подключаюсь…'**
+  String get srvConnectingTitle;
+
+  /// No description provided for @srvMembers.
+  ///
+  /// In ru, this message translates to:
+  /// **'Участники'**
+  String get srvMembers;
+
+  /// No description provided for @srvOnline.
+  ///
+  /// In ru, this message translates to:
+  /// **'{count} в сети'**
+  String srvOnline(int count);
+
+  /// No description provided for @srvGroupOwner.
+  ///
+  /// In ru, this message translates to:
+  /// **'ВЛАДЕЛЕЦ — {count}'**
+  String srvGroupOwner(int count);
+
+  /// No description provided for @srvGroupOnline.
+  ///
+  /// In ru, this message translates to:
+  /// **'В СЕТИ — {count}'**
+  String srvGroupOnline(int count);
+
+  /// No description provided for @srvItsYou.
+  ///
+  /// In ru, this message translates to:
+  /// **'Это вы'**
+  String get srvItsYou;
+
+  /// No description provided for @connRetrying.
+  ///
+  /// In ru, this message translates to:
+  /// **'Связь с сервером потеряна. Переподключаюсь…'**
+  String get connRetrying;
+
+  /// No description provided for @connRetryNow.
+  ///
+  /// In ru, this message translates to:
+  /// **'Повторить сейчас'**
+  String get connRetryNow;
+
+  /// No description provided for @connUnbound.
+  ///
+  /// In ru, this message translates to:
+  /// **'Сервер не подтвердил свой сертификат — он за прокси без tls.proxy_cert. Подмену соединения исключить нельзя.'**
+  String get connUnbound;
+
+  /// No description provided for @navServers.
+  ///
+  /// In ru, this message translates to:
+  /// **'Серверы'**
+  String get navServers;
+
+  /// No description provided for @navFeed.
+  ///
+  /// In ru, this message translates to:
+  /// **'Лента'**
+  String get navFeed;
+
+  /// No description provided for @navDms.
+  ///
+  /// In ru, this message translates to:
+  /// **'Личные'**
+  String get navDms;
+
+  /// No description provided for @navProfile.
+  ///
+  /// In ru, this message translates to:
+  /// **'Профиль'**
+  String get navProfile;
+
+  /// No description provided for @feedEmptyTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Ленты пока нет'**
+  String get feedEmptyTitle;
+
+  /// No description provided for @feedEmptyBody.
+  ///
+  /// In ru, this message translates to:
+  /// **'Здесь будут посты с ваших серверов.'**
+  String get feedEmptyBody;
+
+  /// No description provided for @dmsEmptyTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Личных сообщений пока нет'**
+  String get dmsEmptyTitle;
+
+  /// No description provided for @dmsEmptyBody.
+  ///
+  /// In ru, this message translates to:
+  /// **'Здесь будут переписки один на один.'**
+  String get dmsEmptyBody;
+
+  /// No description provided for @pinTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Подтвердите PIN-код'**
+  String get pinTitle;
+
+  /// No description provided for @pinBody.
+  ///
+  /// In ru, this message translates to:
+  /// **'Этого устройства ещё нет в списке ваших устройств. Введите PIN-код — приложение подпишет новый список, и серверы будут знать, что устройство ваше. Это нужно один раз.'**
+  String get pinBody;
+
+  /// No description provided for @pinLabel.
+  ///
+  /// In ru, this message translates to:
+  /// **'PIN-код'**
+  String get pinLabel;
+
+  /// No description provided for @pinConfirm.
+  ///
+  /// In ru, this message translates to:
+  /// **'Подтвердить'**
+  String get pinConfirm;
+
+  /// No description provided for @pinLater.
+  ///
+  /// In ru, this message translates to:
+  /// **'Не сейчас'**
+  String get pinLater;
+
+  /// No description provided for @pinWrong.
+  ///
+  /// In ru, this message translates to:
+  /// **'PIN-код не подошёл.'**
+  String get pinWrong;
+
+  /// No description provided for @pinWait.
+  ///
+  /// In ru, this message translates to:
+  /// **'Слишком много попыток. Подождите {seconds} с.'**
+  String pinWait(int seconds);
 }
 
 class _L10nDelegate extends LocalizationsDelegate<L10n> {

@@ -1,15 +1,17 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:drift/native.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:yeenlink/app/app.dart';
 import 'package:yeenlink/core/account/account_store.dart';
 import 'package:yeenlink/core/account/pin_guard.dart';
+import 'package:yeenlink/core/db/app_db.dart';
 import 'package:yeenlink/core/identity/identity.dart';
 import 'package:yeenlink/core/vault/key_vault.dart';
 import 'package:yeenlink/core/vault/master_lock.dart';
-import 'package:yeenlink/features/home/home_stub.dart';
+import 'package:yeenlink/features/home/home_screen.dart';
 
 import '../helpers/app.dart';
 import 'onboarding_test.dart' show FakeBridge, enter;
@@ -61,7 +63,12 @@ void main() {
       guard: PinGuard(vault),
     );
     final bridge = FakeBridge('android', model: 'Pixel 8');
-    final services = AppServices(store: store, bridge: bridge, pickImage: () async => null);
+    final services = AppServices(
+      store: store,
+      bridge: bridge,
+      pickImage: () async => null,
+      openDb: () => AppDb(NativeDatabase.memory()),
+    );
     await tester.pumpWidget(testApp(AppRoot(services: services)));
     await waitFor(tester, find.text('У меня уже есть профиль'));
     return (store, bridge);
@@ -98,7 +105,10 @@ void main() {
     await tap(tester, 'Пропустить пока');
     await waitFor(tester, find.text('Профиль готов'));
     await tap(tester, 'Открыть YeenLink');
-    await waitFor(tester, find.byType(HomeStub));
+    await waitFor(tester, find.byType(HomeScreen));
+    await waitFor(tester, find.text('Здесь пока тихо'));
+    await tap(tester, 'Профиль');
+    await tester.pump();
 
     final id = await tester.runAsync(() => Identity.fromMnemonic(_phrase));
     final fp = fingerprint(id!.masterPub);
@@ -116,7 +126,10 @@ void main() {
     await tap(tester, 'Дальше');
     await waitFor(tester, find.text('Профиль готов'));
     await tap(tester, 'Открыть YeenLink');
-    await waitFor(tester, find.byType(HomeStub));
+    await waitFor(tester, find.byType(HomeScreen));
+    await waitFor(tester, find.text('Здесь пока тихо'));
+    await tap(tester, 'Профиль');
+    await tester.pump();
 
     expect(find.text('Gnoll'), findsOneWidget);
     expect(find.text('GN'), findsOneWidget);

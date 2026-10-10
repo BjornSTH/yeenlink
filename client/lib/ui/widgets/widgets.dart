@@ -10,6 +10,8 @@ export 'yl_checkbox.dart';
 export 'yl_chip.dart';
 export 'yl_input.dart';
 export 'yl_logo.dart';
+export 'yl_modal.dart';
+export 'yl_rail_button.dart';
 export 'yl_segmented.dart';
 export 'yl_status_banner.dart';
 export 'yl_step_bar.dart';

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 import 'dart:ui' show AppExitResponse;
 
@@ -9,10 +10,13 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:path_provider/path_provider.dart';
 
 import '../core/account/account_store.dart';
+import '../core/account/account_sync.dart';
 import '../core/account/platform_bridge.dart';
-import '../core/identity/identity.dart';
+import '../core/db/app_db.dart';
+import '../core/servers/servers_controller.dart';
 import '../core/vault/key_vault.dart';
-import '../features/home/home_stub.dart';
+import '../features/home/home_controller.dart';
+import '../features/home/home_screen.dart';
 import '../features/onboarding/onboarding_controller.dart';
 import '../features/onboarding/onboarding_screen.dart';
 import '../l10n/gen/app_localizations.dart';
@@ -21,11 +25,29 @@ import '../ui/widgets/widgets.dart';
 
 /// Зависимости приложения; в тестах подменяются.
 class AppServices {
-  const AppServices({required this.store, required this.bridge, required this.pickImage});
+  AppServices({
+    required this.store,
+    required this.bridge,
+    required this.pickImage,
+    required this.openDb,
+    MasterKeyCache? masterCache,
+    this.dial,
+    this.fetch,
+  }) : masterCache = masterCache ?? MasterKeyCache();
 
   final AccountStore store;
   final PlatformBridge bridge;
   final Future<Uint8List?> Function() pickImage;
+
+  /// Локальная база (серверы); открывается при входе в главное окно.
+  final AppDb Function() openDb;
+
+  /// Главный ключ после восстановления — до подписи списка устройств.
+  final MasterKeyCache masterCache;
+
+  /// Подключение и server_info; в тестах — подмена.
+  final LinkDialer? dial;
+  final InfoFetcher? fetch;
 
   /// Хранилище по `--dart-define=YL_VAULT`: `secure` (по умолчанию) или
   /// `file` — незашифрованный файл для отладки в Docker.
@@ -39,6 +61,7 @@ class AppServices {
       store: AccountStore(vault: vault, dir: Directory('${support.path}/identity')),
       bridge: PlatformBridge(),
       pickImage: _pickImage,
+      openDb: AppDb.open,
     );
   }
 
@@ -95,8 +118,11 @@ class _AppRootState extends State<AppRoot> {
   late final OnboardingController _onboarding = OnboardingController(
     store: widget.services.store,
     pickImage: widget.services.pickImage,
+    masterCache: widget.services.masterCache,
   );
-  late Future<(LocalAccount, Profile?)?> _account = _load();
+  late Future<LocalAccount?> _account = widget.services.store.load();
+  HomeController? _home;
+  AppDb? _db;
 
   // Фраза в буфере обмена не переживает закрытие приложения. При уходе в фон
   // буфер не трогаем: фразу копируют, чтобы вставить в менеджер паролей.
@@ -116,17 +142,21 @@ class _AppRootState extends State<AppRoot> {
     _lifecycle;
   }
 
-  Future<(LocalAccount, Profile?)?> _load() async {
-    final acc = await widget.services.store.load();
-    if (acc == null) return null;
-    final profile = acc.profile == null ? null : await openProfile(acc.profile!);
-    return (acc, profile);
-  }
+  HomeController _homeFor(LocalAccount account) => _home ??= HomeController(
+    store: widget.services.store,
+    account: account,
+    db: _db ??= widget.services.openDb(),
+    masterCache: widget.services.masterCache,
+    dial: widget.services.dial,
+    fetch: widget.services.fetch,
+  );
 
   @override
   void dispose() {
     _lifecycle.dispose();
     _onboarding.dispose();
+    _home?.dispose();
+    unawaited(_db?.close());
     super.dispose();
   }
 
@@ -147,7 +177,7 @@ class _AppRootState extends State<AppRoot> {
           );
         }
         final data = snap.data;
-        if (data != null) return HomeStub(account: data.$1, profile: data.$2);
+        if (data != null) return HomeScreen(controller: _homeFor(data));
         return OnboardingScreen(
           controller: _onboarding,
           bridge: widget.services.bridge,
@@ -155,7 +185,7 @@ class _AppRootState extends State<AppRoot> {
           // присваивания — Future, и в отладочной сборке setState падает на
           // assert, перехода нет (баг фазы 1 на Android). Только тело в скобках.
           onOpenApp: () {
-            final next = _load();
+            final next = widget.services.store.load();
             setState(() {
               _account = next;
             });

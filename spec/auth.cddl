@@ -1,0 +1,100 @@
+; Кадры входа и сессии (spec/auth.md). Это формы d в кадрах из frame.cddl.
+
+pubkey = bstr .size 32
+nonce = bstr .size 32
+unix-ms = uint
+signed-bytes = bstr           ; CBOR конверта Signed (signed.cddl), как есть
+
+; Запрос клиента, op = "hello".
+hello = {
+  proto: 1,
+  master_pub: pubkey,
+  device_pub: pubkey,
+  device_cert: signed-bytes,  ; t = "device_cert", подписан master_pub
+  client_nonce: nonce,
+  ? resume: resume,
+}
+resume = {
+  session: bstr .size 16,
+  last_event: uint,
+}
+
+; Ответ на hello, op = "challenge".
+challenge = {
+  nonce: nonce,
+  server_pub: pubkey,
+  ts: unix-ms,
+  server_sig: bstr .size 64,  ; "yl-server-v1" | client_nonce | nonce | ts(8 BE) | cert_hash
+  ? alt_sigs: [+ alt-sig],    ; другие сертификаты (за прокси)
+  ? unbound: true,            ; сертификат неизвестен, cert_hash = 32 нулевых байта
+}
+alt-sig = { h: bstr .size 32, s: bstr .size 64 }
+
+; Запрос клиента, op = "auth".
+auth = {
+  sig: bstr .size 64,         ; ключ устройства: "yl-auth-v1" | nonce | server_pub | ts(8 BE)
+}
+
+; Ответ на auth, op = "ready".
+ready = {
+  server: server,
+  me: me,
+  session: session,
+  channels: [* any],          ; фаза 3
+  roles: [* role],
+  perms: perms,
+  addresses: [* any],         ; фаза 4
+  last_event: uint,
+}
+server = {
+  pub: pubkey,
+  name: tstr,
+  version: tstr,
+  has_owner: bool,
+  info: signed-bytes,         ; t = "server_info"
+}
+me = {
+  master_pub: pubkey,
+  owner: bool,
+  ? profile: signed-bytes,
+  ? devices: signed-bytes,
+}
+session = { id: bstr .size 16, resume_ms: uint }
+role = {
+  id: uint,
+  name: tstr,
+  position: uint,
+  perms: perm-mask,
+  ? builtin: "everyone" / "owner",
+}
+perms = {
+  server: perm-mask,
+  channels: { * tstr => perm-mask },
+}
+; uint64 по смыслу; в кадре — int64 в дополнительном коде (бит 63 = OWNER).
+perm-mask = int .ge -9223372036854775808
+
+; Ответ на auth при удачном resume, op = "resumed".
+resumed = {
+  session: session,
+  events: [* bstr],           ; CBOR кадров событий после last_event, по порядку
+  last_event: uint,
+}
+
+; op = "admin.claim"
+admin-claim = { token: tstr }  ; ylat_ + 43 символа base62
+admin-claimed = { owner: true }
+
+; op = "profile.push" / "devices.push" / "revoke.push"
+profile-push = { profile: signed-bytes }
+devices-push = { devices: signed-bytes }
+revoke-push = { revoke: signed-bytes }
+seq-ack = { seq: uint }
+
+; События.
+server-update = { server: server }                 ; op = "server.update"
+member-update = {                                  ; op = "member.update"
+  master_pub: pubkey,
+  owner: bool,
+  ? profile: signed-bytes,
+}

@@ -494,9 +494,6 @@ class L10nRu extends L10n {
   String get homeDevice => 'Это устройство';
 
   @override
-  String get homeNoServers => 'Серверов пока нет: подключение появится в фазе 2.';
-
-  @override
   String homeLoadFailed(String reason) {
     return 'Не получилось прочитать профиль на этом устройстве: $reason';
   }
@@ -528,4 +525,305 @@ class L10nRu extends L10n {
 
   @override
   String get homeNoName => 'Имя не указано';
+
+  @override
+  String get commonOk => 'Понятно';
+
+  @override
+  String get commonClose => 'Закрыть';
+
+  @override
+  String get commonBack => 'Назад';
+
+  @override
+  String get emptyTitle => 'Здесь пока тихо';
+
+  @override
+  String get emptyBodyPc =>
+      'У вас ещё нет ни одного сервера. Выберите, с чего начать — профиль уже готов и поедет с вами куда угодно.';
+
+  @override
+  String get emptyBodyPhone => 'Серверов пока нет. Начните с одного из вариантов.';
+
+  @override
+  String get emptyInviteTitle => 'Вставить приглашение';
+
+  @override
+  String get emptyInviteBody => 'Если вам прислали ссылку или QR-код.';
+
+  @override
+  String get emptyCatalogTitle => 'Найти в каталоге';
+
+  @override
+  String get emptyCatalogBody => 'Открытые сообщества по интересам.';
+
+  @override
+  String get emptyOwnTitle => 'Поднять свой сервер';
+
+  @override
+  String get emptyOwnBodyPc => 'Один бинарник, хватит VPS за 200 ₽. Инструкция — в документации.';
+
+  @override
+  String get emptyOwnBodyPhone => 'Один бинарник, хватит VPS за 200 ₽.';
+
+  @override
+  String get catalogSoonTitle => 'Каталог серверов';
+
+  @override
+  String get catalogSoonBody =>
+      'Каталог пока не работает — он появится в следующих версиях. Подключиться можно по адресу сервера.';
+
+  @override
+  String get ownTitle => 'Свой сервер';
+
+  @override
+  String get ownBody =>
+      'Сервер YeenLink — один файл ylsrv. Скопируйте его на VPS с Linux и выполните:';
+
+  @override
+  String get ownAfter =>
+      'ylsrv init покажет ключ сервера и ключ администратора. Добавьте сервер по адресу, сверьте ключ и станьте владельцем.';
+
+  @override
+  String get ownAdd => 'Добавить сервер';
+
+  @override
+  String get addTitle => 'Добавить сервер';
+
+  @override
+  String get addBody =>
+      'Введите адрес сервера: домен или IP, если нужно — с портом. Вход по приглашению появится позже.';
+
+  @override
+  String get addLabel => 'Адрес сервера';
+
+  @override
+  String get addPlaceholder => 'chat.example.org или 203.0.113.7:8443';
+
+  @override
+  String get addCheck => 'Продолжить';
+
+  @override
+  String get addChecking => 'Проверяю адрес…';
+
+  @override
+  String addConfirmBody(String server) {
+    return 'Сервер «$server». Сверьте его ключ с тем, что показал ylsrv init на сервере:';
+  }
+
+  @override
+  String get addKeyLabel => 'Ключ сервера';
+
+  @override
+  String get addConfirmHint =>
+      'Совпадает — подключайтесь. Не совпадает — не подключайтесь: это может быть чужой сервер, который выдаёт себя за ваш.';
+
+  @override
+  String get addConnect => 'Подключиться';
+
+  @override
+  String get addConnecting => 'Подключаюсь…';
+
+  @override
+  String get addErrEmpty => 'Введите адрес.';
+
+  @override
+  String get addErrAddress => 'Не похоже на адрес сервера. Пример: chat.example.org:8443';
+
+  @override
+  String get addErrScheme => 'Адрес пишется без схемы или с https://.';
+
+  @override
+  String get addErrFingerprint =>
+      'После # нужен отпечаток из четырёх групп, например A0D2·5F11·0C3E·99AB.';
+
+  @override
+  String get linkUnreachable => 'Сервер не отвечает по этому адресу. Проверьте адрес и порт.';
+
+  @override
+  String get linkNotYeenLink => 'По этому адресу не сервер YeenLink.';
+
+  @override
+  String get linkWrongServer =>
+      'Это не тот сервер: его ключ не совпадает с ожидаемым. Не подключайтесь.';
+
+  @override
+  String get linkCertNotSigned =>
+      'Сертификат сервера не подписан его ключом — соединение могли подменить. Не подключайтесь через эту сеть.';
+
+  @override
+  String get linkDeviceRevoked => 'Это устройство отвязано от вашего профиля.';
+
+  @override
+  String get linkProto =>
+      'Сервер говорит на другой версии протокола. Обновите приложение или сервер.';
+
+  @override
+  String get linkRejected => 'Сервер не пустил это устройство.';
+
+  @override
+  String get linkClosed => 'Связь с сервером оборвалась.';
+
+  @override
+  String get linkReplaced => 'Вы подключились к этому серверу в другом окне.';
+
+  @override
+  String get claimTitle => 'Стать владельцем сервера';
+
+  @override
+  String get claimTitlePhone => 'Ключ администратора';
+
+  @override
+  String claimBody(String server) {
+    return 'У сервера «$server» пока нет владельца. Если сервер установили вы, введите ключ администратора: сервер показал его один раз при первом запуске — в консоли и в файле на сервере.';
+  }
+
+  @override
+  String get claimLostKey => 'Потеряли ключ? Выпустите новый на сервере:';
+
+  @override
+  String get claimConsoleProof => 'Доступ к консоли сервера и есть доказательство, что он ваш.';
+
+  @override
+  String get claimLabel => 'Ключ администратора';
+
+  @override
+  String claimNote(String fingerprint) {
+    return 'Роль Владельца привяжется к вашему ключу $fingerprint. Ключ администратора одноразовый и сгорит сразу после использования.';
+  }
+
+  @override
+  String get claimButton => 'Стать владельцем';
+
+  @override
+  String get claimChecking => 'Проверяю ключ…';
+
+  @override
+  String claimDone(String server) {
+    return 'Готово. Теперь вы Владелец сервера «$server». Ключ администратора сгорел — для следующей передачи выпустите новый.';
+  }
+
+  @override
+  String get claimDoneButton => 'Перейти к серверу';
+
+  @override
+  String get claimErrFormat =>
+      'Ключ начинается с ylat_, в нём 48 символов. Скопируйте его целиком.';
+
+  @override
+  String get claimErrBadToken =>
+      'Ключ не подошёл. Возможно, им уже воспользовались — выпустите новый: ylsrv admin-token.';
+
+  @override
+  String get claimErrRate => 'Слишком много попыток. Повторите через минуту.';
+
+  @override
+  String get claimErrOffline => 'Нет связи с сервером. Повторите, когда она вернётся.';
+
+  @override
+  String get railHome => 'YeenLink';
+
+  @override
+  String get railAdd => 'Добавить сервер';
+
+  @override
+  String get railCatalog => 'Каталог серверов';
+
+  @override
+  String get srvNoOwnerTitle => 'У сервера пока нет владельца';
+
+  @override
+  String get srvNoOwnerBody =>
+      'Если сервер установили вы, станьте владельцем по ключу администратора.';
+
+  @override
+  String get srvNoOwnerAction => 'Ввести ключ администратора';
+
+  @override
+  String get srvNoChannelsTitle => 'Каналов пока нет';
+
+  @override
+  String get srvNoChannelsBody => 'Когда на сервере появятся каналы, они будут здесь.';
+
+  @override
+  String get srvConnectingTitle => 'Подключаюсь…';
+
+  @override
+  String get srvMembers => 'Участники';
+
+  @override
+  String srvOnline(int count) {
+    return '$count в сети';
+  }
+
+  @override
+  String srvGroupOwner(int count) {
+    return 'ВЛАДЕЛЕЦ — $count';
+  }
+
+  @override
+  String srvGroupOnline(int count) {
+    return 'В СЕТИ — $count';
+  }
+
+  @override
+  String get srvItsYou => 'Это вы';
+
+  @override
+  String get connRetrying => 'Связь с сервером потеряна. Переподключаюсь…';
+
+  @override
+  String get connRetryNow => 'Повторить сейчас';
+
+  @override
+  String get connUnbound =>
+      'Сервер не подтвердил свой сертификат — он за прокси без tls.proxy_cert. Подмену соединения исключить нельзя.';
+
+  @override
+  String get navServers => 'Серверы';
+
+  @override
+  String get navFeed => 'Лента';
+
+  @override
+  String get navDms => 'Личные';
+
+  @override
+  String get navProfile => 'Профиль';
+
+  @override
+  String get feedEmptyTitle => 'Ленты пока нет';
+
+  @override
+  String get feedEmptyBody => 'Здесь будут посты с ваших серверов.';
+
+  @override
+  String get dmsEmptyTitle => 'Личных сообщений пока нет';
+
+  @override
+  String get dmsEmptyBody => 'Здесь будут переписки один на один.';
+
+  @override
+  String get pinTitle => 'Подтвердите PIN-код';
+
+  @override
+  String get pinBody =>
+      'Этого устройства ещё нет в списке ваших устройств. Введите PIN-код — приложение подпишет новый список, и серверы будут знать, что устройство ваше. Это нужно один раз.';
+
+  @override
+  String get pinLabel => 'PIN-код';
+
+  @override
+  String get pinConfirm => 'Подтвердить';
+
+  @override
+  String get pinLater => 'Не сейчас';
+
+  @override
+  String get pinWrong => 'PIN-код не подошёл.';
+
+  @override
+  String pinWait(int seconds) {
+    return 'Слишком много попыток. Подождите $seconds с.';
+  }
 }

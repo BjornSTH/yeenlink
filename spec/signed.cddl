@@ -10,7 +10,7 @@ signed = {
   s: bstr .size 64,           ; Ed25519( "yl-v1" | t | p )
 }
 
-signed-type = "profile" / "post" / "device_cert" / "revoke" / "devices" / "addresses" / "invite"
+signed-type = "profile" / "post" / "device_cert" / "revoke" / "devices" / "addresses" / "invite" / "server_info"
 
 pubkey = bstr .size 32
 sha256 = bstr .size 32
@@ -68,3 +68,12 @@ invite = {
 addresses = { seq: uint, addrs: [+ address] }
 
 address = { h: tstr, p: uint .le 65535, kind: "main" / "backup" / "mirror" }
+
+; t = "server_info", подписывает ключ сервера (k == server_pub).
+; Отдаётся по GET /.well-known/yeenlink (spec/auth.md).
+server_info = {
+  v: 1,
+  server_pub: pubkey,
+  name: tstr .size (1..256),  ; 1–64 символа
+  version: tstr,              ; версия ylsrv, только для показа
+}

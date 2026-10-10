@@ -16,8 +16,9 @@ abstract final class SignedType {
   static const devices = 'devices';
   static const addresses = 'addresses';
   static const invite = 'invite';
+  static const serverInfo = 'server_info';
 
-  static const all = [profile, post, deviceCert, revoke, devices, addresses, invite];
+  static const all = [profile, post, deviceCert, revoke, devices, addresses, invite, serverInfo];
 }
 
 /// Категории ошибок проверки; строки общие с Go и векторами.

@@ -23,6 +23,8 @@ dependencies:
   crypto: ^3.0.7
   path_provider: ^2.1.6
   path_drawing: ^1.0.1
+  drift: ^2.35.2
+  drift_flutter: ^0.3.1
 
 dev_dependencies:
   flutter_test:
@@ -32,6 +34,8 @@ dev_dependencies:
   path: ^1.9.1
   integration_test:
     sdk: flutter
+  drift_dev: ^2.35.1
+  build_runner: ^2.15.1
 
 flutter:
   uses-material-design: false
